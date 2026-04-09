@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:uiblockify.co)",
+      "Bash(curl -s \"https://uiblockify.co/\")",
+      "Bash(grep -E \"\\(color|background|font|gradient|rgba|#[0-9a-fA-F]{3,6}\\)\")",
+      "Bash(node:*)",
+      "Bash(curl -s \"https://framerusercontent.com/sites/5zoqUe96nnnvaHd8RhDf9i/searchIndex-UtLoz5PJaeKx.json\")",
+      "Bash(curl -s \"https://framerusercontent.com/sites/5zoqUe96nnnvaHd8RhDf9i/searchIndex-UtLoz5PJaeKx.json\" -o \"C:\\\\Users\\\\User\\\\Documents\\\\Projects\\\\Action Plus TAX\\\\test-hero\\\\search.json\")",
+      "Bash(curl -s \"https://framerusercontent.com/sites/5zoqUe96nnnvaHd8RhDf9i/QC9W4X5SrazlL60SpezEok4bZ4HyKSD6yhYtj1saJvE.Spa_EpcA.mjs\" -o \"C:\\\\Users\\\\User\\\\Documents\\\\Projects\\\\Action Plus TAX\\\\test-hero\\\\main.mjs\")",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes)",
+      "Bash(del main.mjs page.html search.json)",
+      "Bash(npm install:*)",
+      "WebFetch(domain:actionplustax.com)",
+      "WebSearch",
+      "WebFetch(domain:www.drakesoftware.com)",
+      "WebFetch(domain:kb.drakesoftware.com)",
+      "WebFetch(domain:taxdome.com)",
+      "WebFetch(domain:www.acecloudhosting.com)",
+      "WebFetch(domain:www.getcanopy.com)",
+      "WebFetch(domain:www.filed.com)",
+      "WebFetch(domain:www.wolterskluwer.com)",
+      "WebFetch(domain:www.thetaxadviser.com)"
+    ]
+  }
+}
