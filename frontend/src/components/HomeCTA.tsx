@@ -49,7 +49,7 @@ export default function HomeCTA() {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
-                href="/appointment"
+                href="/consultation"
                 className="inline-flex items-center justify-center gap-2 font-bold px-8 py-4 rounded-xl text-base transition-all shadow-lg"
                 style={{ background: "#FFC200", color: "#0A0A0A" }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}

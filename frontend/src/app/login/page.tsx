@@ -1,23 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import toast from "react-hot-toast";
+import { useAuth } from "@/context/AuthContext";
 
 const PRIMARY = "#0046BE";
 
-export default function LoginPage() {
+function LoginContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const justVerified = searchParams.get("verified") === "1";
+  const { login } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 1500);
+    setError("");
+    try {
+      await login(form.email, form.password);
+      router.push("/");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Login failed.";
+      setError(msg);
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -52,6 +71,20 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
+
+        {/* Verified banner */}
+        {justVerified && (
+          <div className="mb-5 rounded-xl px-4 py-3 text-sm text-green-700 bg-green-50 border border-green-100">
+            Email verified! You can now sign in.
+          </div>
+        )}
+
+        {/* Error */}
+        {error && (
+          <div className="mb-5 rounded-xl px-4 py-3 text-sm text-red-700 bg-red-50 border border-red-100">
+            {error}
+          </div>
+        )}
 
         {/* Google */}
         <button
@@ -128,7 +161,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
+            className="w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
             style={{ background: "#FFC200", color: "#001A57" }}
           >
             {loading ? (
@@ -152,5 +185,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginContent />
+    </Suspense>
   );
 }

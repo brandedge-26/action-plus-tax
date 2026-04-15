@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ShieldCheck, BadgeCheck, Award } from "lucide-react";
 
 const PRIMARY       = "#0046BE";
@@ -95,6 +96,28 @@ export default function HomeGuarantee() {
               <span className="text-xs mt-1 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.45)" }}>{s.label}</span>
             </div>
           ))}
+        </div>
+
+        {/* Office photo strip */}
+        <div className="relative w-full rounded-3xl overflow-hidden mb-10" style={{ height: "220px" }}>
+          <Image
+            src="/images/office-building.jpg"
+            alt="Modern professional office building — Action Plus TAX"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(0,26,87,0.85) 0%, rgba(0,26,87,0.3) 50%, rgba(0,26,87,0.7) 100%)" }} />
+          <div className="absolute inset-0 flex items-center px-10 lg:px-16">
+            <div className="max-w-lg">
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#FFC200" }}>Our Office</p>
+              <h3 className="text-xl lg:text-2xl font-bold text-white leading-snug">
+                A Modern, Professional Tax Office — Built Around You
+              </h3>
+              <p className="text-sm mt-2" style={{ color: "rgba(255,255,255,0.6)" }}>
+                Walk in, drop off, or connect remotely. We make expert tax help accessible.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Guarantee cards */}

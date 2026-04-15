@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import HeaderTest from "@/components/HeaderTest";
 import SiteFooter from "@/components/SiteFooter";
+import toast from "react-hot-toast";
 
 const PRIMARY = "#0046BE";
 const PRIMARY_LIGHT = "#EBF3FF";
@@ -164,10 +165,24 @@ export default function ConsultationPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => { setLoading(false); setDone(true); }, 1500);
+    try {
+      const res = await fetch("http://localhost:5510/api/consultations", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Booking failed.");
+      toast.success("Consultation booked! We'll confirm within 1 business day.");
+      setDone(true);
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Something went wrong.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputCls =

@@ -2,25 +2,41 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, ArrowRight, ShieldCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff, ArrowRight } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const PRIMARY = "#0046BE";
 const PRIMARY_LIGHT = "#EBF3FF";
 
 export default function SignupPage() {
+  const router = useRouter();
+  const { register } = useAuth();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [form, setForm] = useState({ fullName: "", email: "", phone: "", password: "", confirm: "" });
   const [loading, setLoading] = useState(false);
-  const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (form.password !== form.confirm) return;
     setLoading(true);
-    setTimeout(() => { setLoading(false); setDone(true); }, 1500);
+    setError("");
+    try {
+      await register(form.fullName, form.email, form.phone, form.password);
+      // Store password temporarily so verify-otp can auto-login
+      sessionStorage.setItem("apt_tmp_creds", JSON.stringify({ password: form.password }));
+      router.push(`/verify-otp?email=${encodeURIComponent(form.email)}`);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Registration failed.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const passwordStrength = (pw: string) => {
@@ -57,183 +73,154 @@ export default function SignupPage() {
       {/* Card */}
       <div className="w-full max-w-[440px] bg-white rounded-2xl border border-gray-100 shadow-sm p-8">
 
-        {done ? (
-          /* ── Success ── */
-          <div className="flex flex-col items-center text-center gap-5 py-6">
-            <div className="w-18 h-18 rounded-full flex items-center justify-center p-5" style={{ background: PRIMARY_LIGHT }}>
-              <ShieldCheck size={34} style={{ color: PRIMARY }} strokeWidth={1.6} />
-            </div>
-            <h2 className="text-2xl font-bold text-[#0A0A0A]">Account Created!</h2>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-              Welcome to Action Plus Tax. Check your email for a confirmation link, then sign in to access your Client Portal.
-            </p>
-            <Link
-              href="/login"
-              className="inline-flex items-center gap-2 text-white font-semibold px-8 py-3.5 rounded-xl hover:opacity-90 transition-all mt-1"
-              style={{ background: "#FFC200", color: "#001A57" }}
-            >
-              Sign In Now <ArrowRight size={16} strokeWidth={2.5} />
+        {/* Heading */}
+        <div className="mb-7">
+          <h1 className="text-2xl font-bold text-[#0A0A0A] mb-1.5">Create your free account</h1>
+          <p className="text-sm text-gray-500">
+            Already have an account?{" "}
+            <Link href="/login" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>
+              Sign in
             </Link>
+          </p>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div className="mb-5 rounded-xl px-4 py-3 text-sm text-red-700 bg-red-50 border border-red-100">
+            {error}
           </div>
-        ) : (
-          <>
-            {/* Heading */}
-            <div className="mb-7">
-              <h1 className="text-2xl font-bold text-[#0A0A0A] mb-1.5">Create your free account</h1>
-              <p className="text-sm text-gray-500">
-                Already have an account?{" "}
-                <Link href="/login" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>
-                  Sign in
-                </Link>
-              </p>
-            </div>
-
-            {/* Google */}
-            <button
-              type="button"
-              className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-semibold text-[#0A0A0A] hover:bg-gray-50 transition-all mb-5"
-            >
-              <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
-                <path d="M47.5 24.5c0-1.6-.1-3.2-.4-4.7H24v8.9h13.2c-.6 3-2.4 5.6-5 7.3v6h8c4.7-4.3 7.3-10.7 7.3-17.5z" fill="#4285F4"/>
-                <path d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-8-6c-2.1 1.4-4.8 2.2-7.8 2.2-6 0-11.1-4-12.9-9.4H2.8v6.2C6.7 42.8 14.8 48 24 48z" fill="#34A853"/>
-                <path d="M11.1 28.9c-.5-1.4-.7-2.8-.7-4.4s.2-3 .7-4.4v-6.2H2.8C1 17.4 0 20.6 0 24s1 6.6 2.8 9.1l8.3-4.2z" fill="#FBBC05"/>
-                <path d="M24 9.5c3.4 0 6.4 1.2 8.8 3.4l6.5-6.5C35.9 2.8 30.5.5 24 .5 14.8.5 6.7 5.7 2.8 14.1l8.3 6.2C12.9 13.5 18 9.5 24 9.5z" fill="#EA4335"/>
-              </svg>
-              Continue with Google
-            </button>
-
-            {/* Divider */}
-            <div className="flex items-center gap-3 mb-5">
-              <div className="flex-1 h-px bg-gray-100" />
-              <span className="text-xs text-gray-400 font-medium">or sign up with email</span>
-              <div className="flex-1 h-px bg-gray-100" />
-            </div>
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-
-              {/* Full Name */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Full Name <span style={{ color: "#FFC200" }}>*</span>
-                </label>
-                <input
-                  type="text" name="fullName" required
-                  value={form.fullName} onChange={handleChange}
-                  placeholder="John Smith"
-                  className={inputBase}
-                />
-              </div>
-
-              {/* Email */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Email Address <span style={{ color: "#FFC200" }}>*</span>
-                </label>
-                <input
-                  type="email" name="email" required
-                  value={form.email} onChange={handleChange}
-                  placeholder="you@email.com"
-                  className={inputBase}
-                />
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Phone Number <span style={{ color: "#FFC200" }}>*</span>
-                </label>
-                <input
-                  type="tel" name="phone" required
-                  value={form.phone} onChange={handleChange}
-                  placeholder="(912) 000-0000"
-                  className={inputBase}
-                />
-              </div>
-
-              {/* Password */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Password <span style={{ color: "#FFC200" }}>*</span>
-                </label>
-                <div className="relative">
-                  <input
-                    type={showPassword ? "text" : "password"} name="password" required
-                    value={form.password} onChange={handleChange}
-                    placeholder="Min. 8 characters"
-                    className={inputBase + " pr-11"}
-                  />
-                  <button type="button" onClick={() => setShowPassword((v) => !v)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
-                    {showPassword ? <EyeOff size={16} strokeWidth={2} /> : <Eye size={16} strokeWidth={2} />}
-                  </button>
-                </div>
-                {strength && (
-                  <div className="mt-2">
-                    <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full transition-all duration-300"
-                        style={{ width: strength.width, background: strength.color }} />
-                    </div>
-                    <p className="text-[11px] mt-1 font-medium" style={{ color: strength.color }}>
-                      {strength.label} password
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Confirm Password */}
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Confirm Password <span style={{ color: "#FFC200" }}>*</span>
-                </label>
-                <div className="relative">
-                  <input
-                    type={showConfirm ? "text" : "password"} name="confirm" required
-                    value={form.confirm} onChange={handleChange}
-                    placeholder="Re-enter your password"
-                    className={`${inputBase} pr-11 ${mismatch ? "border-red-300 focus:border-red-400 focus:ring-red-200" : ""}`}
-                  />
-                  <button type="button" onClick={() => setShowConfirm((v) => !v)}
-                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
-                    {showConfirm ? <EyeOff size={16} strokeWidth={2} /> : <Eye size={16} strokeWidth={2} />}
-                  </button>
-                </div>
-                {mismatch && (
-                  <p className="text-[11px] text-red-500 mt-1">Passwords do not match</p>
-                )}
-              </div>
-
-              {/* Terms */}
-              <label className="flex items-start gap-2.5 cursor-pointer">
-                <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded accent-[#0046BE]" />
-                <span className="text-xs text-gray-500 leading-relaxed">
-                  I agree to the{" "}
-                  <Link href="/terms" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Terms of Service</Link>
-                  {" "}&amp;{" "}
-                  <Link href="/privacy" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Privacy Policy</Link>
-                </span>
-              </label>
-
-              <button
-                type="submit"
-                disabled={loading || mismatch}
-                className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
-                style={{ background: "#FFC200", color: "#001A57" }}
-              >
-                {loading ? (
-                  <>
-                    <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                    </svg>
-                    Creating account…
-                  </>
-                ) : (
-                  <>Create Free Account <ArrowRight size={16} strokeWidth={2.5} /></>
-                )}
-              </button>
-            </form>
-          </>
         )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          {/* Full Name */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+              Full Name <span style={{ color: "#FFC200" }}>*</span>
+            </label>
+            <input
+              type="text" name="fullName" required
+              value={form.fullName} onChange={handleChange}
+              placeholder="John Smith"
+              className={inputBase}
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+              Email Address <span style={{ color: "#FFC200" }}>*</span>
+            </label>
+            <input
+              type="email" name="email" required
+              value={form.email} onChange={handleChange}
+              placeholder="you@email.com"
+              className={inputBase}
+            />
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+              Phone Number <span style={{ color: "#FFC200" }}>*</span>
+            </label>
+            <input
+              type="tel" name="phone" required
+              value={form.phone} onChange={handleChange}
+              placeholder="(912) 000-0000"
+              className={inputBase}
+            />
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+              Password <span style={{ color: "#FFC200" }}>*</span>
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"} name="password" required
+                value={form.password} onChange={handleChange}
+                placeholder="Min. 8 characters"
+                className={inputBase + " pr-11"}
+              />
+              <button type="button" onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                {showPassword ? <EyeOff size={16} strokeWidth={2} /> : <Eye size={16} strokeWidth={2} />}
+              </button>
+            </div>
+            {strength && (
+              <div className="mt-2">
+                <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
+                  <div className="h-full rounded-full transition-all duration-300"
+                    style={{ width: strength.width, background: strength.color }} />
+                </div>
+                <p className="text-[11px] mt-1 font-medium" style={{ color: strength.color }}>
+                  {strength.label} password
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Confirm Password */}
+          <div>
+            <label className="block text-xs font-semibold text-gray-600 mb-1.5">
+              Confirm Password <span style={{ color: "#FFC200" }}>*</span>
+            </label>
+            <div className="relative">
+              <input
+                type={showConfirm ? "text" : "password"} name="confirm" required
+                value={form.confirm} onChange={handleChange}
+                placeholder="Re-enter your password"
+                className={`${inputBase} pr-11 ${mismatch ? "border-red-300 focus:border-red-400 focus:ring-red-200" : ""}`}
+              />
+              <button type="button" onClick={() => setShowConfirm((v) => !v)}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
+                {showConfirm ? <EyeOff size={16} strokeWidth={2} /> : <Eye size={16} strokeWidth={2} />}
+              </button>
+            </div>
+            {mismatch && (
+              <p className="text-[11px] text-red-500 mt-1">Passwords do not match</p>
+            )}
+          </div>
+
+          {/* Terms */}
+          <label className="flex items-start gap-2.5 cursor-pointer">
+            <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded accent-[#0046BE]" />
+            <span className="text-xs text-gray-500 leading-relaxed">
+              I agree to the{" "}
+              <Link href="/terms" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Terms of Service</Link>
+              {" "}&amp;{" "}
+              <Link href="/privacy" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Privacy Policy</Link>
+            </span>
+          </label>
+
+          <button
+            type="submit"
+            disabled={loading || mismatch}
+            className="w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
+            style={{ background: "#FFC200", color: "#001A57" }}
+          >
+            {loading ? (
+              <>
+                <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+                Creating account…
+              </>
+            ) : (
+              <>Create Free Account <ArrowRight size={16} strokeWidth={2.5} /></>
+            )}
+          </button>
+        </form>
+
+        <p className="text-xs text-gray-400 text-center mt-6 leading-relaxed">
+          By signing up you agree to our{" "}
+          <Link href="/terms" className="underline hover:text-gray-600">Terms</Link>
+          {" "}&amp;{" "}
+          <Link href="/privacy" className="underline hover:text-gray-600">Privacy Policy</Link>.
+        </p>
       </div>
     </div>
   );

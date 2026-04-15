@@ -443,7 +443,7 @@ export default function ContactPage() {
 
                 {/* Book Appointment CTA */}
                 <Link
-                  href="/appointment"
+                  href="/consultation"
                   className="flex items-center justify-center gap-2 text-white font-semibold py-4 rounded-2xl transition-all hover:opacity-90 shadow-lg"
                   style={{ background: "#FFC200", color: "#001A57" }}
                 >

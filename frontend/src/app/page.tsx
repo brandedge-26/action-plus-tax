@@ -7,6 +7,7 @@ import HomeGuarantee from "@/components/HomeGuarantee";
 import HomeTestimonials from "@/components/HomeTestimonials";
 import HomeHowItWorks from "@/components/HomeHowItWorks";
 import HomeCTA from "@/components/HomeCTA";
+import HomeAbout from "@/components/HomeAbout";
 import SiteFooter from "@/components/SiteFooter";
 
 export default function HomePage() {
@@ -16,6 +17,7 @@ export default function HomePage() {
       <main>
         <TestHero />
         <HomeServices />
+        <HomeAbout />
         <HomeHowItWorks />
         <HomeGuarantee />
         <HomeTestimonials />

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Menu,
   X,
@@ -9,7 +10,10 @@ import {
   ChevronRight,
   LogIn,
   Phone,
+  LogOut,
+  User,
 } from "lucide-react";
+import { useAuth, getAvatarInitials } from "@/context/AuthContext";
 
 const PRIMARY = "#0046BE";
 const PRIMARY_DARK = "#003DA5";
@@ -39,7 +43,7 @@ const megaMenu = [
   },
   {
     category: "Tax Planning",
-    cta: { label: "Schedule Consultation", href: "/appointment" },
+    cta: { label: "Schedule Consultation", href: "/consultation" },
     items: [
       { label: "Tax Planning Services", href: "/services/tax-planning" },
     ],
@@ -63,8 +67,104 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
+// ─── Avatar Dropdown ──────────────────────────────────────────────────────────
+function AvatarDropdown() {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  if (!user) return null;
+
+  const initials = getAvatarInitials(user.name);
+  const displayName = user.name.trim().split(/\s+/).slice(0, 2).join(" ");
+
+  const handleLogout = async () => {
+    setOpen(false);
+    await logout();
+    router.push("/login");
+  };
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-2 rounded-xl px-2 py-1.5 transition-colors"
+        style={{ color: "white" }}
+        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
+        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+      >
+        {/* Avatar circle */}
+        <div
+          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+          style={{ background: "#FFC200", color: "#001A57" }}
+        >
+          {initials}
+        </div>
+        <span className="text-sm font-medium hidden lg:block max-w-[120px] truncate">
+          {displayName}
+        </span>
+        <ChevronDown
+          size={14}
+          strokeWidth={2.5}
+          className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {/* Dropdown */}
+      {open && (
+        <div
+          className="absolute right-0 top-[calc(100%+10px)] w-56 rounded-2xl border shadow-xl overflow-hidden z-50"
+          style={{ background: "white", borderColor: "rgba(0,0,0,0.08)" }}
+        >
+          {/* User info */}
+          <div className=" px-4 py-3.5 border-b border-gray-100">
+            <p className="text-sm font-bold text-[#0A0A0A] truncate">{user.name}</p>
+            <p className="text-xs text-gray-400 truncate">{user.email}</p>
+          </div>
+
+          {/* Menu items */}
+          <div className="py-1.5">
+            <Link
+              href="/profile"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <User size={15} strokeWidth={2} className="text-gray-400" />
+              My Profile
+            </Link>
+
+            <div className="mx-3 my-1.5 h-px bg-gray-100" />
+
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors"
+              style={{ color: "#DC2626" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#FEF2F2")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+            >
+              <LogOut size={15} strokeWidth={2} />
+              Sign Out
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function HeaderTest() {
+  const { user, loading } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
@@ -76,7 +176,7 @@ export default function HeaderTest() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b" style={{ background: "#0046BE", borderColor: "#003DA5" }}>
+    <header className="sticky top-0 z-50 border-b" style={{ background: "#001040", borderColor: "rgba(255,255,255,0.08)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
@@ -139,12 +239,9 @@ export default function HeaderTest() {
                             key={col.category}
                             className={`flex flex-col gap-1 px-4 ${ci !== 0 ? "border-l border-gray-100" : ""}`}
                           >
-                            {/* Category heading */}
                             <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">
                               {col.category}
                             </p>
-
-                            {/* Items — no icons */}
                             {col.items.map((item) => (
                               <Link
                                 key={item.label}
@@ -158,8 +255,6 @@ export default function HeaderTest() {
                                 <span className="leading-snug">{item.label}</span>
                               </Link>
                             ))}
-
-                            {/* Column CTA */}
                             <Link
                               href={col.cta.href}
                               onClick={() => setServicesOpen(false)}
@@ -209,26 +304,45 @@ export default function HeaderTest() {
           </nav>
 
           {/* ── Desktop Right CTAs ── */}
-          <div className="hidden md:flex items-center gap-4">
-            <Link
-              href="/login"
-              className="flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition-colors"
-              style={{ color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.3)" }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
-            >
-              <LogIn size={15} strokeWidth={2} />
-              Client Portal
-            </Link>
-            <Link
-              href="/consultation"
-              className="text-sm font-bold px-5 py-2.5 rounded-lg transition-all"
-              style={{ background: "#FFC200", color: "#0A0A0A" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
-            >
-              Get Consultation
-            </Link>
+          <div className="hidden md:flex items-center gap-3">
+            {!loading && (
+              user ? (
+                <>
+                  <AvatarDropdown />
+                  <Link
+                    href="/client-portal"
+                    className="text-sm font-bold px-5 py-2.5 rounded-lg transition-all"
+                    style={{ background: "#FFC200", color: "#0A0A0A" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
+                  >
+                    Client Portal
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition-colors"
+                    style={{ color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.3)" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
+                  >
+                    <LogIn size={15} strokeWidth={2} />
+                    Client Portal
+                  </Link>
+                  <Link
+                    href="/consultation"
+                    className="text-sm font-bold px-5 py-2.5 rounded-lg transition-all"
+                    style={{ background: "#FFC200", color: "#0A0A0A" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
+                  >
+                    Get Consultation
+                  </Link>
+                </>
+              )
+            )}
           </div>
 
           {/* ── Mobile Hamburger ── */}
@@ -245,8 +359,30 @@ export default function HeaderTest() {
 
       {/* ── Mobile Drawer ── */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto" style={{ background: "#0046BE" }}>
+        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto" style={{ background: "#001040" }}>
           <div className="px-4 py-4 flex flex-col gap-1">
+
+            {/* Mobile user info (if logged in) */}
+            {user && (
+              <div
+                className="flex items-center gap-3 p-4 rounded-2xl mb-2"
+                style={{ background: "rgba(255,255,255,0.1)" }}
+              >
+                <div
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
+                  style={{ background: "#FFC200", color: "#001A57" }}
+                >
+                  {getAvatarInitials(user.name)}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-bold text-white truncate">
+                    {user.name.trim().split(/\s+/).slice(0, 2).join(" ")}
+                  </p>
+                  <p className="text-xs text-white/50 truncate">{user.email}</p>
+                </div>
+              </div>
+            )}
+
             {navLinks.map((link) =>
               link.hasMega ? (
                 <div key={link.label}>
@@ -314,27 +450,64 @@ export default function HeaderTest() {
             )}
 
             <div className="pt-4 space-y-2">
-              <Link
-                href="/login"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl transition-colors"
-                style={{ color: "white", border: "1px solid rgba(255,255,255,0.3)" }}
-              >
-                <LogIn size={16} strokeWidth={2} />
-                Client Portal
-              </Link>
-              <Link
-                href="/consultation"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 text-sm font-bold py-3.5 rounded-xl transition-colors"
-                style={{ background: "#FFC200", color: "#0A0A0A" }}
-              >
-                Get Consultation
-              </Link>
+              {user ? (
+                <>
+                  <Link
+                    href="/client-portal"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-2 text-sm font-bold py-3.5 rounded-xl transition-colors"
+                    style={{ background: "#FFC200", color: "#0A0A0A" }}
+                  >
+                    Client Portal
+                  </Link>
+                  <MobileLogoutButton />
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl transition-colors"
+                    style={{ color: "white", border: "1px solid rgba(255,255,255,0.3)" }}
+                  >
+                    <LogIn size={16} strokeWidth={2} />
+                    Client Portal
+                  </Link>
+                  <Link
+                    href="/consultation"
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-center gap-2 text-sm font-bold py-3.5 rounded-xl transition-colors"
+                    style={{ background: "#FFC200", color: "#0A0A0A" }}
+                  >
+                    Get Consultation
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
       )}
     </header>
+  );
+}
+
+function MobileLogoutButton() {
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.push("/login");
+  };
+
+  return (
+    <button
+      onClick={handleLogout}
+      className="w-full flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl transition-colors"
+      style={{ color: "#FFC200", border: "1px solid rgba(255,194,0,0.4)" }}
+    >
+      <LogOut size={16} strokeWidth={2} />
+      Sign Out
+    </button>
   );
 }

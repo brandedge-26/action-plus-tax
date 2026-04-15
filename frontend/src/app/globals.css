@@ -14,6 +14,11 @@
   --gray-text: #64748B;
 }
 
+::selection {
+  background: #FFC200;
+  color: #0A0A0A;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

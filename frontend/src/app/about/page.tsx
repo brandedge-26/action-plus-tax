@@ -183,7 +183,7 @@ export default function AboutPage() {
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
                   <Link
-                    href="/appointment"
+                    href="/consultation"
                     className="inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-3.5 rounded-xl text-base transition-all hover:opacity-90"
                     style={{ background: "#FFC200", color: "#001A57" }}
                   >
@@ -602,7 +602,7 @@ export default function AboutPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Link
-                    href="/appointment"
+                    href="/consultation"
                     className="inline-flex items-center justify-center gap-2 font-bold px-8 py-4 rounded-xl text-base transition-all hover:opacity-90 shadow-lg"
                     style={{ background: PRIMARY, color: "white" }}
                   >

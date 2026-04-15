@@ -75,7 +75,7 @@ export default function Hero() {
                 <ArrowRight size={17} strokeWidth={2.5} />
               </Link>
               <Link
-                href="/appointment"
+                href="/consultation"
                 className="inline-flex items-center justify-center gap-2 border border-(--gray-border) hover:border-(--primary) text-gray-700 hover:text-(--primary) font-semibold px-7 py-3.5 rounded-xl text-base transition-all"
               >
                 <Calendar size={17} strokeWidth={2} />

@@ -122,7 +122,7 @@ export default function HomeHowItWorks() {
             <ArrowRight size={16} strokeWidth={2.5} />
           </Link>
           <Link
-            href="/appointment"
+            href="/consultation"
             className="inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl text-sm transition-all"
             style={{ background: YELLOW, color: "#0A0A0A" }}
             onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}

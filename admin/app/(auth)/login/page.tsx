@@ -2,15 +2,38 @@
 
 import { useState } from "react";
 import { Eye, EyeOff, Shield } from "lucide-react";
+import toast from "react-hot-toast";
+import { adminFetch, setAdminToken } from "../../lib/adminApi";
 
 export default function AdminLoginPage() {
   const [show, setShow]       = useState(false);
   const [loading, setLoading] = useState(false);
+  const [email, setEmail]     = useState("admin@actionplustax.com");
+  const [password, setPassword] = useState("");
 
-  const handle = (e: React.FormEvent) => {
+  const handle = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => { window.location.href = "/dashboard"; }, 1200);
+    try {
+      const data = await adminFetch("/api/auth/login", {
+        method: "POST",
+        body: { email, password },
+      });
+
+      if (data.user?.role !== "admin") {
+        toast.error("Access denied. Admin accounts only.");
+        setLoading(false);
+        return;
+      }
+
+      setAdminToken(data.accessToken);
+      localStorage.setItem("apt_admin_user", JSON.stringify(data.user));
+      toast.success(`Welcome, ${data.user.name}!`);
+      window.location.href = "/dashboard";
+    } catch (err: unknown) {
+      toast.error(err instanceof Error ? err.message : "Login failed.");
+      setLoading(false);
+    }
   };
 
   const PRIMARY = "#0046BE";
@@ -47,7 +70,8 @@ export default function AdminLoginPage() {
               <label className="block text-xs font-semibold mb-1.5 text-white/70">Admin Email</label>
               <input
                 type="email"
-                defaultValue="admin@actionplustax.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full rounded-xl px-4 py-3 text-sm outline-none transition-all"
                 style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
@@ -61,8 +85,10 @@ export default function AdminLoginPage() {
               <div className="relative">
                 <input
                   type={show ? "text" : "password"}
-                  defaultValue="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   required
+                  placeholder="Enter your password"
                   className="w-full rounded-xl px-4 py-3 pr-11 text-sm outline-none transition-all"
                   style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.12)", color: "#fff" }}
                   onFocus={(e) => (e.target.style.borderColor = PRIMARY)}

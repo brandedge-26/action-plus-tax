@@ -47,7 +47,7 @@ const megaMenu = [
   },
   {
     category: "Tax Planning",
-    cta: { label: "Schedule Consultation", href: "/appointment" },
+    cta: { label: "Schedule Consultation", href: "/consultation" },
     items: [
       { label: "Tax Planning Services", href: "/services/tax-planning", icon: CalendarCheck },
     ],

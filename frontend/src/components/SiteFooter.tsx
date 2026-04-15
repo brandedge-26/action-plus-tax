@@ -9,7 +9,7 @@ const quickLinks = [
   { label: "Services", href: "/services" },
   { label: "Blog", href: "/blog" },
   { label: "Contact", href: "/contact" },
-  { label: "Book Appointment", href: "/appointment" },
+  { label: "Book Appointment", href: "/consultation" },
 ];
 
 const services = [
@@ -224,7 +224,7 @@ export default function SiteFooter() {
 
           {/* Book CTA */}
           <Link
-            href="/appointment"
+            href="/consultation"
             className="mt-5 flex items-center justify-center gap-2 text-sm font-bold py-3 rounded-xl transition-all hover:opacity-90"
             style={{ background: "#FFC200", color: "#0A0A0A" }}
           >

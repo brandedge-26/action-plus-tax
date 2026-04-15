@@ -5,6 +5,7 @@ import { connectDB } from "./config/db.js";
 import { globalErrorHandler } from "./middlewares/error.middleware.js";
 import { generalLimiter } from "./middlewares/rateLimiter.middleware.js";
 import { authRoutes } from "./routes/auth.routes.js";
+import { consultationRoutes } from "./routes/consultation.routes.js";
 
 
 
@@ -58,6 +59,7 @@ app.get("/api/health", (req, res) => {
 
 // ROUTES
 app.use("/api/auth", authRoutes);
+app.use("/api/consultations", consultationRoutes);
 
 
 
