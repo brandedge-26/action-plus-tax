@@ -11,8 +11,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-const PRIMARY = "#9245FF";
-const PRIMARY_LIGHT = "#F3ECFF";
+const PRIMARY = "#0046BE";
+const PRIMARY_LIGHT = "#EBF3FF";
 
 const stats = [
   { value: "10+", label: "Years in Business", sub: "Family-owned since 2012" },
@@ -87,27 +87,27 @@ export default function ServicesPage() {
       <main>
 
         {/* ── Hero ── */}
-        <section className="relative bg-white overflow-hidden pt-16 pb-16">
+        <section className="relative overflow-hidden pt-16 pb-16" style={{ background: "#0046BE" }}>
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-            style={{ backgroundImage: `linear-gradient(rgba(146,69,255,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.055) 1px, transparent 1px)`, backgroundSize: "48px 48px" }}
+            style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)`, backgroundSize: "48px 48px" }}
           />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[320px] pointer-events-none"
-            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(146,69,255,0.12) 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.15) 0%, transparent 70%)" }}
           />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6 border"
-              style={{ background: PRIMARY_LIGHT, color: PRIMARY, borderColor: "rgba(146,69,255,0.2)" }}
+              style={{ background: "#FFC200", color: "#001A57", borderColor: "rgba(255,194,0,0.15)" }}
             >
               <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: PRIMARY }} />
               Serving Jesup, GA &amp; Surrounding Areas
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.6rem] font-bold text-[#0A0A0A] tracking-tight leading-[1.08] mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-[3.6rem] font-bold text-white tracking-tight leading-[1.08] mb-6">
               Complete Tax &amp; Financial<br />
-              <span style={{ color: PRIMARY }}>Services Under One Roof</span>
+              <span style={{ color: "#FFC200" }}>Services Under One Roof</span>
             </h1>
-            <p className="text-gray-500 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
+            <p className="text-white/70 text-lg leading-relaxed max-w-2xl mx-auto mb-10">
               From your first filing to complex IRS resolution — our certified Tax Pros handle everything
               accurately, efficiently, and at transparent flat-rate pricing.
             </p>
@@ -115,12 +115,12 @@ export default function ServicesPage() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center mb-14">
               <Link href="/consultation"
                 className="inline-flex items-center justify-center gap-2 text-white font-bold px-8 py-4 rounded-xl text-base transition-all hover:opacity-90 shadow-lg"
-                style={{ background: PRIMARY, boxShadow: "0 4px 24px rgba(146,69,255,0.3)" }}
+                style={{ background: "#FFC200", color: "#001A57", boxShadow: "0 4px 24px rgba(255,194,0,0.35)" }}
               >
                 Get Free Consultation <ArrowRight size={17} strokeWidth={2.5} />
               </Link>
               <a href="tel:9125592222"
-                className="inline-flex items-center justify-center gap-2 border-2 border-gray-200 hover:border-[#9245FF] text-gray-700 hover:text-[#9245FF] font-bold px-8 py-4 rounded-xl text-base transition-all"
+                className="inline-flex items-center justify-center gap-2 border-2 border-white/30 hover:border-[#FFC200] text-white hover:text-[#FFC200] font-bold px-8 py-4 rounded-xl text-base transition-all"
               >
                 <Phone size={16} strokeWidth={2} /> 912-559-2222
               </a>
@@ -130,7 +130,7 @@ export default function ServicesPage() {
             <div className="flex flex-wrap justify-center gap-2">
               {allServices.map((cat) => (
                 <a key={cat.id} href={`#${cat.id}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full border border-gray-200 hover:border-[#9245FF] text-gray-600 hover:text-[#9245FF] transition-all"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold px-4 py-2 rounded-full border border-white/20 hover:border-[#FFC200] text-white/70 hover:text-[#FFC200] transition-all"
                 >
                   <ChevronRight size={11} strokeWidth={2.5} />
                   {cat.category}
@@ -141,20 +141,20 @@ export default function ServicesPage() {
         </section>
 
         {/* ── Stats Bar ── */}
-        <section className="relative py-12 overflow-hidden" style={{ background: "#0A0A0A" }}>
+        <section className="relative py-12 overflow-hidden" style={{ background: "#001A57" }}>
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-            style={{ backgroundImage: `linear-gradient(rgba(146,69,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.07) 1px, transparent 1px)`, backgroundSize: "48px 48px" }}
+            style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)`, backgroundSize: "48px 48px" }}
           />
           <div className="h-[2px] w-full absolute top-0"
-            style={{ background: `linear-gradient(90deg, transparent 0%, ${PRIMARY} 30%, #c084fc 50%, ${PRIMARY} 70%, transparent 100%)` }}
+            style={{ background: `linear-gradient(90deg, transparent 0%, #FFC200 30%, rgba(255,255,255,0.5) 50%, #FFC200 70%, transparent 100%)` }}
           />
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-px" style={{ background: "rgba(255,255,255,0.05)" }}>
               {stats.map((s) => (
-                <div key={s.label} className="flex flex-col items-center text-center py-8 px-4" style={{ background: "#0A0A0A" }}>
+                <div key={s.label} className="flex flex-col items-center text-center py-8 px-4" style={{ background: "#001A57" }}>
                   <div className="text-3xl sm:text-4xl font-bold text-white mb-1">{s.value}</div>
-                  <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: PRIMARY }}>{s.label}</div>
-                  <div className="text-xs text-gray-600">{s.sub}</div>
+                  <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#FFC200" }}>{s.label}</div>
+                  <div className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{s.sub}</div>
                 </div>
               ))}
             </div>
@@ -164,7 +164,7 @@ export default function ServicesPage() {
         {/* ── Service Sections ── */}
         {allServices.map((cat, ci) => (
           <section key={cat.id} id={cat.id} className="py-20 lg:py-24"
-            style={{ background: ci % 2 === 0 ? "#FAFAFA" : "white" }}
+            style={{ background: ci % 2 === 0 ? "#F4F7FF" : "white" }}
           >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -172,7 +172,7 @@ export default function ServicesPage() {
               <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
                 <div>
                   <span className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-3"
-                    style={{ background: PRIMARY_LIGHT, color: PRIMARY }}
+                    style={{ background: "#FFC200", color: "#001A57" }}
                   >
                     {cat.category}
                   </span>
@@ -203,16 +203,16 @@ export default function ServicesPage() {
                   const Icon = s.icon;
                   return (
                     <Link key={s.title} href={s.href}
-                      className="group relative bg-white border border-gray-100 rounded-2xl p-7 hover:border-[#9245FF] hover:shadow-2xl transition-all duration-300 flex flex-col gap-5 overflow-hidden"
+                      className="group relative bg-white border border-gray-100 rounded-2xl p-7 hover:border-[#FFC200] hover:shadow-2xl transition-all duration-300 flex flex-col gap-5 overflow-hidden"
                     >
                       {/* Hover gradient top */}
                       <div className="absolute top-0 left-0 right-0 h-[3px] opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ background: `linear-gradient(90deg, ${PRIMARY}, #c084fc)` }}
+                        style={{ background: `linear-gradient(90deg, #0046BE, #FFC200)` }}
                       />
 
                       {s.badge && (
                         <span className="absolute top-5 right-5 text-[10px] font-bold px-2.5 py-1 rounded-full"
-                          style={{ background: PRIMARY_LIGHT, color: PRIMARY }}
+                          style={{ background: "#FFC200", color: "#001A57" }}
                         >
                           {s.badge}
                         </span>
@@ -220,12 +220,12 @@ export default function ServicesPage() {
 
                       <div className="flex items-start gap-4">
                         <div className="w-13 h-13 rounded-2xl flex items-center justify-center shrink-0 p-3"
-                          style={{ background: PRIMARY_LIGHT, color: PRIMARY }}
+                          style={{ background: "#FFC200", color: "#001A57" }}
                         >
                           <Icon size={24} strokeWidth={1.7} />
                         </div>
                         <div className="flex-1 pt-0.5">
-                          <h3 className="text-base font-bold text-[#0A0A0A] group-hover:text-[#9245FF] transition-colors leading-tight mb-1">
+                          <h3 className="text-base font-bold text-[#0A0A0A] group-hover:text-[#FFC200] transition-colors leading-tight mb-1">
                             {s.title}
                           </h3>
                           <p className="text-xs text-gray-400 font-medium">{s.sub}</p>
@@ -233,7 +233,7 @@ export default function ServicesPage() {
                       </div>
 
                       <div className="flex items-center justify-between pt-3 border-t border-gray-50">
-                        <span className="flex items-center gap-1.5 text-xs font-bold transition-colors" style={{ color: PRIMARY }}>
+                        <span className="flex items-center gap-1.5 text-xs font-bold transition-colors" style={{ color: "#FFC200" }}>
                           Learn More <ArrowRight size={12} strokeWidth={2.5} className="group-hover:translate-x-0.5 transition-transform" />
                         </span>
                         <span className="text-[10px] text-gray-300 font-medium uppercase tracking-wide">Action Plus Tax</span>
@@ -247,23 +247,23 @@ export default function ServicesPage() {
         ))}
 
         {/* ── Trust Section ── */}
-        <section className="relative py-20 lg:py-28 overflow-hidden" style={{ background: "#0A0A0A" }}>
+        <section className="relative py-20 lg:py-28 overflow-hidden" style={{ background: "#001A57" }}>
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-            style={{ backgroundImage: `linear-gradient(rgba(146,69,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.07) 1px, transparent 1px)`, backgroundSize: "48px 48px" }}
+            style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)`, backgroundSize: "48px 48px" }}
           />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
-            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(146,69,255,0.2) 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.15) 0%, transparent 70%)" }}
           />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-                style={{ background: "rgba(146,69,255,0.15)", color: PRIMARY }}
+                style={{ background: "rgba(255,194,0,0.15)", color: PRIMARY }}
               >
                 Why Choose Us
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                The Action Plus Tax <span style={{ color: PRIMARY }}>Difference</span>
+                The Action Plus Tax <span style={{ color: "#FFC200" }}>Difference</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
                 We are not a tax machine. We are Tax Pros who genuinely care about your outcome.
@@ -275,13 +275,13 @@ export default function ServicesPage() {
                 const Icon = item.icon;
                 return (
                   <div key={item.title}
-                    className="group rounded-2xl p-6 border transition-all hover:border-[#9245FF] flex flex-col gap-4"
+                    className="group rounded-2xl p-6 border transition-all hover:border-[#FFC200] flex flex-col gap-4"
                     style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.07)" }}
                   >
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: PRIMARY_LIGHT, color: PRIMARY }}>
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center" style={{ background: "#FFC200", color: "#001A57" }}>
                       <Icon size={20} strokeWidth={1.8} />
                     </div>
-                    <h3 className="text-sm font-bold text-white group-hover:text-[#9245FF] transition-colors">{item.title}</h3>
+                    <h3 className="text-sm font-bold text-white group-hover:text-[#FFC200] transition-colors">{item.title}</h3>
                     <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
                   </div>
                 );
@@ -295,12 +295,12 @@ export default function ServicesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-                style={{ background: PRIMARY_LIGHT, color: PRIMARY }}
+                style={{ background: "#FFC200", color: "#001A57" }}
               >
                 How It Works
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
-                Getting Started Is <span style={{ color: PRIMARY }}>Simple</span>
+                Getting Started Is <span style={{ color: "#FFC200" }}>Simple</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">Four easy steps — and we handle most of the work for you.</p>
             </div>
@@ -308,7 +308,7 @@ export default function ServicesPage() {
             <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {/* Connecting line desktop */}
               <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px"
-                style={{ background: `linear-gradient(90deg, ${PRIMARY}, #c084fc, ${PRIMARY})`, opacity: 0.25 }}
+                style={{ background: `linear-gradient(90deg, ${PRIMARY}, #60A5FA, ${PRIMARY})`, opacity: 0.25 }}
               />
               {[
                 { step: "01", title: "Contact or Walk In", desc: "Call, book online, or walk in during business hours. No appointment necessary." },
@@ -317,14 +317,14 @@ export default function ServicesPage() {
                 { step: "04", title: "File & Get Paid", desc: "We e-file your return. Get your refund in days — or get a same-day advance up to $6,000." },
               ].map((s) => (
                 <div key={s.step}
-                  className="relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#9245FF] hover:shadow-lg transition-all group text-center"
+                  className="relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#FFC200] hover:shadow-lg transition-all group text-center"
                 >
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-sm font-bold"
-                    style={{ background: PRIMARY_LIGHT, color: PRIMARY }}
+                    style={{ background: "#FFC200", color: "#001A57" }}
                   >
                     {s.step}
                   </div>
-                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#9245FF] transition-colors mb-2">{s.title}</h3>
+                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFC200] transition-colors mb-2">{s.title}</h3>
                   <p className="text-xs text-gray-500 leading-relaxed">{s.desc}</p>
                 </div>
               ))}
@@ -333,23 +333,23 @@ export default function ServicesPage() {
         </section>
 
         {/* ── CTA ── */}
-        <section className="py-20 lg:py-24" style={{ background: "#FAFAFA" }}>
+        <section className="py-20 lg:py-24" style={{ background: "#F4F7FF" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="relative rounded-3xl overflow-hidden" style={{ background: "#0A0A0A" }}>
+            <div className="relative rounded-3xl overflow-hidden" style={{ background: "#001A57" }}>
               <div className="absolute inset-0 pointer-events-none opacity-20" aria-hidden="true"
-                style={{ backgroundImage: `linear-gradient(rgba(146,69,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.5) 1px, transparent 1px)`, backgroundSize: "40px 40px" }}
+                style={{ backgroundImage: `linear-gradient(rgba(255,194,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,194,0,0.25) 1px, transparent 1px)`, backgroundSize: "40px 40px" }}
               />
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] pointer-events-none"
-                style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(146,69,255,0.3) 0%, transparent 70%)" }}
+                style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.2) 0%, transparent 70%)" }}
               />
               <div className="h-[2px] w-full absolute top-0"
-                style={{ background: `linear-gradient(90deg, transparent, ${PRIMARY}, #c084fc, ${PRIMARY}, transparent)` }}
+                style={{ background: `linear-gradient(90deg, transparent, ${PRIMARY}, #60A5FA, ${PRIMARY}, transparent)` }}
               />
 
               <div className="relative grid lg:grid-cols-2 gap-0">
                 {/* Left */}
                 <div className="px-10 sm:px-16 py-16">
-                  <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: PRIMARY }}>
+                  <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#FFC200" }}>
                     Ready to Get Started?
                   </p>
                   <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-4">
@@ -376,7 +376,7 @@ export default function ServicesPage() {
 
                 {/* Right — quick facts */}
                 <div className="px-10 sm:px-16 py-16 border-t lg:border-t-0 lg:border-l" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-                  <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: PRIMARY }}>Why Clients Choose Us</p>
+                  <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: "#FFC200" }}>Why Clients Choose Us</p>
                   <ul className="space-y-4">
                     {[
                       "Certified Tax Pros with 10+ years experience",

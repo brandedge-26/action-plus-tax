@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-const PRIMARY = "#9245FF";
-const PRIMARY_DARK = "#7B35E0";
+const PRIMARY = "#0046BE";
+const PRIMARY_DARK = "#003DA5";
 
 export default function HomeCTA() {
   return (
@@ -50,8 +50,10 @@ export default function HomeCTA() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link
                 href="/appointment"
-                className="inline-flex items-center justify-center gap-2 bg-white font-bold px-8 py-4 rounded-xl text-base transition-all hover:bg-gray-50 shadow-lg"
-                style={{ color: PRIMARY }}
+                className="inline-flex items-center justify-center gap-2 font-bold px-8 py-4 rounded-xl text-base transition-all shadow-lg"
+                style={{ background: "#FFC200", color: "#0A0A0A" }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
               >
                 Book an Appointment
                 <ArrowRight size={17} strokeWidth={2.5} />

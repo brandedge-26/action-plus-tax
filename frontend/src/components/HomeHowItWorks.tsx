@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, MousePointerClick, ClipboardList, Upload, CheckCircle2 } from "lucide-react";
 
-const PRIMARY = "#9245FF";
-const PRIMARY_LIGHT = "#F3ECFF";
+const PRIMARY      = "#0046BE";
+const PRIMARY_DARK = "#003DA5";
+const YELLOW       = "#FFC200";
 
 const steps = [
   {
@@ -33,18 +34,23 @@ const steps = [
 
 export default function HomeHowItWorks() {
   return (
-    <section className="bg-white py-20 lg:py-28 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-20 lg:py-28 overflow-hidden" style={{ background: "#fff" }}>
+
+      {/* Subtle blue tint bg */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
+        style={{ background: "linear-gradient(180deg, #F4F7FF 0%, #fff 100%)" }} />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="text-center mb-16">
           <span
             className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-            style={{ background: PRIMARY_LIGHT, color: PRIMARY }}
+            style={{ background: PRIMARY, color: "#fff" }}
           >
             How It Works
           </span>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight" style={{ color: "#0A0A0A" }}>
             Get Your Taxes Done in{" "}
             <span style={{ color: PRIMARY }}>4 Simple Steps</span>
           </h2>
@@ -59,7 +65,7 @@ export default function HomeHowItWorks() {
           <div
             className="hidden lg:block absolute top-11 left-[12.5%] right-[12.5%] h-px"
             style={{
-              backgroundImage: `repeating-linear-gradient(90deg, rgba(146,69,255,0.25) 0px, rgba(146,69,255,0.25) 8px, transparent 8px, transparent 18px)`,
+              backgroundImage: `repeating-linear-gradient(90deg, ${YELLOW} 0px, ${YELLOW} 8px, transparent 8px, transparent 18px)`,
             }}
           />
 
@@ -74,13 +80,13 @@ export default function HomeHowItWorks() {
                   <div className="relative mb-5">
                     <div
                       className="w-[88px] h-[88px] rounded-full flex items-center justify-center border-2 bg-white"
-                      style={{ borderColor: isLast ? PRIMARY : "rgba(146,69,255,0.20)" }}
+                      style={{ borderColor: isLast ? YELLOW : `rgba(0,70,190,0.25)` }}
                     >
                       <div
                         className="w-14 h-14 rounded-full flex items-center justify-center"
                         style={{
-                          background: isLast ? PRIMARY : PRIMARY_LIGHT,
-                          color: isLast ? "white" : PRIMARY,
+                          background: isLast ? YELLOW : PRIMARY,
+                          color: isLast ? "#0A0A0A" : "white",
                         }}
                       >
                         <Icon size={24} strokeWidth={1.8} />
@@ -88,8 +94,8 @@ export default function HomeHowItWorks() {
                     </div>
                     {/* Step number badge */}
                     <span
-                      className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold text-white"
-                      style={{ background: PRIMARY }}
+                      className="absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold"
+                      style={{ background: YELLOW, color: "#0A0A0A" }}
                     >
                       {i + 1}
                     </span>
@@ -107,15 +113,20 @@ export default function HomeHowItWorks() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-14">
           <Link
             href="/apply"
-            className="inline-flex items-center gap-2 text-white font-semibold px-7 py-3.5 rounded-xl text-sm transition-all hover:opacity-90"
-            style={{ background: PRIMARY, boxShadow: "0 4px 20px rgba(146,69,255,0.25)" }}
+            className="inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl text-sm transition-all"
+            style={{ background: PRIMARY, color: "white", boxShadow: "0 4px 20px rgba(0,70,190,0.25)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#003DA5")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = PRIMARY)}
           >
             Start Your Application
             <ArrowRight size={16} strokeWidth={2.5} />
           </Link>
           <Link
             href="/appointment"
-            className="inline-flex items-center gap-2 border border-gray-200 hover:border-[#9245FF] text-gray-600 hover:text-[#9245FF] font-semibold px-7 py-3.5 rounded-xl text-sm transition-all"
+            className="inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl text-sm transition-all"
+            style={{ background: YELLOW, color: "#0A0A0A" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = YELLOW)}
           >
             Book an Appointment
           </Link>

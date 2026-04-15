@@ -17,8 +17,8 @@ import {
 import HeaderTest from "@/components/HeaderTest";
 import SiteFooter from "@/components/SiteFooter";
 
-const PRIMARY = "#9245FF";
-const PRIMARY_LIGHT = "#F3ECFF";
+const PRIMARY = "#0046BE";
+const PRIMARY_LIGHT = "#EBF3FF";
 
 const contactMethods = [
   {
@@ -102,14 +102,14 @@ export default function ContactPage() {
       <main>
 
         {/* ── Page Hero ── */}
-        <section className="relative bg-white overflow-hidden pt-16 pb-12">
+        <section className="relative overflow-hidden pt-16 pb-12" style={{ background: "#0046BE" }}>
           <div
             className="absolute inset-0 pointer-events-none"
             aria-hidden="true"
             style={{
               backgroundImage: `
-                linear-gradient(rgba(146,69,255,0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(146,69,255,0.06) 1px, transparent 1px)
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
               `,
               backgroundSize: "48px 48px",
             }}
@@ -119,21 +119,21 @@ export default function ContactPage() {
             aria-hidden="true"
             style={{
               background:
-                "radial-gradient(ellipse at 50% 0%, rgba(146,69,255,0.10) 0%, transparent 70%)",
+                "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.15) 0%, transparent 70%)",
             }}
           />
           <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span
               className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5"
-              style={{ background: PRIMARY_LIGHT, color: PRIMARY }}
+              style={{ background: "#FFC200", color: "#001A57" }}
             >
               Contact Us
             </span>
-            <h1 className="text-4xl sm:text-5xl font-bold text-[#0A0A0A] tracking-tight leading-[1.1] mb-4">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-4">
               Let&apos;s Get Your Taxes{" "}
-              <span style={{ color: PRIMARY }}>Done Right</span>
+              <span style={{ color: "#FFC200" }}>Done Right</span>
             </h1>
-            <p className="text-gray-500 text-lg leading-relaxed max-w-xl mx-auto">
+            <p className="text-white/70 text-lg leading-relaxed max-w-xl mx-auto">
               Reach out by phone, WhatsApp, or email — or fill in the form below.
               Our Tax Pros typically respond within one business day.
             </p>
@@ -152,7 +152,7 @@ export default function ContactPage() {
                     href={m.href}
                     target={m.href.startsWith("http") ? "_blank" : undefined}
                     rel="noreferrer"
-                    className="group flex items-start gap-4 bg-white border border-gray-100 rounded-2xl p-5 hover:border-[#9245FF] hover:shadow-md transition-all"
+                    className="group flex items-start gap-4 bg-white border border-gray-100 rounded-2xl p-5 hover:border-[#FFC200] hover:shadow-md transition-all"
                   >
                     <div
                       className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
@@ -165,7 +165,7 @@ export default function ContactPage() {
                         {m.label}
                       </p>
                       <p
-                        className="text-sm font-semibold text-[#0A0A0A] group-hover:text-[#9245FF] transition-colors"
+                        className="text-sm font-semibold text-[#0A0A0A] group-hover:text-[#FFC200] transition-colors"
                       >
                         {m.value}
                       </p>
@@ -217,7 +217,7 @@ export default function ContactPage() {
                       <div className="grid sm:grid-cols-2 gap-4">
                         <div>
                           <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                            Full Name <span style={{ color: PRIMARY }}>*</span>
+                            Full Name <span style={{ color: "#FFC200" }}>*</span>
                           </label>
                           <input
                             type="text"
@@ -226,7 +226,7 @@ export default function ContactPage() {
                             value={form.name}
                             onChange={handleChange}
                             placeholder="John Smith"
-                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/10"
+                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/10"
                           />
                         </div>
                         <div>
@@ -239,7 +239,7 @@ export default function ContactPage() {
                             value={form.phone}
                             onChange={handleChange}
                             placeholder="(912) 000-0000"
-                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/10"
+                            className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/10"
                           />
                         </div>
                       </div>
@@ -247,7 +247,7 @@ export default function ContactPage() {
                       {/* Email */}
                       <div>
                         <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                          Email Address <span style={{ color: PRIMARY }}>*</span>
+                          Email Address <span style={{ color: "#FFC200" }}>*</span>
                         </label>
                         <input
                           type="email"
@@ -256,21 +256,21 @@ export default function ContactPage() {
                           value={form.email}
                           onChange={handleChange}
                           placeholder="john@email.com"
-                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/10"
+                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/10"
                         />
                       </div>
 
                       {/* Subject */}
                       <div>
                         <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                          Subject <span style={{ color: PRIMARY }}>*</span>
+                          Subject <span style={{ color: "#FFC200" }}>*</span>
                         </label>
                         <select
                           name="subject"
                           required
                           value={form.subject}
                           onChange={handleChange}
-                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/10 bg-white"
+                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/10 bg-white"
                         >
                           <option value="" disabled>Select a subject…</option>
                           {subjects.map((s) => (
@@ -282,7 +282,7 @@ export default function ContactPage() {
                       {/* Message */}
                       <div>
                         <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                          Message <span style={{ color: PRIMARY }}>*</span>
+                          Message <span style={{ color: "#FFC200" }}>*</span>
                         </label>
                         <textarea
                           name="message"
@@ -291,7 +291,7 @@ export default function ContactPage() {
                           value={form.message}
                           onChange={handleChange}
                           placeholder="Tell us how we can help you…"
-                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/10 resize-none"
+                          className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/10 resize-none"
                         />
                       </div>
 
@@ -306,7 +306,7 @@ export default function ContactPage() {
                             className="flex items-center justify-between gap-3 border border-gray-200 rounded-xl px-4 py-3"
                             style={{ background: PRIMARY_LIGHT }}
                           >
-                            <div className="flex items-center gap-2 text-sm font-medium" style={{ color: PRIMARY }}>
+                            <div className="flex items-center gap-2 text-sm font-medium" style={{ color: "#FFC200" }}>
                               <Paperclip size={14} strokeWidth={2} />
                               <span className="truncate max-w-[200px]">{file.name}</span>
                             </div>
@@ -319,7 +319,7 @@ export default function ContactPage() {
                             </button>
                           </div>
                         ) : (
-                          <label className="flex items-center gap-3 border border-dashed border-gray-200 rounded-xl px-4 py-4 cursor-pointer hover:border-[#9245FF] transition-colors group">
+                          <label className="flex items-center gap-3 border border-dashed border-gray-200 rounded-xl px-4 py-4 cursor-pointer hover:border-[#FFC200] transition-colors group">
                             <div
                               className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
                               style={{ background: PRIMARY_LIGHT }}
@@ -327,7 +327,7 @@ export default function ContactPage() {
                               <Paperclip size={15} strokeWidth={2} style={{ color: PRIMARY }} />
                             </div>
                             <div>
-                              <p className="text-sm font-medium text-gray-600 group-hover:text-[#9245FF] transition-colors">
+                              <p className="text-sm font-medium text-gray-600 group-hover:text-[#FFC200] transition-colors">
                                 Click to attach a file
                               </p>
                               <p className="text-xs text-gray-400">Max 10MB · PDF, JPG, PNG</p>
@@ -347,7 +347,7 @@ export default function ContactPage() {
                         type="submit"
                         disabled={loading}
                         className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
-                        style={{ background: PRIMARY, boxShadow: "0 4px 20px rgba(146,69,255,0.25)" }}
+                        style={{ background: "#FFC200", color: "#001A57" }}
                       >
                         {loading ? (
                           <>
@@ -377,7 +377,7 @@ export default function ContactPage() {
                     className="absolute inset-0 pointer-events-none opacity-20"
                     aria-hidden="true"
                     style={{
-                      backgroundImage: `linear-gradient(rgba(146,69,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.4) 1px, transparent 1px)`,
+                      backgroundImage: `linear-gradient(rgba(255,194,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,194,0,0.25) 1px, transparent 1px)`,
                       backgroundSize: "32px 32px",
                     }}
                   />
@@ -387,7 +387,7 @@ export default function ContactPage() {
                       <div className="flex items-start gap-3">
                         <div
                           className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                          style={{ background: "rgba(146,69,255,0.15)" }}
+                          style={{ background: "rgba(255,194,0,0.15)" }}
                         >
                           <MapPin size={14} strokeWidth={2} style={{ color: PRIMARY }} />
                         </div>
@@ -399,13 +399,13 @@ export default function ContactPage() {
                       <div className="flex items-center gap-3">
                         <div
                           className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                          style={{ background: "rgba(146,69,255,0.15)" }}
+                          style={{ background: "rgba(255,194,0,0.15)" }}
                         >
                           <Phone size={14} strokeWidth={2} style={{ color: PRIMARY }} />
                         </div>
                         <div>
-                          <a href="tel:9125592222" className="text-white text-sm font-medium hover:text-[#9245FF] transition-colors block">912-559-2222</a>
-                          <a href="tel:9125592223" className="text-gray-400 text-sm hover:text-[#9245FF] transition-colors block">912-559-2223</a>
+                          <a href="tel:9125592222" className="text-white text-sm font-medium hover:text-[#0046BE] transition-colors block">912-559-2222</a>
+                          <a href="tel:9125592223" className="text-white/50 text-sm hover:text-[#FFC200] transition-colors block">912-559-2223</a>
                         </div>
                       </div>
                     </div>
@@ -423,14 +423,14 @@ export default function ContactPage() {
                       <li
                         key={h.day}
                         className="flex items-center justify-between gap-3 py-2.5 px-3 rounded-xl"
-                        style={{ background: "#FAFAFA", border: "1px solid #F0F0F0" }}
+                        style={{ background: "#F4F7FF", border: "1px solid #F0F0F0" }}
                       >
                         <span className="text-sm text-gray-600">{h.day}</span>
                         <span
                           className="text-xs font-semibold px-2.5 py-1 rounded-full"
                           style={
                             h.open
-                              ? { background: PRIMARY_LIGHT, color: PRIMARY }
+                              ? { background: "#FFC200", color: "#001A57" }
                               : { background: "#FEE2E2", color: "#DC2626" }
                           }
                         >
@@ -445,7 +445,7 @@ export default function ContactPage() {
                 <Link
                   href="/appointment"
                   className="flex items-center justify-center gap-2 text-white font-semibold py-4 rounded-2xl transition-all hover:opacity-90 shadow-lg"
-                  style={{ background: PRIMARY, boxShadow: "0 4px 20px rgba(146,69,255,0.25)" }}
+                  style={{ background: "#FFC200", color: "#001A57" }}
                 >
                   Book an Appointment
                   <ArrowRight size={16} strokeWidth={2.5} />

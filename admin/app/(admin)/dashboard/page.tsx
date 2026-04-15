@@ -57,11 +57,11 @@ export default function AdminDashboard() {
       {/* Welcome banner */}
       <div className="rounded-2xl p-6 relative overflow-hidden" style={{ background: "var(--black)" }}>
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `linear-gradient(rgba(146,69,255,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.18) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,70,190,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(0,70,190,0.18) 1px, transparent 1px)`,
           backgroundSize: "40px 40px",
         }} />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(146,69,255,0.28) 0%, transparent 65%)" }} />
-        <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #9245FF, #c084fc, #9245FF, transparent)" }} />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none" style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(0,70,190,0.28) 0%, transparent 65%)" }} />
+        <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #0046BE, #60A5FA, #0046BE, transparent)" }} />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.45)" }}>Good morning,</p>

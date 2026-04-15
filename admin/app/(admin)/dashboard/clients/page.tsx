@@ -16,7 +16,7 @@ const clients = [
 ];
 
 const initials = (name: string) => name.split(" ").map(w => w[0]).join("").toUpperCase();
-const avatarColors = ["#9245FF","#EA580C","#0891B2","#16A34A","#D97706","#DC2626","#7C3AED","#DB2777"];
+const avatarColors = ["#0046BE","#EA580C","#0891B2","#16A34A","#D97706","#DC2626","#7C3AED","#DB2777"];
 
 export default function ClientsPage() {
   const [search, setSearch] = useState("");

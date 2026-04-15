@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowRight, ShieldCheck } from "lucide-react";
 
-const PRIMARY = "#9245FF";
-const PRIMARY_LIGHT = "#F3ECFF";
+const PRIMARY = "#0046BE";
+const PRIMARY_LIGHT = "#EBF3FF";
 
 export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -33,25 +33,25 @@ export default function SignupPage() {
   const mismatch = !!form.confirm && form.confirm !== form.password;
 
   const inputBase =
-    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/30 focus:ring-offset-2";
+    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/30 focus:ring-offset-2";
 
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
       style={{
-        background: "#FAFAFA",
+        background: "#0046BE",
         backgroundImage: `
-          linear-gradient(rgba(146,69,255,0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(146,69,255,0.05) 1px, transparent 1px)
+          linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
         `,
         backgroundSize: "48px 48px",
       }}
     >
       {/* Logo */}
       <Link href="/" className="tracking-tighter text-2xl font-bold mb-8 inline-block">
-        <span style={{ color: PRIMARY }}>Action</span>
-        <span className="text-[#0A0A0A]">Plus</span>
-        <span style={{ color: PRIMARY }}>&nbsp;Tax</span>
+        <span style={{ color: "#FFC200" }}>Action</span>
+        <span className="text-white">Plus</span>
+        <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
       </Link>
 
       {/* Card */}
@@ -70,7 +70,7 @@ export default function SignupPage() {
             <Link
               href="/login"
               className="inline-flex items-center gap-2 text-white font-semibold px-8 py-3.5 rounded-xl hover:opacity-90 transition-all mt-1"
-              style={{ background: PRIMARY, boxShadow: "0 4px 20px rgba(146,69,255,0.25)" }}
+              style={{ background: "#FFC200", color: "#001A57" }}
             >
               Sign In Now <ArrowRight size={16} strokeWidth={2.5} />
             </Link>
@@ -82,7 +82,7 @@ export default function SignupPage() {
               <h1 className="text-2xl font-bold text-[#0A0A0A] mb-1.5">Create your free account</h1>
               <p className="text-sm text-gray-500">
                 Already have an account?{" "}
-                <Link href="/login" className="font-semibold hover:underline" style={{ color: PRIMARY }}>
+                <Link href="/login" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>
                   Sign in
                 </Link>
               </p>
@@ -115,7 +115,7 @@ export default function SignupPage() {
               {/* Full Name */}
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Full Name <span style={{ color: PRIMARY }}>*</span>
+                  Full Name <span style={{ color: "#FFC200" }}>*</span>
                 </label>
                 <input
                   type="text" name="fullName" required
@@ -128,7 +128,7 @@ export default function SignupPage() {
               {/* Email */}
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Email Address <span style={{ color: PRIMARY }}>*</span>
+                  Email Address <span style={{ color: "#FFC200" }}>*</span>
                 </label>
                 <input
                   type="email" name="email" required
@@ -141,7 +141,7 @@ export default function SignupPage() {
               {/* Phone */}
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Phone Number <span style={{ color: PRIMARY }}>*</span>
+                  Phone Number <span style={{ color: "#FFC200" }}>*</span>
                 </label>
                 <input
                   type="tel" name="phone" required
@@ -154,7 +154,7 @@ export default function SignupPage() {
               {/* Password */}
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Password <span style={{ color: PRIMARY }}>*</span>
+                  Password <span style={{ color: "#FFC200" }}>*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -184,7 +184,7 @@ export default function SignupPage() {
               {/* Confirm Password */}
               <div>
                 <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                  Confirm Password <span style={{ color: PRIMARY }}>*</span>
+                  Confirm Password <span style={{ color: "#FFC200" }}>*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -205,12 +205,12 @@ export default function SignupPage() {
 
               {/* Terms */}
               <label className="flex items-start gap-2.5 cursor-pointer">
-                <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded accent-[#9245FF]" />
+                <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded accent-[#0046BE]" />
                 <span className="text-xs text-gray-500 leading-relaxed">
                   I agree to the{" "}
-                  <Link href="/terms" className="font-semibold hover:underline" style={{ color: PRIMARY }}>Terms of Service</Link>
+                  <Link href="/terms" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Terms of Service</Link>
                   {" "}&amp;{" "}
-                  <Link href="/privacy" className="font-semibold hover:underline" style={{ color: PRIMARY }}>Privacy Policy</Link>
+                  <Link href="/privacy" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Privacy Policy</Link>
                 </span>
               </label>
 
@@ -218,7 +218,7 @@ export default function SignupPage() {
                 type="submit"
                 disabled={loading || mismatch}
                 className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
-                style={{ background: PRIMARY, boxShadow: "0 4px 20px rgba(146,69,255,0.25)" }}
+                style={{ background: "#FFC200", color: "#001A57" }}
               >
                 {loading ? (
                   <>

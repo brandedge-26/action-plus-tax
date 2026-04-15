@@ -3,15 +3,15 @@
 :root {
   --background: #ffffff;
   --foreground: #0A0A0A;
-  --primary: #DC2626;
-  --primary-dark: #B91C1C;
-  --primary-light: #FEE2E2;
-  --accent: #FF6B00;
-  --accent-light: #FFF0E5;
+  --primary: #0046BE;
+  --primary-dark: #003DA5;
+  --primary-light: #EBF3FF;
+  --accent: #FFC200;
+  --accent-light: #FFF8E6;
   --black: #0A0A0A;
-  --gray-light: #F5F5F5;
-  --gray-border: #e5e7eb;
-  --gray-text: #6B7280;
+  --gray-light: #F4F7FF;
+  --gray-border: #E2E8F0;
+  --gray-text: #64748B;
 }
 
 body {

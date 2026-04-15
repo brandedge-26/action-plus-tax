@@ -13,22 +13,22 @@ export default function AdminLoginPage() {
     setTimeout(() => { window.location.href = "/dashboard"; }, 1200);
   };
 
-  const PRIMARY = "#9245FF";
+  const PRIMARY = "#0046BE";
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: "#0A0A0A" }}>
       {/* Grid */}
       <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `linear-gradient(rgba(146,69,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.08) 1px, transparent 1px)`,
+        backgroundImage: `linear-gradient(rgba(0,70,190,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,70,190,0.08) 1px, transparent 1px)`,
         backgroundSize: "40px 40px",
       }} />
       {/* Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-96 pointer-events-none" style={{
-        background: "radial-gradient(ellipse at 50% 0%, rgba(146,69,255,0.22) 0%, transparent 70%)"
+        background: "radial-gradient(ellipse at 50% 0%, rgba(0,70,190,0.22) 0%, transparent 70%)"
       }} />
       {/* Top line */}
       <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
-        background: `linear-gradient(90deg, transparent, ${PRIMARY}, #c084fc, ${PRIMARY}, transparent)`
+        background: `linear-gradient(90deg, transparent, ${PRIMARY}, #60A5FA, ${PRIMARY}, transparent)`
       }} />
 
       <div className="relative z-10 w-full max-w-sm">
@@ -78,7 +78,7 @@ export default function AdminLoginPage() {
               type="submit"
               disabled={loading}
               className="w-full py-3 rounded-xl text-sm font-bold text-white transition-all mt-2"
-              style={{ background: loading ? "rgba(146,69,255,0.5)" : PRIMARY }}
+              style={{ background: loading ? "rgba(0,70,190,0.5)" : PRIMARY }}
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 
-const PRIMARY = "#9245FF";
+const PRIMARY = "#0046BE";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -24,19 +24,19 @@ export default function LoginPage() {
     <div
       className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
       style={{
-        background: "#FAFAFA",
+        background: "#0046BE",
         backgroundImage: `
-          linear-gradient(rgba(146,69,255,0.05) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(146,69,255,0.05) 1px, transparent 1px)
+          linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
         `,
         backgroundSize: "48px 48px",
       }}
     >
       {/* Logo */}
       <Link href="/" className="tracking-tighter text-2xl font-bold mb-8 inline-block">
-        <span style={{ color: PRIMARY }}>Action</span>
-        <span className="text-[#0A0A0A]">Plus</span>
-        <span style={{ color: PRIMARY }}>&nbsp;Tax</span>
+        <span style={{ color: "#FFC200" }}>Action</span>
+        <span className="text-white">Plus</span>
+        <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
       </Link>
 
       {/* Card */}
@@ -47,7 +47,7 @@ export default function LoginPage() {
           <h1 className="text-2xl font-bold text-[#0A0A0A] mb-1.5">Sign in to your account</h1>
           <p className="text-sm text-gray-500">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="font-semibold hover:underline" style={{ color: PRIMARY }}>
+            <Link href="/signup" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>
               Create one free
             </Link>
           </p>
@@ -88,14 +88,14 @@ export default function LoginPage() {
               value={form.email}
               onChange={handleChange}
               placeholder="you@email.com"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/30 focus:ring-offset-2"
+              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/30 focus:ring-offset-2"
             />
           </div>
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="text-xs font-semibold text-gray-600">Password</label>
-              <Link href="/forgot-password" className="text-xs font-semibold hover:underline" style={{ color: PRIMARY }}>
+              <Link href="/forgot-password" className="text-xs font-semibold hover:underline" style={{ color: "#FFC200" }}>
                 Forgot password?
               </Link>
             </div>
@@ -107,7 +107,7 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-11 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#9245FF] focus:ring-2 focus:ring-[#9245FF]/30 focus:ring-offset-2"
+                className="w-full border border-gray-200 rounded-xl px-4 py-3 pr-11 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/30 focus:ring-offset-2"
               />
               <button
                 type="button"
@@ -121,7 +121,7 @@ export default function LoginPage() {
 
           {/* Remember me */}
           <label className="flex items-center gap-2.5 cursor-pointer">
-            <input type="checkbox" className="w-4 h-4 rounded accent-[#9245FF]" />
+            <input type="checkbox" className="w-4 h-4 rounded accent-[#0046BE]" />
             <span className="text-xs text-gray-500">Keep me signed in for 30 days</span>
           </label>
 
@@ -129,7 +129,7 @@ export default function LoginPage() {
             type="submit"
             disabled={loading}
             className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
-            style={{ background: PRIMARY, boxShadow: "0 4px 20px rgba(146,69,255,0.25)" }}
+            style={{ background: "#FFC200", color: "#001A57" }}
           >
             {loading ? (
               <>

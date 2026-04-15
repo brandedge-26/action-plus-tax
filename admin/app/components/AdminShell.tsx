@@ -69,29 +69,29 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       >
         {/* Grid */}
         <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `linear-gradient(rgba(146,69,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(146,69,255,0.08) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,70,190,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,70,190,0.08) 1px, transparent 1px)`,
           backgroundSize: "32px 32px",
         }} />
         {/* Glow */}
         <div className="absolute top-0 left-0 right-0 h-40 pointer-events-none" style={{
-          background: "radial-gradient(ellipse at 50% 0%, rgba(146,69,255,0.22) 0%, transparent 70%)"
+          background: "radial-gradient(ellipse at 50% 0%, rgba(0,70,190,0.22) 0%, transparent 70%)"
         }} />
         {/* Accent line */}
         <div className="absolute top-0 left-0 right-0 h-[2px]" style={{
-          background: "linear-gradient(90deg, transparent, #9245FF, #c084fc, #9245FF, transparent)"
+          background: "linear-gradient(90deg, transparent, #FFC200, #fff8, #FFC200, transparent)"
         }} />
 
         {/* Logo */}
         <div className="relative z-10 flex items-center justify-between px-5 py-5" style={{ borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "var(--primary)" }}>
-              <Receipt size={15} strokeWidth={2} className="text-white" />
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: "#FFC200" }}>
+              <Receipt size={15} strokeWidth={2} style={{ color: "#0A0A0A" }} />
             </div>
             <div>
               <p className="text-sm font-bold leading-none tracking-tight">
-                <span style={{ color: "var(--primary)" }}>Action</span>
+                <span style={{ color: "#FFC200" }}>Action</span>
                 <span className="text-white">Plus</span>
-                <span style={{ color: "var(--primary)" }}>&nbsp;Tax</span>
+                <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
               </p>
               <p className="text-[9px] mt-0.5 font-semibold tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.25)" }}>
                 Admin Panel
@@ -114,10 +114,10 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 href={item.href}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all relative"
                 style={active
-                  ? { background: "var(--primary)", color: "#fff", boxShadow: "0 4px 16px rgba(146,69,255,0.35)" }
+                  ? { background: "var(--primary)", color: "#fff", boxShadow: "0 4px 16px rgba(0,70,190,0.35)" }
                   : { color: "rgba(255,255,255,0.45)" }
                 }
-                onMouseEnter={(e) => { if (!active) { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(146,69,255,0.12)"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; } }}
+                onMouseEnter={(e) => { if (!active) { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0,70,190,0.12)"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; } }}
                 onMouseLeave={(e) => { if (!active) { (e.currentTarget as HTMLAnchorElement).style.background = ""; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.45)"; } }}
               >
                 <Icon size={16} strokeWidth={active ? 2.5 : 2} />
@@ -147,7 +147,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             href="/login"
             className="flex items-center gap-2 text-xs font-medium py-2 px-3 rounded-xl transition-all w-full"
             style={{ color: "rgba(255,255,255,0.3)" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; (e.currentTarget as HTMLAnchorElement).style.background = "rgba(146,69,255,0.12)"; }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0,70,190,0.12)"; }}
             onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; (e.currentTarget as HTMLAnchorElement).style.background = ""; }}
           >
             <LogOut size={13} strokeWidth={2} />

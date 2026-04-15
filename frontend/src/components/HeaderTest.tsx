@@ -11,9 +11,9 @@ import {
   Phone,
 } from "lucide-react";
 
-const PRIMARY = "#9245FF";
-const PRIMARY_DARK = "#7B35E0";
-const PRIMARY_LIGHT = "#F3ECFF";
+const PRIMARY = "#0046BE";
+const PRIMARY_DARK = "#003DA5";
+const PRIMARY_LIGHT = "#EBF3FF";
 
 // ─── Mega Menu Data ───────────────────────────────────────────────────────────
 const megaMenu = [
@@ -76,15 +76,15 @@ export default function HeaderTest() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-100">
+    <header className="sticky top-0 z-50 border-b" style={{ background: "#0046BE", borderColor: "#003DA5" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* ── Logo ── */}
           <Link href="/" className="shrink-0 tracking-tighter text-xl font-bold">
-            <span style={{ color: PRIMARY }}>Action</span>
-            <span className="text-[#0A0A0A]">Plus</span>
-            <span style={{ color: PRIMARY }}>&nbsp;Tax</span>
+            <span style={{ color: "#FFC200" }}>Action</span>
+            <span className="text-white">Plus</span>
+            <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
           </Link>
 
           {/* ── Desktop Nav ── */}
@@ -99,15 +99,15 @@ export default function HeaderTest() {
                   onMouseLeave={() => setServicesOpen(false)}
                 >
                   <button
-                    className="flex items-center gap-1 text-sm font-medium text-gray-600 transition-colors cursor-pointer"
-                    style={{ color: servicesOpen ? PRIMARY : undefined }}
+                    className="flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer"
+                    style={{ color: servicesOpen ? "#FFC200" : "rgba(255,255,255,0.85)" }}
                   >
                     {link.label}
                     <ChevronDown
                       size={15}
                       strokeWidth={2.5}
                       className={`mt-0.5 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
-                      style={{ color: servicesOpen ? PRIMARY : undefined }}
+                      style={{ color: servicesOpen ? "#FFC200" : "rgba(255,255,255,0.85)" }}
                     />
                   </button>
 
@@ -124,13 +124,13 @@ export default function HeaderTest() {
                         background: "rgba(255,255,255,0.92)",
                         backdropFilter: "blur(20px)",
                         WebkitBackdropFilter: "blur(20px)",
-                        boxShadow: "0 8px 40px rgba(146,69,255,0.10), 0 0 0 1px rgba(255,255,255,0.5) inset",
+                        boxShadow: "0 8px 40px rgba(0,70,190,0.10), 0 0 0 1px rgba(255,255,255,0.5) inset",
                       }}
                     >
                       {/* Top accent bar */}
                       <div
                         className="h-[3px] w-full"
-                        style={{ background: `linear-gradient(90deg, ${PRIMARY}, #c084fc, ${PRIMARY})` }}
+                        style={{ background: `linear-gradient(90deg, ${PRIMARY}, #60A5FA, ${PRIMARY})` }}
                       />
 
                       <div className="grid grid-cols-4 gap-0 p-5">
@@ -174,7 +174,7 @@ export default function HeaderTest() {
                       </div>
 
                       {/* Bottom banner */}
-                      <div className="mx-5 mb-4 rounded-xl px-4 py-3 flex items-center justify-between gap-4 bg-[#F3ECFF]">
+                      <div className="mx-5 mb-4 rounded-xl px-4 py-3 flex items-center justify-between gap-4 bg-[#EBF3FF]">
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                           <Phone size={14} strokeWidth={2} style={{ color: PRIMARY }} />
                           Not sure which service you need?&nbsp;
@@ -198,7 +198,9 @@ export default function HeaderTest() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-sm font-medium text-gray-600 hover:text-[#9245FF] transition-colors"
+                  className="text-sm font-medium transition-colors" style={{ color: "rgba(255,255,255,0.85)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFC200")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.85)")}
                 >
                   {link.label}
                 </Link>
@@ -210,17 +212,20 @@ export default function HeaderTest() {
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/login"
-              className="flex items-center gap-1.5 text-sm font-medium border border-gray-200 px-3 py-2 rounded-lg text-gray-600 transition-colors hover:text-[#9245FF] hover:border-[#9245FF]"
+              className="flex items-center gap-1.5 text-sm font-medium px-3 py-2 rounded-lg transition-colors"
+              style={{ color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.3)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.7)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.85)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}
             >
               <LogIn size={15} strokeWidth={2} />
               Client Portal
             </Link>
             <Link
               href="/consultation"
-              className="text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors"
-              style={{ background: PRIMARY }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = PRIMARY_DARK)}
-              onMouseLeave={(e) => (e.currentTarget.style.background = PRIMARY)}
+              className="text-sm font-bold px-5 py-2.5 rounded-lg transition-all"
+              style={{ background: "#FFC200", color: "#0A0A0A" }}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
             >
               Get Consultation
             </Link>
@@ -228,7 +233,8 @@ export default function HeaderTest() {
 
           {/* ── Mobile Hamburger ── */}
           <button
-            className="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors cursor-pointer"
+            className="md:hidden p-2 rounded-lg transition-colors cursor-pointer"
+            style={{ color: "white" }}
             onClick={() => setMobileOpen((v) => !v)}
             aria-label="Toggle menu"
           >
@@ -239,29 +245,29 @@ export default function HeaderTest() {
 
       {/* ── Mobile Drawer ── */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col bg-white overflow-y-auto">
+        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto" style={{ background: "#0046BE" }}>
           <div className="px-4 py-4 flex flex-col gap-1">
             {navLinks.map((link) =>
               link.hasMega ? (
                 <div key={link.label}>
                   <button
                     onClick={() => setMobileServicesOpen((v) => !v)}
-                    className="w-full flex items-center justify-between text-base font-semibold text-gray-800 py-3.5 border-b border-gray-100 transition-colors cursor-pointer"
-                    style={{ color: mobileServicesOpen ? PRIMARY : undefined }}
+                    className="w-full flex items-center justify-between text-base font-semibold py-3.5 border-b transition-colors cursor-pointer"
+                    style={{ color: mobileServicesOpen ? "#FFC200" : "white", borderColor: "rgba(255,255,255,0.15)" }}
                   >
                     Services
                     <ChevronDown
                       size={18}
                       strokeWidth={2}
-                      className={`text-gray-400 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
-                      style={{ color: mobileServicesOpen ? PRIMARY : undefined }}
+                      className={`transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
+                      style={{ color: mobileServicesOpen ? "#FFC200" : "rgba(255,255,255,0.5)" }}
                     />
                   </button>
 
                   {mobileServicesOpen && (
                     <div className="mt-1 mb-2 space-y-4">
                       {megaMenu.map((col) => (
-                        <div key={col.category} className="bg-gray-50 rounded-xl p-3">
+                        <div key={col.category} className="rounded-xl p-3" style={{ background: "rgba(255,255,255,0.1)" }}>
                           <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-1 mb-2">
                             {col.category}
                           </p>
@@ -270,7 +276,8 @@ export default function HeaderTest() {
                               key={item.label}
                               href={item.href}
                               onClick={() => setMobileOpen(false)}
-                              className="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium text-gray-700 transition-all hover:text-white"
+                              className="flex items-center px-3 py-2.5 rounded-lg text-sm font-medium transition-all"
+                              style={{ color: "rgba(255,255,255,0.85)" }}
                               onMouseEnter={(e) => (e.currentTarget.style.background = PRIMARY)}
                               onMouseLeave={(e) => (e.currentTarget.style.background = "")}
                             >
@@ -295,7 +302,10 @@ export default function HeaderTest() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
-                  className="flex items-center justify-between text-base font-semibold text-gray-800 hover:text-[#9245FF] py-3.5 border-b border-gray-100 transition-colors"
+                  className="flex items-center justify-between text-base font-semibold py-3.5 border-b transition-colors"
+                  style={{ color: "white", borderColor: "rgba(255,255,255,0.15)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFC200")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
                 >
                   {link.label}
                   <ChevronRight size={16} strokeWidth={2} className="text-gray-300" />
@@ -307,7 +317,8 @@ export default function HeaderTest() {
               <Link
                 href="/login"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 text-sm font-semibold text-gray-700 border border-gray-200 py-3 rounded-xl hover:border-[#9245FF] hover:text-[#9245FF] transition-colors"
+                className="flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl transition-colors"
+                style={{ color: "white", border: "1px solid rgba(255,255,255,0.3)" }}
               >
                 <LogIn size={16} strokeWidth={2} />
                 Client Portal
@@ -315,8 +326,8 @@ export default function HeaderTest() {
               <Link
                 href="/consultation"
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center justify-center gap-2 text-white text-sm font-semibold py-3.5 rounded-xl transition-colors"
-                style={{ background: PRIMARY }}
+                className="flex items-center justify-center gap-2 text-sm font-bold py-3.5 rounded-xl transition-colors"
+                style={{ background: "#FFC200", color: "#0A0A0A" }}
               >
                 Get Consultation
               </Link>
