@@ -22,7 +22,7 @@ export default function Providers({ children }: { children: ReactNode }) {
             boxShadow: "0 4px 20px rgba(0,0,0,0.08)",
           },
           success: {
-            iconTheme: { primary: "#0046BE", secondary: "#fff" },
+            iconTheme: { primary: "#01567E", secondary: "#fff" },
           },
           error: {
             iconTheme: { primary: "#DC2626", secondary: "#fff" },

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { MapPin, Phone, Clock, ArrowRight, Mail } from "lucide-react";
 
-const PRIMARY = "#0046BE";
+const PRIMARY = "#01567E";
 
 const quickLinks = [
   { label: "Home", href: "/" },
@@ -31,7 +31,7 @@ export default function SiteFooter() {
   return (
     <footer
       className="relative overflow-hidden"
-      style={{ background: "#001040" }}
+      style={{ background: "#041E42" }}
     >
       {/* Subtle top purple glow */}
       <div
@@ -39,7 +39,7 @@ export default function SiteFooter() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 0%, rgba(0,70,190,0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse at 50% 0%, rgba(1,86,126,0.12) 0%, transparent 70%)",
         }}
       />
 
@@ -47,7 +47,7 @@ export default function SiteFooter() {
       <div
         className="h-[2px] w-full"
         style={{
-          background: `linear-gradient(90deg, transparent 0%, #FFC200 30%, #fff8 50%, #FFC200 70%, transparent 100%)`,
+          background: `linear-gradient(90deg, transparent 0%, #FFF200 30%, #fff8 50%, #FFF200 70%, transparent 100%)`,
         }}
       />
 
@@ -75,13 +75,13 @@ export default function SiteFooter() {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:border-[#FFC200] transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:border-[#FFF200] transition-colors"
               />
             </div>
             <button
               type="submit"
               className="shrink-0 flex items-center gap-1.5 text-sm font-bold px-4 py-2.5 rounded-lg transition-all hover:opacity-90"
-              style={{ background: "#FFC200", color: "#0A0A0A" }}
+              style={{ background: "#FFF200", color: "#0A0A0A" }}
             >
               Subscribe <ArrowRight size={13} strokeWidth={2.5} />
             </button>
@@ -95,9 +95,9 @@ export default function SiteFooter() {
         {/* Brand col — wider */}
         <div className="lg:col-span-4">
           <Link href="/" className="tracking-tighter text-2xl font-bold inline-block">
-            <span style={{ color: "#FFC200" }}>Action</span>
+            <span style={{ color: "#FFF200" }}>Action</span>
             <span className="text-white">Plus</span>
-            <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
+            <span style={{ color: "#FFF200" }}>&nbsp;Tax</span>
           </Link>
           <p className="mt-4 text-gray-400 text-sm leading-relaxed max-w-xs">
             Family-owned Tax Professionals serving individuals &amp; businesses
@@ -112,9 +112,9 @@ export default function SiteFooter() {
             >
               <div
                 className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors"
-                style={{ background: "rgba(255,194,0,0.15)" }}
+                style={{ background: "rgba(255,242,0,0.15)" }}
               >
-                <Phone size={13} strokeWidth={2} style={{ color: "#FFC200" }} />
+                <Phone size={13} strokeWidth={2} style={{ color: "#FFF200" }} />
               </div>
               <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
                 912-559-2222
@@ -126,9 +126,9 @@ export default function SiteFooter() {
             >
               <div
                 className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                style={{ background: "rgba(255,194,0,0.15)" }}
+                style={{ background: "rgba(255,242,0,0.15)" }}
               >
-                <Phone size={13} strokeWidth={2} style={{ color: "#FFC200" }} />
+                <Phone size={13} strokeWidth={2} style={{ color: "#FFF200" }} />
               </div>
               <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
                 912-559-2223
@@ -137,9 +137,9 @@ export default function SiteFooter() {
             <div className="flex items-center gap-3">
               <div
                 className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                style={{ background: "rgba(255,194,0,0.15)" }}
+                style={{ background: "rgba(255,242,0,0.15)" }}
               >
-                <MapPin size={13} strokeWidth={2} style={{ color: "#FFC200" }} />
+                <MapPin size={13} strokeWidth={2} style={{ color: "#FFF200" }} />
               </div>
               <span className="text-sm text-gray-400">
                 212 S 1st St, Suite 2, Jesup, GA 31545
@@ -162,7 +162,7 @@ export default function SiteFooter() {
                 >
                   <span
                     className="w-1 h-1 rounded-full shrink-0 transition-colors"
-                    style={{ background: "rgba(255,194,0,0.5)" }}
+                    style={{ background: "rgba(255,242,0,0.5)" }}
                   />
                   {l.label}
                 </Link>
@@ -185,7 +185,7 @@ export default function SiteFooter() {
                 >
                   <span
                     className="w-1 h-1 rounded-full shrink-0"
-                    style={{ background: "rgba(255,194,0,0.5)" }}
+                    style={{ background: "rgba(255,242,0,0.5)" }}
                   />
                   {s.label}
                 </Link>
@@ -197,7 +197,7 @@ export default function SiteFooter() {
         {/* Hours */}
         <div className="lg:col-span-3">
           <h4 className="text-white text-xs font-bold uppercase tracking-[0.12em] mb-5 flex items-center gap-2">
-            <Clock size={13} strokeWidth={2} style={{ color: "#FFC200" }} />
+            <Clock size={13} strokeWidth={2} style={{ color: "#FFF200" }} />
             Office Hours
           </h4>
           <ul className="space-y-3">
@@ -212,7 +212,7 @@ export default function SiteFooter() {
                   className="text-xs font-semibold px-2 py-0.5 rounded-full"
                   style={
                     h.open
-                      ? { background: "rgba(255,194,0,0.18)", color: "#FFC200" }
+                      ? { background: "rgba(255,242,0,0.18)", color: "#FFF200" }
                       : { background: "rgba(239,68,68,0.12)", color: "#f87171" }
                   }
                 >
@@ -226,7 +226,7 @@ export default function SiteFooter() {
           <Link
             href="/consultation"
             className="mt-5 flex items-center justify-center gap-2 text-sm font-bold py-3 rounded-xl transition-all hover:opacity-90"
-            style={{ background: "#FFC200", color: "#0A0A0A" }}
+            style={{ background: "#FFF200", color: "#0A0A0A" }}
           >
             Book Appointment
             <ArrowRight size={14} strokeWidth={2.5} />

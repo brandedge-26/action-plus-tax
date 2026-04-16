@@ -18,8 +18,8 @@ import HeaderTest from "@/components/HeaderTest";
 import SiteFooter from "@/components/SiteFooter";
 import toast from "react-hot-toast";
 
-const PRIMARY = "#0046BE";
-const PRIMARY_LIGHT = "#EBF3FF";
+const PRIMARY = "#01567E";
+const PRIMARY_LIGHT = "#E0F4F9";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -137,9 +137,9 @@ function MiniCalendar({ selected, onSelect }: { selected: string; onSelect: (d: 
               onClick={() => onSelect(str)}
               className={`
                 h-8 w-full text-xs font-medium rounded-lg transition-all
-                ${disabled ? "text-gray-300 cursor-not-allowed" : "hover:bg-[#EBF3FF] cursor-pointer"}
+                ${disabled ? "text-gray-300 cursor-not-allowed" : "hover:bg-[#E0F4F9] cursor-pointer"}
                 ${isSelected ? "text-white font-bold" : ""}
-                ${isToday && !isSelected ? "ring-1 ring-[#0046BE]" : ""}
+                ${isToday && !isSelected ? "ring-1 ring-[#01567E]" : ""}
               `}
               style={isSelected ? { background: PRIMARY } : {}}
             >
@@ -167,6 +167,14 @@ export default function ConsultationPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!form.fullName.trim())  { toast.error("Please enter your full name."); return; }
+    if (!form.email.trim())     { toast.error("Please enter your email address."); return; }
+    if (!/\S+@\S+\.\S+/.test(form.email)) { toast.error("Please enter a valid email address."); return; }
+    if (!form.phone.trim())     { toast.error("Please enter your phone number."); return; }
+    if (!form.service)          { toast.error("Please select a service."); return; }
+    if (!form.date)             { toast.error("Please select an appointment date."); return; }
+    if (!form.time)             { toast.error("Please select a time slot."); return; }
+
     setLoading(true);
     try {
       const res = await fetch("http://localhost:5510/api/consultations", {
@@ -186,7 +194,7 @@ export default function ConsultationPage() {
   };
 
   const inputCls =
-    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/30 focus:ring-offset-2 bg-white";
+    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#01567E] focus:ring-2 focus:ring-[#01567E]/30 focus:ring-offset-2 bg-white";
 
   return (
     <>
@@ -194,7 +202,7 @@ export default function ConsultationPage() {
       <main>
 
         {/* ── Hero ── */}
-        <section className="relative overflow-hidden pt-16 pb-12" style={{ background: "#0046BE" }}>
+        <section className="relative overflow-hidden pt-16 pb-12" style={{ background: "#01567E" }}>
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
             style={{
               backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)`,
@@ -202,18 +210,18 @@ export default function ConsultationPage() {
             }}
           />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[240px] pointer-events-none"
-            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.15) 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,242,0,0.15) 0%, transparent 70%)" }}
           />
           <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <span
               className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5"
-              style={{ background: "#FFC200", color: "#001A57" }}
+              style={{ background: "#FFF200", color: "#041E42" }}
             >
               Free Consultation
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight leading-[1.1] mb-4">
               Book Your Free{" "}
-              <span style={{ color: "#FFC200" }}>Tax Consultation</span>
+              <span style={{ color: "#FFF200" }}>Tax Consultation</span>
             </h1>
             <p className="text-white/70 text-lg leading-relaxed max-w-xl mx-auto">
               Speak one-on-one with an expert Tax Pro. No obligation, completely free.
@@ -242,7 +250,7 @@ export default function ConsultationPage() {
                       </p>
                       <div
                         className="w-full rounded-2xl p-5 text-sm text-left space-y-2 border"
-                        style={{ background: PRIMARY_LIGHT, borderColor: "rgba(255,194,0,0.15)" }}
+                        style={{ background: PRIMARY_LIGHT, borderColor: "rgba(255,242,0,0.15)" }}
                       >
                         {form.service && <p><span className="font-semibold text-[#0A0A0A]">Service:</span> <span className="text-gray-600">{form.service}</span></p>}
                         {form.date && <p><span className="font-semibold text-[#0A0A0A]">Date:</span> <span className="text-gray-600">{form.date}</span></p>}
@@ -268,16 +276,16 @@ export default function ConsultationPage() {
                           <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Your Information</p>
                           <div className="grid sm:grid-cols-2 gap-4">
                             <div>
-                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Full Name <span style={{ color: "#FFC200" }}>*</span></label>
+                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Full Name <span style={{ color: "#FFF200" }}>*</span></label>
                               <input type="text" name="fullName" required value={form.fullName} onChange={handleChange} placeholder="John Smith" className={inputCls} />
                             </div>
                             <div>
-                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Phone Number <span style={{ color: "#FFC200" }}>*</span></label>
+                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Phone Number <span style={{ color: "#FFF200" }}>*</span></label>
                               <input type="tel" name="phone" required value={form.phone} onChange={handleChange} placeholder="(912) 000-0000" className={inputCls} />
                             </div>
                           </div>
                           <div className="mt-4">
-                            <label className="block text-xs font-semibold text-gray-600 mb-1.5">Email Address <span style={{ color: "#FFC200" }}>*</span></label>
+                            <label className="block text-xs font-semibold text-gray-600 mb-1.5">Email Address <span style={{ color: "#FFF200" }}>*</span></label>
                             <input type="email" name="email" required value={form.email} onChange={handleChange} placeholder="you@email.com" className={inputCls} />
                           </div>
                         </div>
@@ -304,7 +312,7 @@ export default function ConsultationPage() {
                             />
                           </div>
                           {form.date && (
-                            <p className="text-xs font-semibold mt-2" style={{ color: "#FFC200" }}>
+                            <p className="text-xs font-semibold mt-2" style={{ color: "#FFF200" }}>
                               ✓ Selected: {new Date(form.date + "T00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
                             </p>
                           )}
@@ -351,7 +359,7 @@ export default function ConsultationPage() {
                           type="submit"
                           disabled={loading || !form.date || !form.time}
                           className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-50"
-                          style={{ background: "#FFC200", color: "#001A57" }}
+                          style={{ background: "#FFF200", color: "#041E42" }}
                         >
                           {loading ? (
                             <>
@@ -381,7 +389,7 @@ export default function ConsultationPage() {
                 <div className="bg-[#0A0A0A] rounded-3xl p-7 relative overflow-hidden">
                   <div className="absolute inset-0 pointer-events-none opacity-20" aria-hidden="true"
                     style={{
-                      backgroundImage: `linear-gradient(rgba(255,194,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,194,0,0.25) 1px, transparent 1px)`,
+                      backgroundImage: `linear-gradient(rgba(255,242,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,242,0,0.25) 1px, transparent 1px)`,
                       backgroundSize: "32px 32px",
                     }}
                   />
@@ -396,7 +404,7 @@ export default function ConsultationPage() {
                         const Icon = item.icon;
                         return (
                           <li key={item.title} className="flex items-start gap-3">
-                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(255,194,0,0.15)", color: "#FFC200" }}>
+                            <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ background: "rgba(255,242,0,0.15)", color: "#FFF200" }}>
                               <Icon size={16} strokeWidth={1.8} />
                             </div>
                             <div>
@@ -415,14 +423,14 @@ export default function ConsultationPage() {
                   <h3 className="text-[#0A0A0A] font-bold text-sm mb-4">Prefer to reach us directly?</h3>
                   <div className="space-y-3">
                     <a href="tel:9125592222"
-                      className="flex items-center gap-3 py-3 px-4 rounded-xl border border-gray-100 hover:border-[#FFC200] transition-all group"
+                      className="flex items-center gap-3 py-3 px-4 rounded-xl border border-gray-100 hover:border-[#01567E] transition-all group"
                     >
                       <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: PRIMARY_LIGHT }}>
                         <Phone size={15} strokeWidth={2} style={{ color: PRIMARY }} />
                       </div>
                       <div>
                         <p className="text-xs text-gray-400">Call Us</p>
-                        <p className="text-sm font-semibold text-[#0A0A0A] group-hover:text-[#FFC200] transition-colors">912-559-2222</p>
+                        <p className="text-sm font-semibold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors">912-559-2222</p>
                       </div>
                     </a>
                     <a href="https://wa.me/19125592222" target="_blank" rel="noreferrer"
@@ -450,10 +458,10 @@ export default function ConsultationPage() {
                       { day: "Saturday", time: "10:00 AM – 6:00 PM", open: true },
                       { day: "Sunday", time: "Closed", open: false },
                     ].map((h) => (
-                      <li key={h.day} className="flex items-center justify-between gap-3 py-2 px-3 rounded-xl" style={{ background: "#F4F7FF" }}>
+                      <li key={h.day} className="flex items-center justify-between gap-3 py-2 px-3 rounded-xl" style={{ background: "#F0F8FA" }}>
                         <span className="text-sm text-gray-600">{h.day}</span>
                         <span className="text-xs font-semibold px-2.5 py-1 rounded-full"
-                          style={h.open ? { background: "#FFC200", color: "#001A57" } : { background: "#FEE2E2", color: "#DC2626" }}>
+                          style={h.open ? { background: "#FFF200", color: "#041E42" } : { background: "#FEE2E2", color: "#DC2626" }}>
                           {h.time}
                         </span>
                       </li>
@@ -463,7 +471,7 @@ export default function ConsultationPage() {
 
                 {/* Contact page link */}
                 <Link href="/contact"
-                  className="flex items-center justify-center gap-2 border border-white/20 hover:border-[#FFC200] text-white/70 hover:text-[#FFC200] font-semibold py-3.5 rounded-2xl text-sm transition-all"
+                  className="flex items-center justify-center gap-2 border border-white/20 hover:border-[#FFF200] text-white/70 hover:text-[#FFF200] font-semibold py-3.5 rounded-2xl text-sm transition-all"
                 >
                   Send a Message Instead
                   <ArrowRight size={14} strokeWidth={2.5} />

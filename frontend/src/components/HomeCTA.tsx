@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-const PRIMARY = "#0046BE";
-const PRIMARY_DARK = "#003DA5";
+const PRIMARY = "#01567E";
+const PRIMARY_DARK = "#014A6A";
 
 export default function HomeCTA() {
   return (
@@ -51,9 +51,9 @@ export default function HomeCTA() {
               <Link
                 href="/consultation"
                 className="inline-flex items-center justify-center gap-2 font-bold px-8 py-4 rounded-xl text-base transition-all shadow-lg"
-                style={{ background: "#FFC200", color: "#0A0A0A" }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
-                onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
+                style={{ background: "#FFF200", color: "#0A0A0A" }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#E6D900")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "#FFF200")}
               >
                 Book an Appointment
                 <ArrowRight size={17} strokeWidth={2.5} />

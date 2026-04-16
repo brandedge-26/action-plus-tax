@@ -6,8 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight, Mail, RotateCcw } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-const PRIMARY = "#0046BE";
-const YELLOW = "#FFC200";
+const PRIMARY = "#01567E";
+const YELLOW = "#FFF200";
 
 function VerifyOtpContent() {
   const router = useRouter();
@@ -115,7 +115,7 @@ function VerifyOtpContent() {
         {/* Icon */}
         <div
           className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6"
-          style={{ background: "#EBF3FF" }}
+          style={{ background: "#E0F4F9" }}
         >
           <Mail size={26} style={{ color: PRIMARY }} strokeWidth={1.7} />
         </div>
@@ -159,7 +159,7 @@ function VerifyOtpContent() {
                 style={{
                   borderColor: digit ? PRIMARY : "#E5E7EB",
                   color: "#0A0A0A",
-                  boxShadow: digit ? `0 0 0 3px rgba(0,70,190,0.12)` : "none",
+                  boxShadow: digit ? `0 0 0 3px rgba(1,86,126,0.12)` : "none",
                 }}
                 onFocus={(e) => (e.currentTarget.style.borderColor = PRIMARY)}
                 onBlur={(e) => (e.currentTarget.style.borderColor = digit ? PRIMARY : "#E5E7EB")}
@@ -171,7 +171,7 @@ function VerifyOtpContent() {
             type="submit"
             disabled={loading || otp.join("").length < 6}
             className="w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ background: YELLOW, color: "#001A57" }}
+            style={{ background: YELLOW, color: "#041E42" }}
           >
             {loading ? (
               <>

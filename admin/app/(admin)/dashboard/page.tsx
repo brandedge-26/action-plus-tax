@@ -1,56 +1,106 @@
 "use client";
 
+import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import {
-  Users, FileText, Clock, CheckCircle, CalendarDays,
-  TrendingUp, ArrowRight, ArrowUpRight, Eye,
+  FileText, Clock, CheckCircle, CalendarDays,
+  TrendingUp, ArrowRight, ArrowUpRight,
 } from "lucide-react";
 import StatusBadge from "../../components/StatusBadge";
+import { adminFetch } from "../../lib/adminApi";
 
-const stats = [
-  { label: "Total Clients",      value: "128", change: "+12 this month", icon: Users,        accent: false },
-  { label: "Total Applications", value: "47",  change: "+8 this month",  icon: FileText,     accent: false },
-  { label: "Pending Review",     value: "12",  change: "Needs attention",icon: Clock,        accent: true  },
-  { label: "Completed",          value: "31",  change: "All time",       icon: CheckCircle,  accent: false },
-];
+type Contact = {
+  _id: string;
+  name: string;
+  email: string;
+  subject: string;
+  status: string;
+  createdAt: string;
+};
 
-const recentApps = [
-  { id: "APP-047", client: "John Doe",       service: "Tax Preparation & Filing",    date: "Apr 10, 2025", status: "pending"   },
-  { id: "APP-046", client: "Sarah Williams", service: "IRS Audit Support",           date: "Apr 09, 2025", status: "in_review" },
-  { id: "APP-045", client: "Michael Chen",   service: "Bookkeeping Services",        date: "Apr 09, 2025", status: "pending"   },
-  { id: "APP-044", client: "Emily Johnson",  service: "Tax Planning & Consultation", date: "Apr 08, 2025", status: "completed" },
-  { id: "APP-043", client: "David Brown",    service: "Self-Employed Tax Filing",    date: "Apr 07, 2025", status: "in_review" },
-];
+type Consultation = {
+  _id: string;
+  fullName: string;
+  service: string;
+  date: string;
+  time: string;
+  status: string;
+};
 
-const upcomingApts = [
-  { id: "APT-012", client: "John Doe",    service: "Tax Planning",         date: "Apr 15, 2025", time: "2:00 PM" },
-  { id: "APT-011", client: "Sarah W.",    service: "IRS Audit Support",    date: "Apr 16, 2025", time: "10:00 AM" },
-  { id: "APT-010", client: "Michael C.",  service: "Bookkeeping Review",   date: "Apr 17, 2025", time: "3:00 PM" },
-];
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-const services = [
-  { name: "Tax Preparation & Filing", count: 18, pct: 38 },
-  { name: "Tax Planning & Consultation", count: 10, pct: 21 },
-  { name: "IRS Audit Support", count: 8, pct: 17 },
-  { name: "Bookkeeping Services", count: 6, pct: 13 },
-  { name: "Self-Employed Tax Filing", count: 5, pct: 11 },
-];
-
-// Simple bar chart using divs
 function MiniBar({ pct }: { pct: number }) {
   return (
     <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "var(--gray-border)" }}>
-      <div className="h-full rounded-full transition-all" style={{ width: `${pct}%`, background: "var(--primary)" }} />
+      <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "var(--primary)" }} />
     </div>
   );
 }
 
-// Monthly sparkline data
-const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-const appData = [5, 8, 6, 12, 10, 9, 14, 11, 13, 8, 10, 7];
-const maxVal  = Math.max(...appData);
-
 export default function AdminDashboard() {
+  const [contacts,      setContacts]      = useState<Contact[]>([]);
+  const [consultations, setConsultations] = useState<Consultation[]>([]);
+  const [loading,       setLoading]       = useState(true);
+
+  useEffect(() => {
+    Promise.all([adminFetch("/api/contact"), adminFetch("/api/consultations")])
+      .then(([c, a]) => {
+        setContacts(c.contacts ?? []);
+        setConsultations(a.consultations ?? []);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
+
+  const year         = new Date().getFullYear();
+  const todayStr     = new Date().toISOString().split("T")[0];
+  const newCount     = contacts.filter(c => c.status === "new").length;
+  const repliedCount = contacts.filter(c => c.status === "replied").length;
+  const pendingApts  = consultations.filter(c => c.status === "pending").length;
+
+  const monthlyData = useMemo(() =>
+    MONTHS.map((_, i) =>
+      contacts.filter(c => {
+        const d = new Date(c.createdAt);
+        return d.getFullYear() === year && d.getMonth() === i;
+      }).length
+    ),
+    [contacts, year]
+  );
+  const maxVal = Math.max(...monthlyData, 1);
+
+  const recentApps = useMemo(() =>
+    [...contacts]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+      .slice(0, 5),
+    [contacts]
+  );
+
+  const upcomingApts = useMemo(() =>
+    [...consultations]
+      .filter(c => c.date >= todayStr && c.status !== "cancelled")
+      .sort((a, b) => a.date.localeCompare(b.date))
+      .slice(0, 3),
+    [consultations, todayStr]
+  );
+
+  const topServices = useMemo(() => {
+    const map: Record<string, number> = {};
+    consultations.forEach(c => { map[c.service] = (map[c.service] || 0) + 1; });
+    const total = consultations.length || 1;
+    return Object.entries(map)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([name, count]) => ({ name, count, pct: Math.round((count / total) * 100) }));
+  }, [consultations]);
+
+  const stats = [
+    { label: "Total Messages",     value: loading ? "…" : String(contacts.length),       change: `${newCount} unread`,      icon: FileText,     accent: false        },
+    { label: "Total Appointments", value: loading ? "…" : String(consultations.length),  change: `${pendingApts} pending`,  icon: CalendarDays, accent: false        },
+    { label: "Pending Review",     value: loading ? "…" : String(newCount),              change: "Unread messages",         icon: Clock,        accent: newCount > 0 },
+    { label: "Replied",            value: loading ? "…" : String(repliedCount),          change: "Messages replied",        icon: CheckCircle,  accent: false        },
+  ];
+
   return (
     <div className="space-y-5">
 
@@ -64,20 +114,31 @@ export default function AdminDashboard() {
         <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: "linear-gradient(90deg, transparent, #0046BE, #60A5FA, #0046BE, transparent)" }} />
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.45)" }}>Good morning,</p>
+            <p className="text-sm mb-1" style={{ color: "rgba(255,255,255,0.45)" }}>Welcome back,</p>
             <h2 className="text-2xl font-bold text-white mb-1">Admin Dashboard</h2>
             <p className="text-sm" style={{ color: "rgba(255,255,255,0.5)" }}>
-              You have{" "}
-              <span className="font-bold" style={{ color: "var(--accent)" }}>12 pending applications</span>
-              {" "}awaiting review.
+              {loading
+                ? "Loading data…"
+                : newCount > 0
+                ? <><span className="font-bold" style={{ color: "var(--accent)" }}>{newCount} unread {newCount === 1 ? "message" : "messages"}</span> awaiting your review.</>
+                : "All messages are up to date."
+              }
             </p>
           </div>
           <div className="flex gap-3 flex-wrap">
-            <Link href="/dashboard/applications" className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl text-white transition-all hover:opacity-90" style={{ background: "var(--primary)" }}>
+            <Link
+              href="/dashboard/applications"
+              className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl text-white transition-all hover:opacity-90"
+              style={{ background: "var(--primary)" }}
+            >
               <FileText size={15} />
-              Review Apps
+              Messages
             </Link>
-            <Link href="/dashboard/appointments" className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl transition-all" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.15)" }}>
+            <Link
+              href="/dashboard/appointments"
+              className="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl transition-all"
+              style={{ background: "rgba(255,255,255,0.1)", color: "#fff", border: "1px solid rgba(255,255,255,0.15)" }}
+            >
               <CalendarDays size={15} />
               Appointments
             </Link>
@@ -97,8 +158,13 @@ export default function AdminDashboard() {
                   <p className="text-3xl font-bold" style={{ color: "var(--black)" }}>{s.value}</p>
                   <p className="text-xs mt-1" style={{ color: "var(--gray-text)" }}>{s.change}</p>
                 </div>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: s.accent ? "var(--accent-light)" : "var(--primary-light)", color: s.accent ? "var(--accent)" : "var(--primary)" }}>
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{
+                    background: s.accent ? "rgba(255,200,0,0.15)" : "var(--primary-light)",
+                    color:      s.accent ? "#B45309"               : "var(--primary)",
+                  }}
+                >
                   <Icon size={18} strokeWidth={2} />
                 </div>
               </div>
@@ -110,96 +176,110 @@ export default function AdminDashboard() {
       {/* Charts row */}
       <div className="grid xl:grid-cols-3 gap-5">
 
-        {/* Monthly Applications Bar Chart */}
+        {/* Monthly Messages Bar Chart */}
         <div className="xl:col-span-2 bg-white rounded-2xl p-5" style={{ border: "1px solid var(--gray-border)" }}>
           <div className="flex items-center justify-between mb-5">
             <div>
-              <p className="text-sm font-bold" style={{ color: "var(--black)" }}>Applications This Year</p>
-              <p className="text-xs" style={{ color: "var(--gray-text)" }}>Monthly breakdown — 2025</p>
+              <p className="text-sm font-bold" style={{ color: "var(--black)" }}>Messages This Year</p>
+              <p className="text-xs" style={{ color: "var(--gray-text)" }}>Monthly breakdown — {year}</p>
             </div>
             <div className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: "var(--primary)" }}>
               <TrendingUp size={14} strokeWidth={2.5} />
-              +24% vs last year
+              {contacts.length} total
             </div>
           </div>
-          {/* Bar Chart */}
           <div className="flex items-end gap-1.5 h-36">
-            {appData.map((v, i) => (
-              <div key={months[i]} className="flex-1 flex flex-col items-center gap-1 group">
+            {monthlyData.map((v, i) => (
+              <div key={MONTHS[i]} className="flex-1 flex flex-col items-center gap-1">
                 <div
-                  className="w-full rounded-t-md transition-all"
+                  className="w-full rounded-t-md"
                   style={{
                     height: `${(v / maxVal) * 100}%`,
-                    background: i === 3 ? "var(--primary)" : "var(--primary-light)",
+                    background: i === new Date().getMonth() ? "var(--primary)" : "var(--primary-light)",
                     minHeight: "4px",
                   }}
                 />
-                <span className="text-[9px] font-semibold" style={{ color: "var(--gray-text)" }}>{months[i]}</span>
+                <span className="text-[9px] font-semibold" style={{ color: "var(--gray-text)" }}>{MONTHS[i]}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Service Popularity */}
+        {/* Top Services */}
         <div className="bg-white rounded-2xl p-5" style={{ border: "1px solid var(--gray-border)" }}>
-          <p className="text-sm font-bold mb-4" style={{ color: "var(--black)" }}>Top Services</p>
-          <div className="space-y-3.5">
-            {services.map((s) => (
-              <div key={s.name}>
-                <div className="flex items-center justify-between mb-1">
-                  <p className="text-xs font-semibold truncate pr-2" style={{ color: "var(--black)" }}>{s.name}</p>
-                  <span className="text-xs font-bold flex-shrink-0" style={{ color: "var(--primary)" }}>{s.count}</span>
+          <p className="text-sm font-bold mb-4" style={{ color: "var(--black)" }}>Top Services Requested</p>
+          {loading ? (
+            <div className="space-y-3">
+              {[...Array(4)].map((_, i) => (
+                <div key={i} className="h-8 rounded-lg animate-pulse" style={{ background: "var(--gray-light)" }} />
+              ))}
+            </div>
+          ) : topServices.length === 0 ? (
+            <p className="text-xs text-center py-8" style={{ color: "var(--gray-text)" }}>No appointment data yet.</p>
+          ) : (
+            <div className="space-y-3.5">
+              {topServices.map((s) => (
+                <div key={s.name}>
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-xs font-semibold truncate pr-2" style={{ color: "var(--black)" }}>{s.name}</p>
+                    <span className="text-xs font-bold flex-shrink-0" style={{ color: "var(--primary)" }}>{s.count}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MiniBar pct={s.pct} />
+                    <span className="text-[10px] w-8 text-right flex-shrink-0" style={{ color: "var(--gray-text)" }}>{s.pct}%</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <MiniBar pct={s.pct} />
-                  <span className="text-[10px] w-8 text-right flex-shrink-0" style={{ color: "var(--gray-text)" }}>{s.pct}%</span>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Recent Applications + Upcoming Appointments */}
+      {/* Recent Messages + Upcoming Appointments */}
       <div className="grid xl:grid-cols-3 gap-5">
 
-        {/* Recent Applications */}
+        {/* Recent Messages */}
         <div className="xl:col-span-2 bg-white rounded-2xl p-5" style={{ border: "1px solid var(--gray-border)" }}>
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm font-bold" style={{ color: "var(--black)" }}>Recent Applications</p>
+            <p className="text-sm font-bold" style={{ color: "var(--black)" }}>Recent Messages</p>
             <Link href="/dashboard/applications" className="flex items-center gap-1 text-xs font-semibold hover:opacity-70" style={{ color: "var(--primary)" }}>
               View all <ArrowRight size={12} strokeWidth={2.5} />
             </Link>
           </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr style={{ borderBottom: "1px solid var(--gray-border)" }}>
-                  {["ID", "Client", "Service", "Date", "Status", ""].map((h) => (
-                    <th key={h} className="text-left text-xs font-semibold pb-3 pr-3" style={{ color: "var(--gray-text)" }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {recentApps.map((app) => (
-                  <tr key={app.id} style={{ borderBottom: "1px solid var(--gray-light)" }}>
-                    <td className="py-3 pr-3">
-                      <Link href={`/dashboard/applications/${app.id}`} className="text-xs font-bold hover:underline" style={{ color: "var(--primary)" }}>{app.id}</Link>
-                    </td>
-                    <td className="py-3 pr-3 text-sm font-medium" style={{ color: "var(--black)" }}>{app.client}</td>
-                    <td className="py-3 pr-3 text-xs max-w-[150px] truncate" style={{ color: "var(--gray-text)" }}>{app.service}</td>
-                    <td className="py-3 pr-3 text-xs" style={{ color: "var(--gray-text)" }}>{app.date}</td>
-                    <td className="py-3 pr-3"><StatusBadge status={app.status} /></td>
-                    <td className="py-3">
-                      <Link href={`/dashboard/applications/${app.id}`}>
-                        <Eye size={15} strokeWidth={2} style={{ color: "var(--gray-text)" }} className="hover:text-[var(--primary)]" />
-                      </Link>
-                    </td>
+          {loading ? (
+            <div className="space-y-3">
+              {[...Array(4)].map((_, i) => <div key={i} className="h-12 rounded-xl animate-pulse" style={{ background: "var(--gray-light)" }} />)}
+            </div>
+          ) : recentApps.length === 0 ? (
+            <p className="text-xs text-center py-8" style={{ color: "var(--gray-text)" }}>No messages yet.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr style={{ borderBottom: "1px solid var(--gray-border)" }}>
+                    {["Sender", "Subject", "Date", "Status"].map((h) => (
+                      <th key={h} className="text-left text-xs font-semibold pb-3 pr-3" style={{ color: "var(--gray-text)" }}>{h}</th>
+                    ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {recentApps.map((app) => (
+                    <tr key={app._id} style={{ borderBottom: "1px solid var(--gray-light)" }}>
+                      <td className="py-3 pr-3">
+                        <p className="text-sm" style={{ color: "var(--black)", fontWeight: app.status === "new" ? 700 : 500 }}>{app.name}</p>
+                        <p className="text-xs" style={{ color: "var(--gray-text)" }}>{app.email}</p>
+                      </td>
+                      <td className="py-3 pr-3 text-xs max-w-[150px] truncate" style={{ color: "var(--gray-text)" }}>{app.subject}</td>
+                      <td className="py-3 pr-3 text-xs whitespace-nowrap" style={{ color: "var(--gray-text)" }}>
+                        {new Date(app.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                      </td>
+                      <td className="py-3 pr-3"><StatusBadge status={app.status} /></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
 
         {/* Upcoming Appointments */}
@@ -210,22 +290,35 @@ export default function AdminDashboard() {
               All <ArrowRight size={12} />
             </Link>
           </div>
-          <div className="space-y-3">
-            {upcomingApts.map((apt) => (
-              <div key={apt.id} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--gray-light)", border: "1px solid var(--gray-border)" }}>
-                <div className="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-white flex-shrink-0" style={{ background: "var(--primary)" }}>
-                  <span className="text-[8px] font-bold uppercase leading-none">{apt.date.split(",")[0].split(" ")[0]}</span>
-                  <span className="text-base font-bold leading-none mt-0.5">{apt.date.split(" ")[1]?.replace(",","")}</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold truncate" style={{ color: "var(--black)" }}>{apt.client}</p>
-                  <p className="text-xs truncate" style={{ color: "var(--gray-text)" }}>{apt.service}</p>
-                  <p className="text-xs font-bold mt-0.5" style={{ color: "var(--primary)" }}>{apt.time}</p>
-                </div>
-                <ArrowUpRight size={14} style={{ color: "var(--gray-text)" }} className="flex-shrink-0" />
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="space-y-3">
+              {[...Array(3)].map((_, i) => <div key={i} className="h-16 rounded-xl animate-pulse" style={{ background: "var(--gray-light)" }} />)}
+            </div>
+          ) : upcomingApts.length === 0 ? (
+            <p className="text-xs text-center py-8" style={{ color: "var(--gray-text)" }}>No upcoming appointments.</p>
+          ) : (
+            <div className="space-y-3">
+              {upcomingApts.map((apt) => {
+                const parts = apt.date.split("-");
+                const monthIdx = parseInt(parts[1]) - 1;
+                const day = parseInt(parts[2]);
+                return (
+                  <div key={apt._id} className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--gray-light)", border: "1px solid var(--gray-border)" }}>
+                    <div className="w-10 h-10 rounded-xl flex flex-col items-center justify-center text-white flex-shrink-0" style={{ background: "var(--primary)" }}>
+                      <span className="text-[8px] font-bold uppercase leading-none">{MONTHS[monthIdx]}</span>
+                      <span className="text-base font-bold leading-none mt-0.5">{day}</span>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold truncate" style={{ color: "var(--black)" }}>{apt.fullName}</p>
+                      <p className="text-xs truncate" style={{ color: "var(--gray-text)" }}>{apt.service}</p>
+                      <p className="text-xs font-bold mt-0.5" style={{ color: "var(--primary)" }}>{apt.time}</p>
+                    </div>
+                    <ArrowUpRight size={14} style={{ color: "var(--gray-text)" }} className="flex-shrink-0" />
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </div>
 

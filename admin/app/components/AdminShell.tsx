@@ -4,30 +4,34 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard, FileText, FolderOpen, CalendarDays,
+  LayoutDashboard, FileText, CalendarDays,
   Users, Settings, Menu, X, Receipt, Bell, ChevronDown,
-  Briefcase, BookOpen, LogOut,
+  Briefcase, BookOpen, LogOut, Plus, List,
 } from "lucide-react";
 
 const navItems = [
   { href: "/dashboard",               label: "Overview",        icon: LayoutDashboard, exact: true },
-  { href: "/dashboard/applications",  label: "Applications",    icon: FileText,        badge: 3   },
-  { href: "/dashboard/documents",     label: "Documents",       icon: FolderOpen                  },
-  { href: "/dashboard/appointments",  label: "Appointments",    icon: CalendarDays,    badge: 2   },
+  { href: "/dashboard/applications",  label: "Applications",    icon: FileText                    },
+  { href: "/dashboard/appointments",  label: "Appointments",    icon: CalendarDays                },
   { href: "/dashboard/clients",       label: "Clients",         icon: Users                       },
   { href: "/dashboard/services",      label: "Services",        icon: Briefcase                   },
-  { href: "/dashboard/blog",          label: "Blog",            icon: BookOpen                    },
+  { href: "/dashboard/blog",          label: "Blog",            icon: BookOpen,        hasSub: true },
   { href: "/dashboard/settings",      label: "Settings",        icon: Settings                    },
+];
+
+const blogSubItems = [
+  { href: "/dashboard/blog",     label: "All Blogs", exact: true },
+  { href: "/dashboard/blog/new", label: "Add Blog",  exact: true },
 ];
 
 const pageTitles: Record<string, string> = {
   "/dashboard":               "Overview",
   "/dashboard/applications":  "Applications",
-  "/dashboard/documents":     "Documents",
   "/dashboard/appointments":  "Appointments",
   "/dashboard/clients":       "Clients",
   "/dashboard/services":      "Services",
-  "/dashboard/blog":          "Blog",
+  "/dashboard/blog":          "All Blogs",
+  "/dashboard/blog/new":      "New Blog Post",
   "/dashboard/settings":      "Settings",
 };
 
@@ -47,6 +51,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const getTitle = () => {
     if (pathname.startsWith("/dashboard/applications/")) return "Application Detail";
     if (pathname.startsWith("/dashboard/clients/"))      return "Client Profile";
+    if (pathname === "/dashboard/blog/new")              return "New Blog Post";
+    if (pathname.match(/^\/dashboard\/blog\/.+\/edit$/)) return "Edit Blog Post";
     return pageTitles[pathname] || "Admin";
   };
 
@@ -106,28 +112,59 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         {/* Nav */}
         <nav className="relative z-10 flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
           {navItems.map((item) => {
-            const active = isActive(item.href, item.exact);
-            const Icon   = item.icon;
+            const active    = isActive(item.href, item.exact);
+            const blogOpen  = item.hasSub && pathname.startsWith("/dashboard/blog");
+            const Icon      = item.icon;
             return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all relative"
-                style={active
-                  ? { background: "var(--primary)", color: "#fff", boxShadow: "0 4px 16px rgba(0,70,190,0.35)" }
-                  : { color: "rgba(255,255,255,0.45)" }
-                }
-                onMouseEnter={(e) => { if (!active) { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0,70,190,0.12)"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; } }}
-                onMouseLeave={(e) => { if (!active) { (e.currentTarget as HTMLAnchorElement).style.background = ""; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.45)"; } }}
-              >
-                <Icon size={16} strokeWidth={active ? 2.5 : 2} />
-                <span className="flex-1">{item.label}</span>
-                {item.badge && !active && (
-                  <span className="text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "var(--primary)" }}>
-                    {item.badge}
-                  </span>
+              <div key={item.href}>
+                <Link
+                  href={item.href}
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all relative"
+                  style={active && !item.hasSub
+                    ? { background: "var(--primary)", color: "#fff", boxShadow: "0 4px 16px rgba(1,86,126,0.35)" }
+                    : blogOpen
+                    ? { background: "rgba(1,86,126,0.18)", color: "#fff" }
+                    : { color: "rgba(255,255,255,0.45)" }
+                  }
+                  onMouseEnter={(e) => { if (!active && !blogOpen) { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(1,86,126,0.12)"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; } }}
+                  onMouseLeave={(e) => { if (!active && !blogOpen) { (e.currentTarget as HTMLAnchorElement).style.background = ""; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.45)"; } }}
+                >
+                  <Icon size={16} strokeWidth={active || blogOpen ? 2.5 : 2} />
+                  <span className="flex-1">{item.label}</span>
+                  {item.hasSub && (
+                    <ChevronDown size={13} strokeWidth={2}
+                      className="transition-transform"
+                      style={{ transform: blogOpen ? "rotate(180deg)" : "rotate(0deg)", color: "rgba(255,255,255,0.4)" }}
+                    />
+                  )}
+                </Link>
+
+                {/* Blog subnav */}
+                {item.hasSub && blogOpen && (
+                  <div className="ml-4 mt-0.5 space-y-0.5">
+                    {blogSubItems.map(sub => {
+                      const subActive = sub.exact ? pathname === sub.href : pathname.startsWith(sub.href);
+                      const SubIcon   = sub.href.includes("new") ? Plus : List;
+                      return (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium transition-all"
+                          style={subActive
+                            ? { background: "var(--primary)", color: "#fff" }
+                            : { color: "rgba(255,255,255,0.4)" }
+                          }
+                          onMouseEnter={(e) => { if (!subActive) { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(1,86,126,0.12)"; (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; } }}
+                          onMouseLeave={(e) => { if (!subActive) { (e.currentTarget as HTMLAnchorElement).style.background = ""; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.4)"; } }}
+                        >
+                          <SubIcon size={13} strokeWidth={2} />
+                          {sub.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
                 )}
-              </Link>
+              </div>
             );
           })}
         </nav>

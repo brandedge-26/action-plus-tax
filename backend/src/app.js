@@ -6,6 +6,10 @@ import { globalErrorHandler } from "./middlewares/error.middleware.js";
 import { generalLimiter } from "./middlewares/rateLimiter.middleware.js";
 import { authRoutes } from "./routes/auth.routes.js";
 import { consultationRoutes } from "./routes/consultation.routes.js";
+import { contactRoutes } from "./routes/contact.routes.js";
+import { serviceRoutes } from "./routes/service.routes.js";
+import { blogRoutes } from "./routes/blog.routes.js";
+import { uploadRoutes } from "./routes/upload.routes.js";
 
 
 
@@ -60,6 +64,10 @@ app.get("/api/health", (req, res) => {
 // ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/consultations", consultationRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/services", serviceRoutes);
+app.use("/api/blogs", blogRoutes);
+app.use("/api/upload", uploadRoutes);
 
 
 

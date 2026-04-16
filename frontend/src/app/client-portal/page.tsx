@@ -26,9 +26,9 @@ import HeaderTest from "@/components/HeaderTest";
 import SiteFooter from "@/components/SiteFooter";
 import { useAuth, getAvatarInitials } from "@/context/AuthContext";
 
-const PRIMARY = "#0046BE";
-const YELLOW = "#FFC200";
-const DARK = "#001040";
+const PRIMARY = "#01567E";
+const YELLOW = "#FFF200";
+const DARK = "#041E42";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const features = [
@@ -188,7 +188,7 @@ function PortalModal({ onClose, userName }: { onClose: () => void; userName: str
 
         <div className="p-8 flex flex-col items-center text-center gap-5">
           {/* Icon */}
-          <div className="w-20 h-20 rounded-3xl flex items-center justify-center" style={{ background: launched ? "#dcfce7" : YELLOW, boxShadow: launched ? "0 8px 32px rgba(34,197,94,0.25)" : "0 8px 32px rgba(255,194,0,0.35)" }}>
+          <div className="w-20 h-20 rounded-3xl flex items-center justify-center" style={{ background: launched ? "#dcfce7" : YELLOW, boxShadow: launched ? "0 8px 32px rgba(34,197,94,0.25)" : "0 8px 32px rgba(255,242,0,0.35)" }}>
             {launched
               ? <CheckCircle2 size={38} strokeWidth={1.8} style={{ color: "#16a34a" }} />
               : <ShieldCheck size={38} strokeWidth={1.8} style={{ color: DARK }} />}
@@ -230,7 +230,7 @@ function PortalModal({ onClose, userName }: { onClose: () => void; userName: str
               { icon: Bell,        label: "Filing Status" },
               { icon: Users,       label: "Tax Pro Messaging" },
             ].map(({ icon: Icon, label }) => (
-              <div key={label} className="flex items-center gap-2 px-3 py-2.5 rounded-xl" style={{ background: "#F4F7FF", border: "1px solid #E2E8F0" }}>
+              <div key={label} className="flex items-center gap-2 px-3 py-2.5 rounded-xl" style={{ background: "#F0F8FA", border: "1px solid #E2E8F0" }}>
                 <Icon size={13} strokeWidth={2} style={{ color: PRIMARY, flexShrink: 0 }} />
                 <span className="text-xs font-semibold" style={{ color: "#0A0A0A" }}>{label}</span>
               </div>
@@ -241,15 +241,15 @@ function PortalModal({ onClose, userName }: { onClose: () => void; userName: str
           <div className="flex flex-col gap-2 w-full">
             <button onClick={launch}
               className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm transition-all hover:opacity-90"
-              style={{ background: YELLOW, color: DARK, boxShadow: "0 4px 20px rgba(255,194,0,0.3)" }}>
+              style={{ background: YELLOW, color: DARK, boxShadow: "0 4px 20px rgba(255,242,0,0.3)" }}>
               <ExternalLink size={15} strokeWidth={2.5} />
               {launched ? "Open Again in New Tab" : "Launch Now"}
             </button>
             <button onClick={onClose}
               className="w-full py-3 rounded-xl text-sm font-semibold transition-all"
-              style={{ color: "#64748B", background: "#F4F7FF" }}
+              style={{ color: "#64748B", background: "#F0F8FA" }}
               onMouseEnter={(e) => (e.currentTarget.style.background = "#E2E8F0")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "#F4F7FF")}>
+              onMouseLeave={(e) => (e.currentTarget.style.background = "#F0F8FA")}>
               {launched ? "Done" : "Cancel"}
             </button>
           </div>
@@ -268,7 +268,7 @@ function PortalModal({ onClose, userName }: { onClose: () => void; userName: str
 function FaqItem({ q, a }: { q: string; a: string }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-2xl overflow-hidden transition-all" style={{ border: `1px solid ${open ? PRIMARY + "40" : "#E2E8F0"}`, background: open ? "#F8FBFF" : "#fff" }}>
+    <div className="rounded-2xl overflow-hidden transition-all" style={{ border: `1px solid ${open ? PRIMARY + "40" : "#E2E8F0"}`, background: open ? "#F0F8FA" : "#fff" }}>
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-6 py-4 text-left gap-4"
@@ -305,7 +305,7 @@ export default function ClientPortalPage() {
             style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`, backgroundSize: "56px 56px" }} />
           {/* Glow */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
-            style={{ width: "900px", height: "500px", background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.14) 0%, transparent 65%)" }} />
+            style={{ width: "900px", height: "500px", background: "radial-gradient(ellipse at 50% 0%, rgba(255,242,0,0.14) 0%, transparent 65%)" }} />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-0 lg:pt-28">
             <div className="grid lg:grid-cols-2 gap-14 lg:gap-24 items-center">
@@ -350,7 +350,7 @@ export default function ClientPortalPage() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <button onClick={() => setPortalOpen(true)}
                     className="inline-flex items-center justify-center gap-2 font-bold px-7 py-4 rounded-xl text-base transition-all hover:opacity-90"
-                    style={{ background: YELLOW, color: DARK, boxShadow: "0 6px 28px rgba(255,194,0,0.32)" }}>
+                    style={{ background: YELLOW, color: DARK, boxShadow: "0 6px 28px rgba(255,242,0,0.32)" }}>
                     <Lock size={17} strokeWidth={2.5} />
                     Access My Portal
                     <ArrowRight size={17} strokeWidth={2.5} />
@@ -378,7 +378,7 @@ export default function ClientPortalPage() {
               {/* Right — Dashboard preview */}
               <div className="relative pb-0 lg:pb-0 hidden lg:block">
                 <div className="absolute -inset-8 pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(255,194,0,0.07) 0%, transparent 65%)" }} />
+                  style={{ background: "radial-gradient(ellipse at 60% 40%, rgba(255,242,0,0.07) 0%, transparent 65%)" }} />
                 <div className="relative rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.09)", background: "rgba(255,255,255,0.04)", boxShadow: "0 32px 80px rgba(0,0,0,0.4)" }}>
                   {/* Browser chrome */}
                   <div className="flex items-center gap-3 px-5 py-3.5 border-b" style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.07)" }}>
@@ -398,7 +398,7 @@ export default function ClientPortalPage() {
                   <div className="p-5 space-y-3">
                     {/* User bar */}
                     {user ? (
-                      <div className="flex items-center gap-3 px-4 py-3 rounded-xl" style={{ background: "rgba(255,194,0,0.1)", border: "1px solid rgba(255,194,0,0.18)" }}>
+                      <div className="flex items-center gap-3 px-4 py-3 rounded-xl" style={{ background: "rgba(255,242,0,0.1)", border: "1px solid rgba(255,242,0,0.18)" }}>
                         <div className="w-9 h-9 rounded-xl flex items-center justify-center text-xs font-bold" style={{ background: YELLOW, color: DARK }}>{initials}</div>
                         <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold text-white truncate">{user.name}</p>
@@ -467,20 +467,20 @@ export default function ClientPortalPage() {
           {/* Bottom wave divider */}
           <div className="w-full overflow-hidden leading-none" style={{ height: "48px" }}>
             <svg viewBox="0 0 1440 48" preserveAspectRatio="none" className="w-full h-full">
-              <path d="M0,48 C360,0 1080,0 1440,48 L1440,48 L0,48 Z" fill="#F4F7FF" />
+              <path d="M0,48 C360,0 1080,0 1440,48 L1440,48 L0,48 Z" fill="#F0F8FA" />
             </svg>
           </div>
         </section>
 
         {/* ─────────────────────────────── STATS ────────────────────────────── */}
-        <section style={{ background: "#F4F7FF" }}>
+        <section style={{ background: "#F0F8FA" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-14">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {stats.map((s) => {
                 const Icon = s.icon;
                 return (
                   <div key={s.label} className="bg-white rounded-2xl p-6 flex flex-col gap-3" style={{ border: "1px solid #E2E8F0" }}>
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#EBF3FF" }}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "#E0F4F9" }}>
                       <Icon size={18} strokeWidth={2} style={{ color: PRIMARY }} />
                     </div>
                     <div>
@@ -499,7 +499,7 @@ export default function ClientPortalPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-14">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-                style={{ background: "#EBF3FF", color: PRIMARY }}>
+                style={{ background: "#E0F4F9", color: PRIMARY }}>
                 <TrendingUp size={11} strokeWidth={3} /> How It Works
               </span>
               <h2 className="text-3xl lg:text-4xl font-bold tracking-tight" style={{ color: "#0A0A0A" }}>
@@ -518,7 +518,7 @@ export default function ClientPortalPage() {
                 return (
                   <div key={s.num} className="relative flex flex-col gap-4 bg-white rounded-2xl p-6 text-center" style={{ border: "1px solid #E2E8F0", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
                     <div className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto relative z-10"
-                      style={{ background: i === steps.length - 1 ? YELLOW : PRIMARY, boxShadow: `0 6px 20px ${i === steps.length - 1 ? "rgba(255,194,0,0.35)" : "rgba(0,70,190,0.25)"}` }}>
+                      style={{ background: i === steps.length - 1 ? YELLOW : PRIMARY, boxShadow: `0 6px 20px ${i === steps.length - 1 ? "rgba(255,242,0,0.35)" : "rgba(1,86,126,0.25)"}` }}>
                       <Icon size={26} strokeWidth={1.8} style={{ color: i === steps.length - 1 ? DARK : "#fff" }} />
                     </div>
                     <div>
@@ -534,7 +534,7 @@ export default function ClientPortalPage() {
         </section>
 
         {/* ─────────────────────────── FEATURES ─────────────────────────────── */}
-        <section className="py-16 lg:py-24" style={{ background: "#F4F7FF" }}>
+        <section className="py-16 lg:py-24" style={{ background: "#F0F8FA" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-14">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
@@ -557,15 +557,15 @@ export default function ClientPortalPage() {
                   <div key={f.title}
                     className="bg-white rounded-2xl p-6 flex flex-col gap-4 transition-all cursor-default"
                     style={{ border: "1px solid #E2E8F0" }}
-                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = PRIMARY + "50"; (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 28px rgba(0,70,190,0.08)"; (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)"; }}
+                    onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = PRIMARY + "50"; (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 28px rgba(1,86,126,0.08)"; (e.currentTarget as HTMLDivElement).style.transform = "translateY(-2px)"; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.borderColor = "#E2E8F0"; (e.currentTarget as HTMLDivElement).style.boxShadow = "none"; (e.currentTarget as HTMLDivElement).style.transform = "none"; }}
                   >
                     <div className="flex items-start justify-between">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "#EBF3FF" }}>
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "#E0F4F9" }}>
                         <Icon size={22} strokeWidth={1.8} style={{ color: PRIMARY }} />
                       </div>
                       {f.badge && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: f.badge === "Most Used" ? "#FFF8E6" : "#EBF3FF", color: f.badge === "Most Used" ? "#B45309" : PRIMARY }}>{f.badge}</span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: f.badge === "Most Used" ? "#FFF8E6" : "#E0F4F9", color: f.badge === "Most Used" ? "#B45309" : PRIMARY }}>{f.badge}</span>
                       )}
                     </div>
                     <div>
@@ -587,7 +587,7 @@ export default function ClientPortalPage() {
               {/* Left — copy */}
               <div className="flex flex-col gap-6">
                 <span className="inline-flex items-center self-start gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
-                  style={{ background: "#EBF3FF", color: PRIMARY }}>
+                  style={{ background: "#E0F4F9", color: PRIMARY }}>
                   <ShieldCheck size={11} strokeWidth={3} /> Enterprise-Grade Security
                 </span>
                 <h2 className="text-3xl lg:text-4xl font-bold tracking-tight" style={{ color: "#0A0A0A" }}>
@@ -600,8 +600,8 @@ export default function ClientPortalPage() {
                 </p>
                 <div className="grid gap-3">
                   {securityPoints.map((sp) => (
-                    <div key={sp.title} className="flex gap-4 p-4 rounded-xl" style={{ background: "#F8FBFF", border: "1px solid #EBF3FF" }}>
-                      <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: "#EBF3FF" }}>
+                    <div key={sp.title} className="flex gap-4 p-4 rounded-xl" style={{ background: "#F0F8FA", border: "1px solid #E0F4F9" }}>
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5" style={{ background: "#E0F4F9" }}>
                         <ShieldCheck size={13} strokeWidth={2.5} style={{ color: PRIMARY }} />
                       </div>
                       <div>
@@ -648,7 +648,7 @@ export default function ClientPortalPage() {
                   const Icon = c.icon;
                   return (
                     <div key={c.title} className="flex gap-5 p-5 rounded-2xl" style={{ border: "1px solid #E2E8F0", background: "#FAFCFF" }}>
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#EBF3FF" }}>
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#E0F4F9" }}>
                         <Icon size={22} strokeWidth={1.8} style={{ color: PRIMARY }} />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -668,11 +668,11 @@ export default function ClientPortalPage() {
         </section>
 
         {/* ────────────────────────────── FAQ ───────────────────────────────── */}
-        <section className="py-16 lg:py-24" style={{ background: "#F4F7FF" }}>
+        <section className="py-16 lg:py-24" style={{ background: "#F0F8FA" }}>
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-                style={{ background: "#EBF3FF", color: PRIMARY }}>
+                style={{ background: "#E0F4F9", color: PRIMARY }}>
                 FAQ
               </span>
               <h2 className="text-3xl font-bold tracking-tight" style={{ color: "#0A0A0A" }}>
@@ -693,10 +693,10 @@ export default function ClientPortalPage() {
           <div className="absolute inset-0 pointer-events-none" aria-hidden
             style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)`, backgroundSize: "56px 56px" }} />
           <div className="absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none"
-            style={{ width: "700px", height: "400px", background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.12) 0%, transparent 60%)" }} />
+            style={{ width: "700px", height: "400px", background: "radial-gradient(ellipse at 50% 0%, rgba(255,242,0,0.12) 0%, transparent 60%)" }} />
           <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6"
-              style={{ background: YELLOW, boxShadow: "0 8px 32px rgba(255,194,0,0.35)" }}>
+              style={{ background: YELLOW, boxShadow: "0 8px 32px rgba(255,242,0,0.35)" }}>
               <Lock size={28} strokeWidth={2} style={{ color: DARK }} />
             </div>
             <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
@@ -711,7 +711,7 @@ export default function ClientPortalPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <button onClick={() => setPortalOpen(true)}
                   className="inline-flex items-center gap-2.5 font-bold px-9 py-4 rounded-xl text-base transition-all hover:opacity-90"
-                  style={{ background: YELLOW, color: DARK, boxShadow: "0 6px 28px rgba(255,194,0,0.35)" }}>
+                  style={{ background: YELLOW, color: DARK, boxShadow: "0 6px 28px rgba(255,242,0,0.35)" }}>
                   <Lock size={18} strokeWidth={2.5} />
                   Access My Portal Now
                   <ArrowRight size={18} strokeWidth={2.5} />
@@ -728,7 +728,7 @@ export default function ClientPortalPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link href="/login"
                   className="inline-flex items-center gap-2.5 font-bold px-9 py-4 rounded-xl text-base transition-all hover:opacity-90"
-                  style={{ background: YELLOW, color: DARK, boxShadow: "0 6px 28px rgba(255,194,0,0.35)" }}>
+                  style={{ background: YELLOW, color: DARK, boxShadow: "0 6px 28px rgba(255,242,0,0.35)" }}>
                   Sign In to Access Portal
                   <ArrowRight size={18} strokeWidth={2.5} />
                 </Link>

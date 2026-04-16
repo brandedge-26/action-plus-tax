@@ -9,10 +9,10 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-const PRIMARY       = "#0046BE";
-const PRIMARY_DARK  = "#003DA5";
-const YELLOW        = "#FFC200";
-const YELLOW_DARK   = "#E6AF00";
+const PRIMARY       = "#01567E";
+const PRIMARY_DARK  = "#014A6A";
+const YELLOW        = "#FFF200";
+const YELLOW_DARK   = "#E6D900";
 
 const featured = {
   icon: FileText,

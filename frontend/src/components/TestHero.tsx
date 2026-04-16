@@ -4,10 +4,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar, ShieldCheck, Star, CheckCircle2 } from "lucide-react";
 
-const PRIMARY      = "#0046BE";
-const YELLOW       = "#FFC200";
-const YELLOW_DARK  = "#E6AF00";
-const DARK         = "#001040";
+const PRIMARY      = "#01567E";
+const YELLOW       = "#FFF200";
+const YELLOW_DARK  = "#E6D900";
+const DARK         = "#041E42";
 
 const stats = [
   { value: "10+",    label: "Years Experience" },
@@ -37,7 +37,7 @@ export default function TestHero() {
 
       {/* Right glow */}
       <div className="absolute right-0 top-0 w-1/2 h-full pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 100% 50%, rgba(0,16,64,0.55) 0%, transparent 70%)" }} />
+        style={{ background: "radial-gradient(ellipse at 100% 50%, rgba(4,30,66,0.55) 0%, transparent 70%)" }} />
 
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none"
@@ -94,7 +94,7 @@ export default function TestHero() {
             <div className="flex flex-col sm:flex-row gap-3 pt-1">
               <Link href="/apply"
                 className="inline-flex items-center justify-center gap-2 font-bold px-7 py-3.5 rounded-xl text-base transition-all"
-                style={{ background: YELLOW, color: "#0A0A0A", boxShadow: "0 4px 24px rgba(255,194,0,0.40)" }}
+                style={{ background: YELLOW, color: "#0A0A0A", boxShadow: "0 4px 24px rgba(255,242,0,0.40)" }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = YELLOW_DARK)}
                 onMouseLeave={(e) => (e.currentTarget.style.background = YELLOW)}>
                 Start Your Application
@@ -125,7 +125,7 @@ export default function TestHero() {
           <div className="hidden lg:block relative">
             {/* Glow behind image */}
             <div className="absolute -inset-4 rounded-3xl pointer-events-none"
-              style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,194,0,0.1) 0%, transparent 70%)" }} />
+              style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,242,0,0.1) 0%, transparent 70%)" }} />
 
             {/* Photo card */}
             <div className="relative rounded-3xl overflow-hidden" style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)" }}>
@@ -139,7 +139,7 @@ export default function TestHero() {
                 priority
               />
               {/* Dark overlay at bottom */}
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,16,64,0.7) 0%, rgba(0,16,64,0.1) 50%, transparent 100%)" }} />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(4,30,66,0.7) 0%, rgba(4,30,66,0.1) 50%, transparent 100%)" }} />
 
               {/* Floating info card */}
               <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl flex items-center gap-4"

@@ -2,21 +2,23 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0A0A0A;
-  --primary: #0046BE;
-  --primary-dark: #003DA5;
-  --primary-light: #EBF3FF;
-  --accent: #FFC200;
-  --accent-light: #FFF8E6;
-  --black: #0A0A0A;
-  --gray-light: #F4F7FF;
-  --gray-border: #E2E8F0;
-  --gray-text: #64748B;
+  --foreground: #041E42;
+  --primary: #01567E;
+  --primary-dark: #014A6A;
+  --primary-light: #E0F4F9;
+  --accent: #FFF200;
+  --accent-dark: #E6D900;
+  --accent-light: #FFFDE6;
+  --cyan: #00A2C7;
+  --black: #041E42;
+  --gray-light: #F0F8FA;
+  --gray-border: #C8DFE8;
+  --gray-text: #5A7A85;
 }
 
 ::selection {
-  background: #FFC200;
-  color: #0A0A0A;
+  background: #FFF200;
+  color: #041E42;
 }
 
 body {

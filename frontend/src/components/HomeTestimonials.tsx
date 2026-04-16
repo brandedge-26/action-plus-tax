@@ -1,5 +1,5 @@
-const PRIMARY = "#0046BE";
-const YELLOW  = "#FFC200";
+const PRIMARY = "#01567E";
+const YELLOW  = "#FFF200";
 
 const testimonials = [
   {

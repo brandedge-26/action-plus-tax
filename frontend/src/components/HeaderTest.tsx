@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 import { useAuth, getAvatarInitials } from "@/context/AuthContext";
 
-const PRIMARY = "#0046BE";
-const PRIMARY_DARK = "#003DA5";
-const PRIMARY_LIGHT = "#EBF3FF";
+const PRIMARY = "#01567E";
+const PRIMARY_DARK = "#014A6A";
+const PRIMARY_LIGHT = "#E0F4F9";
 
 // ─── Mega Menu Data ───────────────────────────────────────────────────────────
 const megaMenu = [
@@ -106,7 +106,7 @@ function AvatarDropdown() {
         {/* Avatar circle */}
         <div
           className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-          style={{ background: "#FFC200", color: "#001A57" }}
+          style={{ background: "#FFF200", color: "#041E42" }}
         >
           {initials}
         </div>
@@ -169,6 +169,27 @@ export default function HeaderTest() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [activeSlugs, setActiveSlugs] = useState<Set<string> | null>(null);
+
+  useEffect(() => {
+    fetch("http://localhost:5510/api/services")
+      .then(r => r.json())
+      .then(data => {
+        const slugs = new Set<string>((data.services ?? []).map((s: { slug: string }) => s.slug));
+        setActiveSlugs(slugs.size > 0 ? slugs : null);
+      })
+      .catch(() => setActiveSlugs(null));
+  }, []);
+
+  // Filter megaMenu to only show active services (null = show all)
+  const filteredMegaMenu = activeSlugs === null
+    ? megaMenu
+    : megaMenu
+        .map(col => ({
+          ...col,
+          items: col.items.filter(item => activeSlugs.has(item.href.replace("/services/", ""))),
+        }))
+        .filter(col => col.items.length > 0);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -176,15 +197,15 @@ export default function HeaderTest() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b" style={{ background: "#001040", borderColor: "rgba(255,255,255,0.08)" }}>
+    <header className="sticky top-0 z-50 border-b" style={{ background: "#041E42", borderColor: "rgba(255,255,255,0.08)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* ── Logo ── */}
           <Link href="/" className="shrink-0 tracking-tighter text-xl font-bold">
-            <span style={{ color: "#FFC200" }}>Action</span>
+            <span style={{ color: "#FFF200" }}>Action</span>
             <span className="text-white">Plus</span>
-            <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
+            <span style={{ color: "#FFF200" }}>&nbsp;Tax</span>
           </Link>
 
           {/* ── Desktop Nav ── */}
@@ -200,14 +221,14 @@ export default function HeaderTest() {
                 >
                   <button
                     className="flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer"
-                    style={{ color: servicesOpen ? "#FFC200" : "rgba(255,255,255,0.85)" }}
+                    style={{ color: servicesOpen ? "#FFF200" : "rgba(255,255,255,0.85)" }}
                   >
                     {link.label}
                     <ChevronDown
                       size={15}
                       strokeWidth={2.5}
                       className={`mt-0.5 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
-                      style={{ color: servicesOpen ? "#FFC200" : "rgba(255,255,255,0.85)" }}
+                      style={{ color: servicesOpen ? "#FFF200" : "rgba(255,255,255,0.85)" }}
                     />
                   </button>
 
@@ -224,7 +245,7 @@ export default function HeaderTest() {
                         background: "rgba(255,255,255,0.92)",
                         backdropFilter: "blur(20px)",
                         WebkitBackdropFilter: "blur(20px)",
-                        boxShadow: "0 8px 40px rgba(0,70,190,0.10), 0 0 0 1px rgba(255,255,255,0.5) inset",
+                        boxShadow: "0 8px 40px rgba(1,86,126,0.10), 0 0 0 1px rgba(255,255,255,0.5) inset",
                       }}
                     >
                       {/* Top accent bar */}
@@ -234,7 +255,7 @@ export default function HeaderTest() {
                       />
 
                       <div className="grid grid-cols-4 gap-0 p-5">
-                        {megaMenu.map((col, ci) => (
+                        {filteredMegaMenu.map((col, ci) => (
                           <div
                             key={col.category}
                             className={`flex flex-col gap-1 px-4 ${ci !== 0 ? "border-l border-gray-100" : ""}`}
@@ -269,7 +290,7 @@ export default function HeaderTest() {
                       </div>
 
                       {/* Bottom banner */}
-                      <div className="mx-5 mb-4 rounded-xl px-4 py-3 flex items-center justify-between gap-4 bg-[#EBF3FF]">
+                      <div className="mx-5 mb-4 rounded-xl px-4 py-3 flex items-center justify-between gap-4 bg-[#E0F4F9]">
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                           <Phone size={14} strokeWidth={2} style={{ color: PRIMARY }} />
                           Not sure which service you need?&nbsp;
@@ -294,7 +315,7 @@ export default function HeaderTest() {
                   key={link.label}
                   href={link.href}
                   className="text-sm font-medium transition-colors" style={{ color: "rgba(255,255,255,0.85)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFC200")}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFF200")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.85)")}
                 >
                   {link.label}
@@ -312,9 +333,9 @@ export default function HeaderTest() {
                   <Link
                     href="/client-portal"
                     className="text-sm font-bold px-5 py-2.5 rounded-lg transition-all"
-                    style={{ background: "#FFC200", color: "#0A0A0A" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
+                    style={{ background: "#FFF200", color: "#0A0A0A" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#E6D900")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#FFF200")}
                   >
                     Client Portal
                   </Link>
@@ -334,9 +355,9 @@ export default function HeaderTest() {
                   <Link
                     href="/consultation"
                     className="text-sm font-bold px-5 py-2.5 rounded-lg transition-all"
-                    style={{ background: "#FFC200", color: "#0A0A0A" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "#FFC200")}
+                    style={{ background: "#FFF200", color: "#0A0A0A" }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "#E6D900")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "#FFF200")}
                   >
                     Get Consultation
                   </Link>
@@ -359,7 +380,7 @@ export default function HeaderTest() {
 
       {/* ── Mobile Drawer ── */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto" style={{ background: "#001040" }}>
+        <div className="md:hidden fixed inset-0 top-16 z-40 flex flex-col overflow-y-auto" style={{ background: "#041E42" }}>
           <div className="px-4 py-4 flex flex-col gap-1">
 
             {/* Mobile user info (if logged in) */}
@@ -370,7 +391,7 @@ export default function HeaderTest() {
               >
                 <div
                   className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
-                  style={{ background: "#FFC200", color: "#001A57" }}
+                  style={{ background: "#FFF200", color: "#041E42" }}
                 >
                   {getAvatarInitials(user.name)}
                 </div>
@@ -389,20 +410,20 @@ export default function HeaderTest() {
                   <button
                     onClick={() => setMobileServicesOpen((v) => !v)}
                     className="w-full flex items-center justify-between text-base font-semibold py-3.5 border-b transition-colors cursor-pointer"
-                    style={{ color: mobileServicesOpen ? "#FFC200" : "white", borderColor: "rgba(255,255,255,0.15)" }}
+                    style={{ color: mobileServicesOpen ? "#FFF200" : "white", borderColor: "rgba(255,255,255,0.15)" }}
                   >
                     Services
                     <ChevronDown
                       size={18}
                       strokeWidth={2}
                       className={`transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
-                      style={{ color: mobileServicesOpen ? "#FFC200" : "rgba(255,255,255,0.5)" }}
+                      style={{ color: mobileServicesOpen ? "#FFF200" : "rgba(255,255,255,0.5)" }}
                     />
                   </button>
 
                   {mobileServicesOpen && (
                     <div className="mt-1 mb-2 space-y-4">
-                      {megaMenu.map((col) => (
+                      {filteredMegaMenu.map((col) => (
                         <div key={col.category} className="rounded-xl p-3" style={{ background: "rgba(255,255,255,0.1)" }}>
                           <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 px-1 mb-2">
                             {col.category}
@@ -440,7 +461,7 @@ export default function HeaderTest() {
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center justify-between text-base font-semibold py-3.5 border-b transition-colors"
                   style={{ color: "white", borderColor: "rgba(255,255,255,0.15)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFC200")}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFF200")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
                 >
                   {link.label}
@@ -456,7 +477,7 @@ export default function HeaderTest() {
                     href="/client-portal"
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center justify-center gap-2 text-sm font-bold py-3.5 rounded-xl transition-colors"
-                    style={{ background: "#FFC200", color: "#0A0A0A" }}
+                    style={{ background: "#FFF200", color: "#0A0A0A" }}
                   >
                     Client Portal
                   </Link>
@@ -477,7 +498,7 @@ export default function HeaderTest() {
                     href="/consultation"
                     onClick={() => setMobileOpen(false)}
                     className="flex items-center justify-center gap-2 text-sm font-bold py-3.5 rounded-xl transition-colors"
-                    style={{ background: "#FFC200", color: "#0A0A0A" }}
+                    style={{ background: "#FFF200", color: "#0A0A0A" }}
                   >
                     Get Consultation
                   </Link>
@@ -504,7 +525,7 @@ function MobileLogoutButton() {
     <button
       onClick={handleLogout}
       className="w-full flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl transition-colors"
-      style={{ color: "#FFC200", border: "1px solid rgba(255,194,0,0.4)" }}
+      style={{ color: "#FFF200", border: "1px solid rgba(255,242,0,0.4)" }}
     >
       <LogOut size={16} strokeWidth={2} />
       Sign Out

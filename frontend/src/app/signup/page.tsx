@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 
-const PRIMARY = "#0046BE";
-const PRIMARY_LIGHT = "#EBF3FF";
+const PRIMARY = "#01567E";
+const PRIMARY_LIGHT = "#E0F4F9";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -49,13 +49,13 @@ export default function SignupPage() {
   const mismatch = !!form.confirm && form.confirm !== form.password;
 
   const inputBase =
-    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#0046BE] focus:ring-2 focus:ring-[#0046BE]/30 focus:ring-offset-2";
+    "w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#01567E] focus:ring-2 focus:ring-[#01567E]/30 focus:ring-offset-2";
 
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center px-4 py-12"
       style={{
-        background: "#0046BE",
+        background: "#01567E",
         backgroundImage: `
           linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
           linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)
@@ -65,9 +65,9 @@ export default function SignupPage() {
     >
       {/* Logo */}
       <Link href="/" className="tracking-tighter text-2xl font-bold mb-8 inline-block">
-        <span style={{ color: "#FFC200" }}>Action</span>
+        <span style={{ color: "#FFF200" }}>Action</span>
         <span className="text-white">Plus</span>
-        <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
+        <span style={{ color: "#FFF200" }}>&nbsp;Tax</span>
       </Link>
 
       {/* Card */}
@@ -78,7 +78,7 @@ export default function SignupPage() {
           <h1 className="text-2xl font-bold text-[#0A0A0A] mb-1.5">Create your free account</h1>
           <p className="text-sm text-gray-500">
             Already have an account?{" "}
-            <Link href="/login" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>
+            <Link href="/login" className="font-semibold hover:underline" style={{ color: "#FFF200" }}>
               Sign in
             </Link>
           </p>
@@ -97,7 +97,7 @@ export default function SignupPage() {
           {/* Full Name */}
           <div>
             <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-              Full Name <span style={{ color: "#FFC200" }}>*</span>
+              Full Name <span style={{ color: "#FFF200" }}>*</span>
             </label>
             <input
               type="text" name="fullName" required
@@ -110,7 +110,7 @@ export default function SignupPage() {
           {/* Email */}
           <div>
             <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-              Email Address <span style={{ color: "#FFC200" }}>*</span>
+              Email Address <span style={{ color: "#FFF200" }}>*</span>
             </label>
             <input
               type="email" name="email" required
@@ -123,7 +123,7 @@ export default function SignupPage() {
           {/* Phone */}
           <div>
             <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-              Phone Number <span style={{ color: "#FFC200" }}>*</span>
+              Phone Number <span style={{ color: "#FFF200" }}>*</span>
             </label>
             <input
               type="tel" name="phone" required
@@ -136,7 +136,7 @@ export default function SignupPage() {
           {/* Password */}
           <div>
             <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-              Password <span style={{ color: "#FFC200" }}>*</span>
+              Password <span style={{ color: "#FFF200" }}>*</span>
             </label>
             <div className="relative">
               <input
@@ -166,7 +166,7 @@ export default function SignupPage() {
           {/* Confirm Password */}
           <div>
             <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-              Confirm Password <span style={{ color: "#FFC200" }}>*</span>
+              Confirm Password <span style={{ color: "#FFF200" }}>*</span>
             </label>
             <div className="relative">
               <input
@@ -187,12 +187,12 @@ export default function SignupPage() {
 
           {/* Terms */}
           <label className="flex items-start gap-2.5 cursor-pointer">
-            <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded accent-[#0046BE]" />
+            <input type="checkbox" required className="mt-0.5 w-4 h-4 rounded accent-[#01567E]" />
             <span className="text-xs text-gray-500 leading-relaxed">
               I agree to the{" "}
-              <Link href="/terms" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Terms of Service</Link>
+              <Link href="/terms" className="font-semibold hover:underline" style={{ color: "#FFF200" }}>Terms of Service</Link>
               {" "}&amp;{" "}
-              <Link href="/privacy" className="font-semibold hover:underline" style={{ color: "#FFC200" }}>Privacy Policy</Link>
+              <Link href="/privacy" className="font-semibold hover:underline" style={{ color: "#FFF200" }}>Privacy Policy</Link>
             </span>
           </label>
 
@@ -200,7 +200,7 @@ export default function SignupPage() {
             type="submit"
             disabled={loading || mismatch}
             className="w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-60"
-            style={{ background: "#FFC200", color: "#001A57" }}
+            style={{ background: "#FFF200", color: "#041E42" }}
           >
             {loading ? (
               <>

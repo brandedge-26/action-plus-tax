@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
-import { Search, Eye, Mail, Phone, RefreshCw } from "lucide-react";
+import { Search, Eye, Mail, Phone, RefreshCw, X, ShieldCheck, ShieldOff } from "lucide-react";
 import { adminFetch } from "../../../lib/adminApi";
+import toast from "react-hot-toast";
 
 type User = {
   _id: string;
@@ -23,10 +23,11 @@ function fmt(date: string) {
 }
 
 export default function ClientsPage() {
-  const [users, setUsers]   = useState<User[]>([]);
-  const [search, setSearch] = useState("");
+  const [users,   setUsers]   = useState<User[]>([]);
+  const [search,  setSearch]  = useState("");
   const [loading, setLoading] = useState(true);
-  const [error, setError]   = useState("");
+  const [error,   setError]   = useState("");
+  const [modal,   setModal]   = useState<User | null>(null);
 
   const loadUsers = async (q = "") => {
     setLoading(true);
@@ -35,15 +36,15 @@ export default function ClientsPage() {
       const data = await adminFetch(`/api/consultations/admin/users${q ? `?search=${encodeURIComponent(q)}` : ""}`);
       setUsers(data.users ?? []);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Failed to load users.");
+      const msg = err instanceof Error ? err.message : "Failed to load users.";
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => { loadUsers(); }, []);
-
-  // Debounced search
   useEffect(() => {
     const t = setTimeout(() => loadUsers(search), 350);
     return () => clearTimeout(t);
@@ -54,6 +55,7 @@ export default function ClientsPage() {
   return (
     <div className="space-y-5">
 
+      {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-lg font-bold" style={{ color: "var(--black)" }}>Clients</h2>
@@ -74,10 +76,10 @@ export default function ClientsPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: "Total Clients",  value: clients.length },
-          { label: "Verified",       value: clients.filter(c => c.isEmailVerified).length },
-          { label: "Unverified",     value: clients.filter(c => !c.isEmailVerified).length },
-          { label: "Total Users",    value: users.length },
+          { label: "Total Clients", value: clients.length                               },
+          { label: "Verified",      value: clients.filter(c => c.isEmailVerified).length },
+          { label: "Unverified",    value: clients.filter(c => !c.isEmailVerified).length},
+          { label: "Total Users",   value: users.length                                 },
         ].map((s) => (
           <div key={s.label} className="bg-white rounded-2xl p-4" style={{ border: "1px solid var(--gray-border)" }}>
             <p className="text-2xl font-bold" style={{ color: "var(--black)" }}>{s.value}</p>
@@ -88,7 +90,7 @@ export default function ClientsPage() {
 
       {/* Error */}
       {error && (
-        <div className="rounded-xl p-4 text-sm" style={{ background: "var(--danger-light)", color: "var(--danger)", border: "1px solid var(--danger-light)" }}>
+        <div className="rounded-xl p-4 text-sm" style={{ background: "var(--danger-light)", color: "var(--danger)" }}>
           {error}
         </div>
       )}
@@ -117,9 +119,7 @@ export default function ClientsPage() {
             <RefreshCw size={20} strokeWidth={2} className="animate-spin" style={{ color: "var(--gray-text)" }} />
           </div>
         ) : clients.length === 0 ? (
-          <div className="text-center py-16 text-sm" style={{ color: "var(--gray-text)" }}>
-            No clients found.
-          </div>
+          <div className="text-center py-16 text-sm" style={{ color: "var(--gray-text)" }}>No clients found.</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -166,10 +166,7 @@ export default function ClientsPage() {
                     </td>
                     <td className="px-4 py-3.5">
                       <span className="inline-flex items-center gap-1.5 text-xs font-semibold">
-                        <span
-                          className="w-1.5 h-1.5 rounded-full"
-                          style={{ background: c.isEmailVerified ? "var(--success)" : "var(--gray-border)" }}
-                        />
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: c.isEmailVerified ? "var(--success)" : "var(--gray-border)" }} />
                         <span style={{ color: c.isEmailVerified ? "var(--success)" : "var(--gray-text)" }}>
                           {c.isEmailVerified ? "Verified" : "Unverified"}
                         </span>
@@ -190,14 +187,14 @@ export default function ClientsPage() {
                       {fmt(c.createdAt)}
                     </td>
                     <td className="px-4 py-3.5">
-                      <Link
-                        href={`/dashboard/clients/${c._id}`}
+                      <button
+                        onClick={() => setModal(c)}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg hover:opacity-80"
                         style={{ background: "var(--primary-light)", color: "var(--primary)" }}
                       >
                         <Eye size={12} strokeWidth={2.5} />
                         View
-                      </Link>
+                      </button>
                     </td>
                   </tr>
                 ))}
@@ -206,6 +203,97 @@ export default function ClientsPage() {
           </div>
         )}
       </div>
+
+      {/* Client Detail Modal */}
+      {modal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(4,30,66,0.45)" }}
+          onClick={() => setModal(null)}
+        >
+          <div
+            className="w-full max-w-md rounded-3xl p-6 space-y-5 relative"
+            style={{ background: "#fff", boxShadow: "0 24px 64px rgba(1,86,126,0.18)" }}
+            onClick={e => e.stopPropagation()}
+          >
+            {/* Close */}
+            <button
+              onClick={() => setModal(null)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-xl flex items-center justify-center hover:opacity-70"
+              style={{ background: "var(--gray-light)", color: "var(--black)" }}
+            >
+              <X size={15} strokeWidth={2.5} />
+            </button>
+
+            {/* Avatar + Name */}
+            <div className="flex items-center gap-4 pr-8">
+              <div
+                className="w-14 h-14 rounded-2xl flex items-center justify-center text-white text-xl font-bold flex-shrink-0"
+                style={{ background: avatarColors[clients.indexOf(modal) % avatarColors.length] || "var(--primary)" }}
+              >
+                {initials(modal.name)}
+              </div>
+              <div>
+                <p className="text-base font-bold" style={{ color: "var(--black)" }}>{modal.name}</p>
+                <p className="text-xs" style={{ color: "var(--gray-text)" }}>ID: {modal._id.slice(-8).toUpperCase()}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                    style={{ background: "var(--primary-light)", color: "var(--primary)" }}>
+                    {modal.role}
+                  </span>
+                  {modal.isEmailVerified
+                    ? <span className="flex items-center gap-1 text-[10px] font-bold" style={{ color: "var(--success)" }}>
+                        <ShieldCheck size={11} /> Verified
+                      </span>
+                    : <span className="flex items-center gap-1 text-[10px] font-bold" style={{ color: "var(--gray-text)" }}>
+                        <ShieldOff size={11} /> Unverified
+                      </span>
+                  }
+                </div>
+              </div>
+            </div>
+
+            {/* Info grid */}
+            <div className="space-y-3">
+              <div className="rounded-xl p-3" style={{ background: "var(--gray-light)", border: "1px solid var(--gray-border)" }}>
+                <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--gray-text)" }}>Email</p>
+                <a href={`mailto:${modal.email}`} className="text-xs font-semibold hover:underline" style={{ color: "var(--primary)" }}>{modal.email}</a>
+              </div>
+              {modal.phone && (
+                <div className="rounded-xl p-3" style={{ background: "var(--gray-light)", border: "1px solid var(--gray-border)" }}>
+                  <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--gray-text)" }}>Phone</p>
+                  <a href={`tel:${modal.phone}`} className="text-xs font-semibold" style={{ color: "var(--black)" }}>{modal.phone}</a>
+                </div>
+              )}
+              <div className="rounded-xl p-3" style={{ background: "var(--gray-light)", border: "1px solid var(--gray-border)" }}>
+                <p className="text-[10px] font-bold uppercase tracking-wider mb-1" style={{ color: "var(--gray-text)" }}>Member Since</p>
+                <p className="text-xs font-semibold" style={{ color: "var(--black)" }}>{fmt(modal.createdAt)}</p>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2 pt-1" style={{ borderTop: "1px solid var(--gray-border)" }}>
+              <a
+                href={`mailto:${modal.email}`}
+                className="flex-1 flex items-center justify-center gap-2 text-sm font-semibold py-2.5 rounded-xl hover:opacity-90"
+                style={{ background: "var(--primary)", color: "#fff" }}
+              >
+                <Mail size={14} /> Email
+              </a>
+              {modal.phone && (
+                <a
+                  href={`tel:${modal.phone}`}
+                  className="flex items-center justify-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl hover:opacity-90"
+                  style={{ background: "var(--primary-light)", color: "var(--primary)" }}
+                >
+                  <Phone size={14} />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

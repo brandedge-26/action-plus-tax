@@ -2,9 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, MapPin, Phone, Clock, Building2 } from "lucide-react";
 
-const PRIMARY = "#0046BE";
-const YELLOW  = "#FFC200";
-const DARK    = "#001040";
+const PRIMARY = "#01567E";
+const YELLOW  = "#FFF200";
+const DARK    = "#041E42";
 
 const highlights = [
   "Founded in 2012, serving the community for 12+ years",
@@ -33,7 +33,7 @@ export default function HomeAbout() {
           {/* Image side */}
           <div className="relative">
             <div className="absolute -inset-4 rounded-3xl pointer-events-none"
-              style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(0,70,190,0.07) 0%, transparent 70%)" }} />
+              style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(1,86,126,0.07) 0%, transparent 70%)" }} />
 
             <div className="relative rounded-3xl overflow-hidden" style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.12)", border: "1px solid #E2E8F0" }}>
               <Image
@@ -45,7 +45,7 @@ export default function HomeAbout() {
                 style={{ height: "420px" }}
               />
               {/* Gradient overlay */}
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(0,16,64,0.5) 0%, transparent 50%)" }} />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(4,30,66,0.5) 0%, transparent 50%)" }} />
 
               {/* Bottom label */}
               <div className="absolute bottom-5 left-5 right-5 p-4 rounded-xl flex items-center gap-3"
@@ -62,7 +62,7 @@ export default function HomeAbout() {
 
             {/* Floating years badge */}
             <div className="absolute -bottom-5 -right-5 w-24 h-24 rounded-2xl flex flex-col items-center justify-center text-center"
-              style={{ background: PRIMARY, boxShadow: "0 8px 28px rgba(0,70,190,0.35)" }}>
+              style={{ background: PRIMARY, boxShadow: "0 8px 28px rgba(1,86,126,0.35)" }}>
               <span className="text-3xl font-bold text-white leading-none">12+</span>
               <span className="text-[10px] font-bold text-white/70 mt-1 leading-tight">Years<br />Experience</span>
             </div>
@@ -71,7 +71,7 @@ export default function HomeAbout() {
           {/* Text side */}
           <div className="flex flex-col gap-6">
             <span className="inline-flex items-center self-start gap-1.5 text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
-              style={{ background: "#EBF3FF", color: PRIMARY }}>
+              style={{ background: "#E0F4F9", color: PRIMARY }}>
               <Building2 size={11} strokeWidth={3} /> About Us
             </span>
 
@@ -104,7 +104,7 @@ export default function HomeAbout() {
 
             <Link href="/consultation"
               className="inline-flex items-center self-start gap-2 font-bold px-6 py-3.5 rounded-xl text-sm transition-all hover:opacity-90"
-              style={{ background: PRIMARY, color: "#fff", boxShadow: "0 4px 20px rgba(0,70,190,0.25)" }}>
+              style={{ background: PRIMARY, color: "#fff", boxShadow: "0 4px 20px rgba(1,86,126,0.25)" }}>
               Meet Your Tax Pro
               <ArrowRight size={16} strokeWidth={2.5} />
             </Link>
@@ -118,8 +118,8 @@ export default function HomeAbout() {
           <div className="lg:col-span-3 grid sm:grid-cols-2 gap-4">
             {officeInfo.map(({ icon: Icon, label, value }) => (
               <div key={label} className="flex items-start gap-4 p-5 rounded-2xl"
-                style={{ background: "#F8FBFF", border: "1px solid #E2E8F0" }}>
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#EBF3FF" }}>
+                style={{ background: "#F0F8FA", border: "1px solid #E2E8F0" }}>
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0" style={{ background: "#E0F4F9" }}>
                   <Icon size={18} strokeWidth={1.8} style={{ color: PRIMARY }} />
                 </div>
                 <div>
@@ -157,7 +157,7 @@ export default function HomeAbout() {
               className="object-cover"
             />
             {/* Overlay */}
-            <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(0,70,190,0.65) 0%, rgba(0,16,64,0.45) 100%)" }} />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, rgba(1,86,126,0.65) 0%, rgba(4,30,66,0.45) 100%)" }} />
             {/* Text overlay */}
             <div className="absolute inset-0 flex flex-col justify-end p-7">
               <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: YELLOW }}>Our Commitment</p>

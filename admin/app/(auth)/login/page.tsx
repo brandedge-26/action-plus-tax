@@ -13,6 +13,8 @@ export default function AdminLoginPage() {
 
   const handle = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email.trim())    { toast.error("Please enter your email address."); return; }
+    if (!password.trim()) { toast.error("Please enter your password."); return; }
     setLoading(true);
     try {
       const data = await adminFetch("/api/auth/login", {

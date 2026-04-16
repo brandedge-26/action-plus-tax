@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { ArrowRight, MousePointerClick, ClipboardList, Upload, CheckCircle2 } from "lucide-react";
 
-const PRIMARY      = "#0046BE";
-const PRIMARY_DARK = "#003DA5";
-const YELLOW       = "#FFC200";
+const PRIMARY      = "#01567E";
+const PRIMARY_DARK = "#014A6A";
+const YELLOW       = "#FFF200";
 
 const steps = [
   {
@@ -38,7 +38,7 @@ export default function HomeHowItWorks() {
 
       {/* Subtle blue tint bg */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-        style={{ background: "linear-gradient(180deg, #F4F7FF 0%, #fff 100%)" }} />
+        style={{ background: "linear-gradient(180deg, #F0F8FA 0%, #fff 100%)" }} />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -80,7 +80,7 @@ export default function HomeHowItWorks() {
                   <div className="relative mb-5">
                     <div
                       className="w-[88px] h-[88px] rounded-full flex items-center justify-center border-2 bg-white"
-                      style={{ borderColor: isLast ? YELLOW : `rgba(0,70,190,0.25)` }}
+                      style={{ borderColor: isLast ? YELLOW : `rgba(1,86,126,0.25)` }}
                     >
                       <div
                         className="w-14 h-14 rounded-full flex items-center justify-center"
@@ -114,8 +114,8 @@ export default function HomeHowItWorks() {
           <Link
             href="/apply"
             className="inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl text-sm transition-all"
-            style={{ background: PRIMARY, color: "white", boxShadow: "0 4px 20px rgba(0,70,190,0.25)" }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#003DA5")}
+            style={{ background: PRIMARY, color: "white", boxShadow: "0 4px 20px rgba(1,86,126,0.25)" }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#014A6A")}
             onMouseLeave={(e) => (e.currentTarget.style.background = PRIMARY)}
           >
             Start Your Application
@@ -125,7 +125,7 @@ export default function HomeHowItWorks() {
             href="/consultation"
             className="inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl text-sm transition-all"
             style={{ background: YELLOW, color: "#0A0A0A" }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "#E6AF00")}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "#E6D900")}
             onMouseLeave={(e) => (e.currentTarget.style.background = YELLOW)}
           >
             Book an Appointment

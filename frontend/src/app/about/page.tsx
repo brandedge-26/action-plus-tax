@@ -21,8 +21,8 @@ import {
 import HeaderTest from "@/components/HeaderTest";
 import SiteFooter from "@/components/SiteFooter";
 
-const PRIMARY = "#0046BE";
-const PRIMARY_LIGHT = "#EBF3FF";
+const PRIMARY = "#01567E";
+const PRIMARY_LIGHT = "#E0F4F9";
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -136,7 +136,7 @@ export default function AboutPage() {
       <main>
 
         {/* ── Hero ── */}
-        <section className="relative overflow-hidden pt-16 pb-0" style={{ background: "#0046BE" }}>
+        <section className="relative overflow-hidden pt-16 pb-0" style={{ background: "#01567E" }}>
           {/* Grid bg */}
           <div
             className="absolute inset-0 pointer-events-none"
@@ -154,7 +154,7 @@ export default function AboutPage() {
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
             aria-hidden="true"
             style={{
-              background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.15) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse at 50% 0%, rgba(255,242,0,0.15) 0%, transparent 70%)",
             }}
           />
 
@@ -165,14 +165,14 @@ export default function AboutPage() {
               <div className="flex flex-col gap-6">
                 <span
                   className="inline-flex items-center self-start text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full"
-                  style={{ background: "#FFC200", color: "#001A57" }}
+                  style={{ background: "#FFF200", color: "#041E42" }}
                 >
                   About Us
                 </span>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-[3.2rem] font-bold text-white tracking-tight leading-[1.1]">
                   A Family Business Built on{" "}
-                  <span style={{ color: "#FFC200" }}>Trust &amp; Expertise</span>
+                  <span style={{ color: "#FFF200" }}>Trust &amp; Expertise</span>
                 </h1>
 
                 <p className="text-white/70 text-lg leading-relaxed max-w-lg">
@@ -185,14 +185,14 @@ export default function AboutPage() {
                   <Link
                     href="/consultation"
                     className="inline-flex items-center justify-center gap-2 text-white font-semibold px-7 py-3.5 rounded-xl text-base transition-all hover:opacity-90"
-                    style={{ background: "#FFC200", color: "#001A57" }}
+                    style={{ background: "#FFF200", color: "#041E42" }}
                   >
                     Book Consultation
                     <ArrowRight size={17} strokeWidth={2.5} />
                   </Link>
                   <a
                     href="tel:9125592222"
-                    className="inline-flex items-center justify-center gap-2 border border-white/30 hover:border-[#FFC200] text-white hover:text-[#FFC200] font-semibold px-7 py-3.5 rounded-xl text-base transition-all"
+                    className="inline-flex items-center justify-center gap-2 border border-white/30 hover:border-[#FFF200] text-white hover:text-[#FFF200] font-semibold px-7 py-3.5 rounded-xl text-base transition-all"
                   >
                     <Phone size={16} strokeWidth={2} />
                     912-559-2222
@@ -209,23 +209,23 @@ export default function AboutPage() {
                 />
                 <div
                   className="relative rounded-3xl p-8 border"
-                  style={{ background: "#001A57", borderColor: "rgba(255,255,255,0.07)" }}
+                  style={{ background: "#041E42", borderColor: "rgba(255,255,255,0.07)" }}
                 >
                   {/* Grid overlay */}
                   <div
                     className="absolute inset-0 rounded-3xl pointer-events-none opacity-20"
                     aria-hidden="true"
                     style={{
-                      backgroundImage: `linear-gradient(rgba(255,194,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,194,0,0.25) 1px, transparent 1px)`,
+                      backgroundImage: `linear-gradient(rgba(255,242,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,242,0,0.25) 1px, transparent 1px)`,
                       backgroundSize: "32px 32px",
                     }}
                   />
                   <div className="relative">
                     {/* Logo */}
                     <div className="text-2xl font-bold tracking-tighter mb-6">
-                      <span style={{ color: "#FFC200" }}>Action</span>
+                      <span style={{ color: "#FFF200" }}>Action</span>
                       <span className="text-white">Plus</span>
-                      <span style={{ color: "#FFC200" }}>&nbsp;Tax</span>
+                      <span style={{ color: "#FFF200" }}>&nbsp;Tax</span>
                     </div>
 
                     <p
@@ -275,7 +275,7 @@ export default function AboutPage() {
         {/* ── Stats bar ── */}
         <section
           className="relative py-12 overflow-hidden"
-          style={{ background: "#001A57" }}
+          style={{ background: "#041E42" }}
         >
           <div
             className="absolute inset-0 pointer-events-none"
@@ -287,7 +287,7 @@ export default function AboutPage() {
           />
           <div
             className="h-[2px] w-full absolute top-0"
-            style={{ background: `linear-gradient(90deg, transparent 0%, #FFC200 30%, rgba(255,255,255,0.5) 50%, #FFC200 70%, transparent 100%)` }}
+            style={{ background: `linear-gradient(90deg, transparent 0%, #FFF200 30%, rgba(255,255,255,0.5) 50%, #FFF200 70%, transparent 100%)` }}
           />
           <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-px" style={{ background: "rgba(255,255,255,0.06)" }}>
@@ -295,10 +295,10 @@ export default function AboutPage() {
                 <div
                   key={s.label}
                   className="flex flex-col items-center text-center py-8 px-4"
-                  style={{ background: "#001A57" }}
+                  style={{ background: "#041E42" }}
                 >
                   <div className="text-3xl sm:text-4xl font-bold text-white mb-1">{s.value}</div>
-                  <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#FFC200" }}>{s.label}</div>
+                  <div className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: "#FFF200" }}>{s.label}</div>
                   <div className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>{s.sub}</div>
                 </div>
               ))}
@@ -315,13 +315,13 @@ export default function AboutPage() {
               <div>
                 <span
                   className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5"
-                  style={{ background: "#FFC200", color: "#001A57" }}
+                  style={{ background: "#FFF200", color: "#041E42" }}
                 >
                   Our Mission
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight leading-tight mb-5">
                   Making Tax Season{" "}
-                  <span style={{ color: "#FFC200" }}>Simple & Stress-Free</span>
+                  <span style={{ color: "#FFF200" }}>Simple & Stress-Free</span>
                 </h2>
                 <p className="text-gray-500 text-base leading-relaxed mb-5">
                   We believe every person deserves expert tax help — not just those who can afford big firms.
@@ -344,7 +344,7 @@ export default function AboutPage() {
                 ].map((item) => (
                   <div
                     key={item.label}
-                    className="rounded-2xl p-5 border border-gray-100 hover:border-[#FFC200] hover:shadow-md transition-all group"
+                    className="rounded-2xl p-5 border border-gray-100 hover:border-[#01567E] hover:shadow-md transition-all group"
                   >
                     <div
                       className="text-xs font-bold uppercase tracking-widest mb-2"
@@ -361,19 +361,19 @@ export default function AboutPage() {
         </section>
 
         {/* ── Timeline ── */}
-        <section className="py-20 lg:py-28" style={{ background: "#F4F7FF" }}>
+        <section className="py-20 lg:py-28" style={{ background: "#F0F8FA" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <div className="text-center mb-14">
               <span
                 className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-                style={{ background: "#FFC200", color: "#001A57" }}
+                style={{ background: "#FFF200", color: "#041E42" }}
               >
                 Our Journey
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
                 From Liberty Tax to{" "}
-                <span style={{ color: "#FFC200" }}>Action Plus Tax</span>
+                <span style={{ color: "#FFF200" }}>Action Plus Tax</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
                 Over a decade of growth, technology, and community service.
@@ -386,7 +386,7 @@ export default function AboutPage() {
               <div
                 className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px hidden md:block"
                 style={{
-                  background: "linear-gradient(to bottom, transparent 0%, rgba(255,194,0,0.2) 10%, rgba(255,194,0,0.2) 90%, transparent 100%)",
+                  background: "linear-gradient(to bottom, transparent 0%, rgba(255,242,0,0.2) 10%, rgba(255,242,0,0.2) 90%, transparent 100%)",
                 }}
               />
 
@@ -404,11 +404,11 @@ export default function AboutPage() {
                       {/* Content card — half width on desktop */}
                       <div className={`flex-1 md:w-[calc(50%-3rem)] md:flex-none ${isEven ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
                         <div
-                          className="bg-white rounded-2xl p-5 border border-gray-100 hover:border-[#FFC200]/50 hover:shadow-md transition-all"
+                          className="bg-white rounded-2xl p-5 border border-gray-100 hover:border-[#01567E]/50 hover:shadow-md transition-all"
                         >
                           <span
                             className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full inline-block mb-2"
-                            style={{ background: "#FFC200", color: "#001A57" }}
+                            style={{ background: "#FFF200", color: "#041E42" }}
                           >
                             {item.year}
                           </span>
@@ -438,7 +438,7 @@ export default function AboutPage() {
                         >
                           <Icon size={18} strokeWidth={1.8} />
                         </div>
-                        <span className="text-[9px] font-bold" style={{ color: "#FFC200" }}>{item.year}</span>
+                        <span className="text-[9px] font-bold" style={{ color: "#FFF200" }}>{item.year}</span>
                       </div>
 
                       {/* Spacer for opposite side on desktop */}
@@ -454,7 +454,7 @@ export default function AboutPage() {
         {/* ── Values ── */}
         <section
           className="py-20 lg:py-24 relative overflow-hidden"
-          style={{ background: "#001A57" }}
+          style={{ background: "#041E42" }}
         >
           <div
             className="absolute inset-0 pointer-events-none"
@@ -467,20 +467,20 @@ export default function AboutPage() {
           <div
             className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] pointer-events-none"
             aria-hidden="true"
-            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.15) 0%, transparent 70%)" }}
+            style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,242,0,0.15) 0%, transparent 70%)" }}
           />
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <span
                 className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-                style={{ background: "#FFC200", color: "#001A57" }}
+                style={{ background: "#FFF200", color: "#041E42" }}
               >
                 Our Values
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
                 What We{" "}
-                <span style={{ color: "#FFC200" }}>Stand For</span>
+                <span style={{ color: "#FFF200" }}>Stand For</span>
               </h2>
             </div>
 
@@ -490,16 +490,16 @@ export default function AboutPage() {
                 return (
                   <div
                     key={v.title}
-                    className="rounded-2xl p-6 border transition-all hover:border-[#FFC200] group flex flex-col gap-4"
+                    className="rounded-2xl p-6 border transition-all hover:border-[#FFF200] group flex flex-col gap-4"
                     style={{ background: "rgba(255,255,255,0.03)", borderColor: "rgba(255,255,255,0.07)" }}
                   >
                     <div
                       className="w-11 h-11 rounded-xl flex items-center justify-center"
-                      style={{ background: "#FFC200", color: "#001A57" }}
+                      style={{ background: "#FFF200", color: "#041E42" }}
                     >
                       <Icon size={20} strokeWidth={1.8} />
                     </div>
-                    <h3 className="text-base font-bold text-white group-hover:text-[#FFC200] transition-colors">
+                    <h3 className="text-base font-bold text-white group-hover:text-[#FFF200] transition-colors">
                       {v.title}
                     </h3>
                     <p className="text-sm text-gray-400 leading-relaxed">{v.desc}</p>
@@ -517,13 +517,13 @@ export default function AboutPage() {
             <div className="text-center mb-14">
               <span
                 className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4"
-                style={{ background: "#FFC200", color: "#001A57" }}
+                style={{ background: "#FFF200", color: "#041E42" }}
               >
                 Why Choose Us
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
                 The Action Plus Tax{" "}
-                <span style={{ color: "#FFC200" }}>Difference</span>
+                <span style={{ color: "#FFF200" }}>Difference</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
                 We are not a tax machine. We are Tax Pros who genuinely care about your outcome.
@@ -536,12 +536,12 @@ export default function AboutPage() {
                 return (
                   <div
                     key={item.title}
-                    className="group flex gap-5 bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#FFC200] hover:shadow-lg transition-all"
+                    className="group flex gap-5 bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#01567E] hover:shadow-lg transition-all"
                   >
                     <div className="shrink-0">
                       <div
                         className="w-11 h-11 rounded-xl flex items-center justify-center"
-                        style={{ background: "#FFC200", color: "#001A57" }}
+                        style={{ background: "#FFF200", color: "#041E42" }}
                       >
                         <Icon size={20} strokeWidth={1.8} />
                       </div>
@@ -549,7 +549,7 @@ export default function AboutPage() {
                     <div>
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className="text-[10px] font-bold text-gray-300">0{i + 1}</span>
-                        <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFC200] transition-colors">
+                        <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors">
                           {item.title}
                         </h3>
                       </div>
@@ -563,25 +563,25 @@ export default function AboutPage() {
         </section>
 
         {/* ── CTA ── */}
-        <section className="py-20 lg:py-24" style={{ background: "#F4F7FF" }}>
+        <section className="py-20 lg:py-24" style={{ background: "#F0F8FA" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div
               className="relative rounded-3xl overflow-hidden px-8 sm:px-16 py-16 text-center"
-              style={{ background: "#001A57" }}
+              style={{ background: "#041E42" }}
             >
               {/* Grid */}
               <div
                 className="absolute inset-0 pointer-events-none opacity-20"
                 aria-hidden="true"
                 style={{
-                  backgroundImage: `linear-gradient(rgba(255,194,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,194,0,0.25) 1px, transparent 1px)`,
+                  backgroundImage: `linear-gradient(rgba(255,242,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,242,0,0.25) 1px, transparent 1px)`,
                   backgroundSize: "40px 40px",
                 }}
               />
               {/* Glow */}
               <div
                 className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[200px] pointer-events-none"
-                style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.2) 0%, transparent 70%)" }}
+                style={{ background: "radial-gradient(ellipse at 50% 0%, rgba(255,242,0,0.2) 0%, transparent 70%)" }}
               />
               {/* Top accent */}
               <div
@@ -590,7 +590,7 @@ export default function AboutPage() {
               />
 
               <div className="relative">
-                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#FFC200" }}>
+                <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "#FFF200" }}>
                   Ready to Get Started?
                 </p>
                 <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-5">

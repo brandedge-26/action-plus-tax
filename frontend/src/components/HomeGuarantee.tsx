@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { ShieldCheck, BadgeCheck, Award } from "lucide-react";
 
-const PRIMARY       = "#0046BE";
-const YELLOW        = "#FFC200";
+const PRIMARY       = "#01567E";
+const YELLOW        = "#FFF200";
 
 const stats = [
   { value: "2012",   label: "Founded" },
@@ -39,7 +39,7 @@ export default function HomeGuarantee() {
   return (
     <section
       className="py-20 lg:py-28 relative overflow-hidden"
-      style={{ background: "#001A57" }}
+      style={{ background: "#041E42" }}
     >
       {/* Grid */}
       <div
@@ -58,7 +58,7 @@ export default function HomeGuarantee() {
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] pointer-events-none"
         aria-hidden="true"
         style={{
-          background: "radial-gradient(ellipse at 50% 0%, rgba(255,194,0,0.15) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse at 50% 0%, rgba(255,242,0,0.15) 0%, transparent 70%)",
         }}
       />
 
@@ -90,7 +90,7 @@ export default function HomeGuarantee() {
             <div
               key={s.label}
               className="flex flex-col items-center justify-center py-6 px-4 text-center"
-              style={{ background: "#001A57" }}
+              style={{ background: "#041E42" }}
             >
               <span className="text-3xl font-bold" style={{ color: YELLOW }}>{s.value}</span>
               <span className="text-xs mt-1 uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.45)" }}>{s.label}</span>
@@ -106,10 +106,10 @@ export default function HomeGuarantee() {
             fill
             className="object-cover"
           />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(0,26,87,0.85) 0%, rgba(0,26,87,0.3) 50%, rgba(0,26,87,0.7) 100%)" }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(90deg, rgba(4,30,66,0.85) 0%, rgba(4,30,66,0.3) 50%, rgba(4,30,66,0.7) 100%)" }} />
           <div className="absolute inset-0 flex items-center px-10 lg:px-16">
             <div className="max-w-lg">
-              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#FFC200" }}>Our Office</p>
+              <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#FFF200" }}>Our Office</p>
               <h3 className="text-xl lg:text-2xl font-bold text-white leading-snug">
                 A Modern, Professional Tax Office — Built Around You
               </h3>
@@ -144,7 +144,7 @@ export default function HomeGuarantee() {
                   </div>
                   <span
                     className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full self-start mt-1"
-                    style={{ background: "rgba(255,194,0,0.15)", color: YELLOW }}
+                    style={{ background: "rgba(255,242,0,0.15)", color: YELLOW }}
                   >
                     {g.badge}
                   </span>
