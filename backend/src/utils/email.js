@@ -276,7 +276,189 @@ export const sendWelcomeEmail = async ({ to, name }) => {
 
 
 
+// APPOINTMENT STATUS EMAIL TEMPLATE
+const appointmentStatusEmailTemplate = (fullName, status, date, time, service) => {
+
+    const statusConfig = {
+        confirmed: {
+            color: "#27ae60",
+            gradientFrom: "#27ae60",
+            gradientTo: "#2ecc71",
+            icon: "",
+            title: "Appointment Confirmed!",
+            message: "Great news! Your appointment has been confirmed. We look forward to seeing you.",
+            badgeText: "CONFIRMED",
+        },
+        scheduled: {
+            color: "#2980b9",
+            gradientFrom: "#2980b9",
+            gradientTo: "#3498db",
+            icon: "📅",
+            title: "Appointment Scheduled!",
+            message: "Your appointment has been scheduled. Please make sure to be available at the given date and time.",
+            badgeText: "SCHEDULED",
+        },
+        cancelled: {
+            color: "#c0392b",
+            gradientFrom: "#c0392b",
+            gradientTo: "#e74c3c",
+            icon: "❌",
+            title: "Appointment Cancelled",
+            message: "We're sorry to inform you that your appointment has been cancelled. Please feel free to book a new appointment.",
+            badgeText: "CANCELLED",
+        },
+        completed: {
+            color: "#8e44ad",
+            gradientFrom: "#8e44ad",
+            gradientTo: "#9b59b6",
+            icon: "🎉",
+            title: "Appointment Completed!",
+            message: "Thank you for your visit! We hope you had a great experience. Feel free to reach out if you need anything.",
+            badgeText: "COMPLETED",
+        },
+        pending: {
+            color: "#f39c12",
+            gradientFrom: "#f39c12",
+            gradientTo: "#f1c40f",
+            icon: "⏳",
+            title: "Appointment Pending",
+            message: "Your appointment is currently pending review. We will confirm it shortly within 1 business day.",
+            badgeText: "PENDING",
+        },
+    };
+
+    const cfg = statusConfig[status] || statusConfig.pending;
+
+    return {
+        subject: `Appointment ${cfg.badgeText} - Action Plus Tax`,
+        text: `Hi ${fullName}, your appointment for ${service} on ${date} at ${time} has been ${status}. ${cfg.message}`,
+        html: `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Update - Action Plus Tax</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7fa;">
+    <table role="presentation" style="width: 100%; border-collapse: collapse; background-color: #f4f7fa;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+
+                <table role="presentation" style="max-width: 600px; width: 100%; border-collapse: collapse; background: linear-gradient(135deg, ${cfg.gradientFrom} 0%, ${cfg.gradientTo} 100%); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: rgba(255,255,255,0.15); padding: 40px 30px; text-align: center;">
+                            <h1 style="margin: 0; color: #ffffff; font-size: 30px; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.2);">
+                                ${cfg.title}
+                            </h1>
+                            <p style="margin: 10px 0 0 0; color: rgba(255,255,255,0.9); font-size: 14px; font-weight: 300;">
+                                Action Plus Tax - Appointment Update
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style="background-color: #ffffff; padding: 50px 40px;">
+
+                            <h2 style="margin: 0 0 10px 0; color: #2d3748; font-size: 22px; font-weight: 600;">
+                                Hi ${fullName},
+                            </h2>
+
+                            <p style="margin: 0 0 30px 0; color: #4a5568; font-size: 16px; line-height: 1.8;">
+                                ${cfg.message}
+                            </p>
+
+                            <!-- Appointment Details Box -->
+                            <table role="presentation" style="width: 100%; margin: 20px 0; background-color: #f7fafc; border-radius: 12px; border-left: 5px solid ${cfg.color};">
+                                <tr>
+                                    <td style="padding: 25px 30px;">
+                                        <p style="margin: 0 0 15px 0; color: #2d3748; font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                                            Appointment Details
+                                        </p>
+                                        <table role="presentation" style="width: 100%; border-collapse: collapse;">
+                                            <tr>
+                                                <td style="padding: 6px 0; color: #718096; font-size: 14px; width: 110px;">Service:</td>
+                                                <td style="padding: 6px 0; color: #2d3748; font-size: 14px; font-weight: 600;">${service}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 6px 0; color: #718096; font-size: 14px;">Date:</td>
+                                                <td style="padding: 6px 0; color: #2d3748; font-size: 14px; font-weight: 600;">${date}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 6px 0; color: #718096; font-size: 14px;">Time:</td>
+                                                <td style="padding: 6px 0; color: #2d3748; font-size: 14px; font-weight: 600;">${time}</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 6px 0; color: #718096; font-size: 14px;">Status:</td>
+                                                <td style="padding: 6px 0;">
+                                                    <span style="display: inline-block; background-color: ${cfg.color}; color: #ffffff; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 1px;">
+                                                        ${cfg.badgeText}
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style="margin: 30px 0 0 0; color: #718096; font-size: 14px; line-height: 1.7;">
+                                If you have any questions, feel free to contact us. We're always happy to help!
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #f7fafc; padding: 30px; text-align: center; border-top: 1px solid #e2e8f0;">
+                            <p style="margin: 0 0 10px 0; color: #718096; font-size: 14px;">
+                                Action Plus Tax | Professional Tax Services
+                            </p>
+                            <p style="margin: 0; color: #cbd5e0; font-size: 12px;">
+                                © ${new Date().getFullYear()} Action Plus Tax. All rights reserved.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+        `.trim()
+    };
+};
+
+
+
+
+// SEND APPOINTMENT STATUS EMAIL
+export const sendAppointmentStatusEmail = async ({ to, fullName, status, date, time, service }) => {
+
+    const tpl = appointmentStatusEmailTemplate(fullName, status, date, time, service);
+
+    const mailOptions = {
+        from: `"Action Plus Tax" <${ENV.SENDER_EMAIL}>`,
+        to: to,
+        subject: tpl.subject,
+        text: tpl.text,
+        html: tpl.html,
+    };
+
+    return mailTransporter.sendMail(mailOptions);
+
+};
+
+
+
+
 export {
     otpEmailTemplate,
-    welcomeEmailTemplate
+    welcomeEmailTemplate,
+    appointmentStatusEmailTemplate
 };

@@ -231,13 +231,15 @@ export default function ConsultationPage() {
         </section>
 
         {/* ── Main Content ── */}
-        <section className="bg-white pb-20 lg:pb-28">
+        <section className="pb-20 lg:pb-28 pt-10" style={{ background: "#F8FAFC" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-5 gap-8 items-start">
 
               {/* ── Booking Form ── */}
               <div className="lg:col-span-3">
-                <div className="bg-white border border-gray-100 rounded-3xl p-7 sm:p-9 shadow-sm">
+                <div className="bg-white border border-gray-100 rounded-3xl p-7 sm:p-9 shadow-sm"
+                  style={{ borderTop: `3px solid ${PRIMARY}` }}
+                >
 
                   {done ? (
                     <div className="flex flex-col items-center text-center gap-5 py-10">
@@ -276,16 +278,16 @@ export default function ConsultationPage() {
                           <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3">Your Information</p>
                           <div className="grid sm:grid-cols-2 gap-4">
                             <div>
-                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Full Name <span style={{ color: "#FFF200" }}>*</span></label>
+                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Full Name <span style={{ color: "#DC2626" }}>*</span></label>
                               <input type="text" name="fullName" required value={form.fullName} onChange={handleChange} placeholder="John Smith" className={inputCls} />
                             </div>
                             <div>
-                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Phone Number <span style={{ color: "#FFF200" }}>*</span></label>
+                              <label className="block text-xs font-semibold text-gray-600 mb-1.5">Phone Number <span style={{ color: "#DC2626" }}>*</span></label>
                               <input type="tel" name="phone" required value={form.phone} onChange={handleChange} placeholder="(912) 000-0000" className={inputCls} />
                             </div>
                           </div>
                           <div className="mt-4">
-                            <label className="block text-xs font-semibold text-gray-600 mb-1.5">Email Address <span style={{ color: "#FFF200" }}>*</span></label>
+                            <label className="block text-xs font-semibold text-gray-600 mb-1.5">Email Address <span style={{ color: "#DC2626" }}>*</span></label>
                             <input type="email" name="email" required value={form.email} onChange={handleChange} placeholder="you@email.com" className={inputCls} />
                           </div>
                         </div>
@@ -312,7 +314,7 @@ export default function ConsultationPage() {
                             />
                           </div>
                           {form.date && (
-                            <p className="text-xs font-semibold mt-2" style={{ color: "#FFF200" }}>
+                            <p className="text-xs font-semibold mt-2" style={{ color: PRIMARY }}>
                               ✓ Selected: {new Date(form.date + "T00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" })}
                             </p>
                           )}
@@ -358,8 +360,8 @@ export default function ConsultationPage() {
                         <button
                           type="submit"
                           disabled={loading || !form.date || !form.time}
-                          className="w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-50"
-                          style={{ background: "#FFF200", color: "#041E42" }}
+                          className="w-full flex items-center justify-center gap-2 font-semibold py-3.5 rounded-xl transition-all hover:opacity-90 disabled:opacity-50"
+                          style={{ background: PRIMARY, color: "#fff" }}
                         >
                           {loading ? (
                             <>
@@ -461,7 +463,7 @@ export default function ConsultationPage() {
                       <li key={h.day} className="flex items-center justify-between gap-3 py-2 px-3 rounded-xl" style={{ background: "#F0F8FA" }}>
                         <span className="text-sm text-gray-600">{h.day}</span>
                         <span className="text-xs font-semibold px-2.5 py-1 rounded-full"
-                          style={h.open ? { background: "#FFF200", color: "#041E42" } : { background: "#FEE2E2", color: "#DC2626" }}>
+                          style={h.open ? { background: "#DCFCE7", color: "#16a34a" } : { background: "#FEE2E2", color: "#DC2626" }}>
                           {h.time}
                         </span>
                       </li>
@@ -471,7 +473,10 @@ export default function ConsultationPage() {
 
                 {/* Contact page link */}
                 <Link href="/contact"
-                  className="flex items-center justify-center gap-2 border border-white/20 hover:border-[#FFF200] text-white/70 hover:text-[#FFF200] font-semibold py-3.5 rounded-2xl text-sm transition-all"
+                  className="flex items-center justify-center gap-2 font-semibold py-3.5 rounded-2xl text-sm transition-all border hover:shadow-md"
+                  style={{ border: "1px solid #E2E8F0", color: PRIMARY, background: "white" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = PRIMARY; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = "#E2E8F0"; }}
                 >
                   Send a Message Instead
                   <ArrowRight size={14} strokeWidth={2.5} />

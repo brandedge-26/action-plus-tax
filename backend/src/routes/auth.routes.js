@@ -12,6 +12,7 @@ import {
     forgotPasswordController,
     resetPasswordController,
     getMeController,
+    changePasswordController,
 } from "../controllers/auth.controller.js";
 import { authLimiter, otpLimiter } from "../middlewares/rateLimiter.middleware.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
@@ -39,5 +40,6 @@ authRoutes.post("/reset-password", authLimiter, resetPasswordController);
 // PROTECTED ROUTES
 authRoutes.get("/me", authMiddleware, getMeController);
 authRoutes.patch("/update-profile", authMiddleware, updateProfileController);
+authRoutes.patch("/change-password", authMiddleware, changePasswordController);
 authRoutes.patch("/upload-avatar", authMiddleware, upload.single("avatar"), uploadAvatarController);
 authRoutes.delete("/delete-account", authMiddleware, deleteAccountController);

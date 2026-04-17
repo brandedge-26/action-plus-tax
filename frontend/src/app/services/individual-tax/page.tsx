@@ -129,18 +129,18 @@ export default function IndividualTaxPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style={{ background: "#FFF200", color: "#041E42" }}>The Process</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">From Documents to <span style={{ color: "#FFF200" }}>Refund in Minutes</span></h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">From Documents to <span style={{ color: "#01567E" }}>Refund in Minutes</span></h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">We handle the hard part — you just bring your documents.</p>
             </div>
             <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               <div className="hidden lg:block absolute top-10 left-[12.5%] right-[12.5%] h-px" style={{ background: `linear-gradient(90deg, ${PRIMARY}, #60A5FA, ${PRIMARY})`, opacity: 0.2 }} />
               {steps.map((s, i) => (
-                <div key={s.step} className="relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#FFF200] hover:shadow-xl transition-all duration-300 group">
+                <div key={s.step} className="relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#01567E] hover:shadow-xl transition-all duration-300 group">
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 text-sm font-bold border-2"
                     style={{ background: i === steps.length - 1 ? PRIMARY : PRIMARY_LIGHT, color: i === steps.length - 1 ? "white" : PRIMARY, borderColor: i === steps.length - 1 ? PRIMARY : "transparent" }}>
                     {s.step}
                   </div>
-                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors mb-2">{s.title}</h3>
+                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors mb-2">{s.title}</h3>
                   <p className="text-xs text-gray-500 leading-relaxed">{s.desc}</p>
                 </div>
               ))}
@@ -182,15 +182,15 @@ export default function IndividualTaxPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-14">
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style={{ background: "#FFF200", color: "#041E42" }}>FAQ</span>
-              <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">Common <span style={{ color: "#FFF200" }}>Questions</span></h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">Common <span style={{ color: "#01567E" }}>Questions</span></h2>
             </div>
             <div className="space-y-4">
               {faqs.map((faq, i) => (
-                <div key={faq.q} className="bg-white border border-gray-100 rounded-2xl p-7 hover:border-[#FFF200] hover:shadow-md transition-all group">
+                <div key={faq.q} className="bg-white border border-gray-100 rounded-2xl p-7 hover:border-[#01567E] hover:shadow-md transition-all group">
                   <div className="flex items-start gap-4">
                     <span className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold mt-0.5" style={{ background: "#FFF200", color: "#041E42" }}>{String(i + 1).padStart(2, "0")}</span>
                     <div>
-                      <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors mb-2">{faq.q}</h3>
+                      <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors mb-2">{faq.q}</h3>
                       <p className="text-sm text-gray-500 leading-relaxed">{faq.a}</p>
                     </div>
                   </div>
@@ -209,8 +209,8 @@ export default function IndividualTaxPage() {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {related.map((r) => (
-                <Link key={r.title} href={r.href} className="group bg-white border border-gray-100 rounded-xl p-5 hover:border-[#FFF200] hover:shadow-lg transition-all flex items-center justify-between">
-                  <div><p className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors">{r.title}</p><p className="text-xs text-gray-400 mt-0.5">{r.sub}</p></div>
+                <Link key={r.title} href={r.href} className="group bg-white border border-gray-100 rounded-xl p-5 hover:border-[#01567E] hover:shadow-lg transition-all flex items-center justify-between">
+                  <div><p className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors">{r.title}</p><p className="text-xs text-gray-400 mt-0.5">{r.sub}</p></div>
                   <ArrowRight size={14} strokeWidth={2.5} style={{ color: PRIMARY }} className="shrink-0 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               ))}

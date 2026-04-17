@@ -166,9 +166,9 @@ export default function ContactPage() {
         </section>
 
         {/* ── Contact Method Cards ── */}
-        <section className="bg-white pb-6">
+        <section className="bg-white pb-8 mt-8 relative z-10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid sm:grid-cols-3 gap-4">
+            <div className="grid sm:grid-cols-3 gap-4 shadow-[0_4px_24px_rgba(0,0,0,0.06)] rounded-2xl overflow-hidden p-0.5 bg-white">
               {contactMethods.map((m) => {
                 const Icon = m.icon;
                 return (
@@ -177,7 +177,7 @@ export default function ContactPage() {
                     href={m.href}
                     target={m.href.startsWith("http") ? "_blank" : undefined}
                     rel="noreferrer"
-                    className="group flex items-start gap-4 bg-white border border-gray-100 rounded-2xl p-5 hover:border-[#01567E] hover:shadow-md transition-all"
+                    className="group flex items-start gap-4 bg-white border border-gray-100 rounded-xl p-5 hover:border-[#01567E] hover:shadow-md transition-all"
                   >
                     <div
                       className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
@@ -204,17 +204,13 @@ export default function ContactPage() {
         </section>
 
         {/* ── Form + Info ── */}
-        <section className="relative py-12 lg:py-16 overflow-hidden" style={{ background: "#01567E" }}>
-          {/* Grid overlay */}
-          <div className="absolute inset-0 pointer-events-none" aria-hidden="true"
-            style={{ backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)`, backgroundSize: "48px 48px" }}
-          />
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative py-12 lg:py-16 overflow-hidden" style={{ background: "#F8FAFC" }}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-5 gap-8 items-start">
 
               {/* ── Contact Form ── */}
               <div className="lg:col-span-3">
-                <div className="bg-white border border-gray-100 rounded-3xl p-7 sm:p-9 shadow-sm">
+                <div className="bg-white border border-gray-100 rounded-3xl p-7 sm:p-9 shadow-sm" style={{ borderTop: `3px solid ${PRIMARY}` }}>
                   <h2 className="text-xl font-bold text-[#0A0A0A] mb-1">Send Us a Message</h2>
                   <p className="text-sm text-gray-400 mb-7">
                     Fill in the form and a Tax Pro will get back to you shortly.
@@ -434,7 +430,7 @@ export default function ContactPage() {
                         </div>
                         <div>
                           <a href="tel:9125592222" className="text-white text-sm font-medium hover:text-[#01567E] transition-colors block">912-559-2222</a>
-                          <a href="tel:9125592223" className="text-white/50 text-sm hover:text-[#FFF200] transition-colors block">912-559-2223</a>
+                          <a href="tel:9125592223" className="text-white/50 text-sm hover:text-white transition-colors block">912-559-2223</a>
                         </div>
                       </div>
                     </div>
@@ -459,7 +455,7 @@ export default function ContactPage() {
                           className="text-xs font-semibold px-2.5 py-1 rounded-full"
                           style={
                             h.open
-                              ? { background: "#FFF200", color: "#041E42" }
+                              ? { background: "#DCFCE7", color: "#16a34a" }
                               : { background: "#FEE2E2", color: "#DC2626" }
                           }
                         >
@@ -474,7 +470,7 @@ export default function ContactPage() {
                 <Link
                   href="/consultation"
                   className="flex items-center justify-center gap-2 font-semibold py-4 rounded-2xl transition-all hover:opacity-90 shadow-lg"
-                  style={{ background: "#041E42", color: "#FFF200" }}
+                  style={{ background: PRIMARY, color: "#fff" }}
                 >
                   Book an Appointment
                   <ArrowRight size={16} strokeWidth={2.5} />
@@ -485,7 +481,7 @@ export default function ContactPage() {
         </section>
 
         {/* ── Google Map ── */}
-        <section className="bg-white pb-16">
+        <section className="pb-16" style={{ background: "#F8FAFC" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="rounded-3xl overflow-hidden border border-gray-100 shadow-sm" style={{ height: "360px" }}>
               <iframe

@@ -72,9 +72,10 @@ function AvatarDropdown() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [profileModal, setProfileModal] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
+  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
@@ -95,70 +96,131 @@ function AvatarDropdown() {
   };
 
   return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 rounded-xl px-2 py-1.5 transition-colors"
-        style={{ color: "white" }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-      >
-        {/* Avatar circle */}
-        <div
-          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
-          style={{ background: "#FFF200", color: "#041E42" }}
+    <>
+      <div className="relative" ref={ref}>
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="flex items-center gap-2 rounded-xl px-2 py-1.5 transition-colors"
+          style={{ color: "white" }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.1)")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
-          {initials}
-        </div>
-        <span className="text-sm font-medium hidden lg:block max-w-[120px] truncate">
-          {displayName}
-        </span>
-        <ChevronDown
-          size={14}
-          strokeWidth={2.5}
-          className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      {/* Dropdown */}
-      {open && (
-        <div
-          className="absolute right-0 top-[calc(100%+10px)] w-56 rounded-2xl border shadow-xl overflow-hidden z-50"
-          style={{ background: "white", borderColor: "rgba(0,0,0,0.08)" }}
-        >
-          {/* User info */}
-          <div className=" px-4 py-3.5 border-b border-gray-100">
-            <p className="text-sm font-bold text-[#0A0A0A] truncate">{user.name}</p>
-            <p className="text-xs text-gray-400 truncate">{user.email}</p>
+          <div
+            className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0"
+            style={{ background: "#FFF200", color: "#041E42" }}
+          >
+            {initials}
           </div>
+          <span className="text-sm font-medium hidden lg:block max-w-[120px] truncate">
+            {displayName}
+          </span>
+          <ChevronDown
+            size={14}
+            strokeWidth={2.5}
+            className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          />
+        </button>
 
-          {/* Menu items */}
-          <div className="py-1.5">
-            <Link
-              href="/profile"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-            >
-              <User size={15} strokeWidth={2} className="text-gray-400" />
-              My Profile
-            </Link>
+        {/* Dropdown */}
+        {open && (
+          <div
+            className="absolute right-0 top-[calc(100%+10px)] w-52 rounded-2xl border shadow-xl overflow-hidden z-50"
+            style={{ background: "white", borderColor: "rgba(0,0,0,0.08)" }}
+          >
+            <div className="py-1.5">
+              <button
+                onClick={() => { setProfileModal(true); setOpen(false); }}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+              >
+                <User size={15} strokeWidth={2} className="text-gray-400" />
+                My Profile
+              </button>
 
-            <div className="mx-3 my-1.5 h-px bg-gray-100" />
+              <div className="mx-3 my-1.5 h-px bg-gray-100" />
 
-            <button
-              onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors"
-              style={{ color: "#DC2626" }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "#FEF2F2")}
-              onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-            >
-              <LogOut size={15} strokeWidth={2} />
-              Sign Out
-            </button>
+              <button
+                onClick={handleLogout}
+                className="w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors"
+                style={{ color: "#DC2626" }}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "#FEF2F2")}
+                onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+              >
+                <LogOut size={15} strokeWidth={2} />
+                Sign Out
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Profile Modal */}
+      {profileModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center px-4"
+          style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setProfileModal(false); }}
+        >
+          <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl overflow-hidden">
+            {/* Header */}
+            <div className="px-6 pt-6 pb-4 border-b border-gray-100 flex items-center justify-between">
+              <h3 className="text-base font-bold text-[#0A0A0A]">My Profile</h3>
+              <button
+                onClick={() => setProfileModal(false)}
+                className="w-8 h-8 rounded-xl flex items-center justify-center text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-all"
+              >
+                <X size={16} strokeWidth={2} />
+              </button>
+            </div>
+
+            {/* Body */}
+            <div className="px-6 py-5">
+              {/* Avatar */}
+              <div className="flex items-center gap-4 mb-5">
+                <div
+                  className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-bold shrink-0"
+                  style={{ background: "#FFF200", color: "#041E42" }}
+                >
+                  {initials}
+                </div>
+                <div>
+                  <p className="font-bold text-[#0A0A0A] text-sm">{user.name}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">Verified Client</p>
+                </div>
+              </div>
+
+              {/* Info rows */}
+              <div className="space-y-3">
+                <div className="flex flex-col gap-0.5 p-3 rounded-xl" style={{ background: "#F8FAFC" }}>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Full Name</span>
+                  <span className="text-sm font-semibold text-[#0A0A0A]">{user.name}</span>
+                </div>
+                <div className="flex flex-col gap-0.5 p-3 rounded-xl" style={{ background: "#F8FAFC" }}>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Email Address</span>
+                  <span className="text-sm font-semibold text-[#0A0A0A]">{user.email}</span>
+                </div>
+                {"phone" in user && user.phone && (
+                  <div className="flex flex-col gap-0.5 p-3 rounded-xl" style={{ background: "#F8FAFC" }}>
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Phone Number</span>
+                    <span className="text-sm font-semibold text-[#0A0A0A]">{(user as { phone: string }).phone}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 pb-5">
+              <button
+                onClick={() => setProfileModal(false)}
+                className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all hover:opacity-90"
+                style={{ background: PRIMARY, color: "#fff" }}
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

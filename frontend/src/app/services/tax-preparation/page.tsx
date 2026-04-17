@@ -118,7 +118,7 @@ export default function TaxPreparationPage() {
                     <div key={h.label} className="rounded-xl p-3 text-center border"
                       style={{ background: PRIMARY_LIGHT, borderColor: "rgba(255,242,0,0.15)" }}
                     >
-                      <div className="text-lg font-bold" style={{ color: "#FFF200" }}>{h.value}</div>
+                      <div className="text-lg font-bold" style={{ color: "#01567E" }}>{h.value}</div>
                       <div className="text-[10px] text-gray-500 mt-0.5 leading-tight">{h.label}</div>
                     </div>
                   ))}
@@ -194,7 +194,7 @@ export default function TaxPreparationPage() {
                 The Process
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
-                Filing Taxes Has Never Been <span style={{ color: "#FFF200" }}>This Simple</span>
+                Filing Taxes Has Never Been <span style={{ color: "#01567E" }}>This Simple</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">Four steps — and we handle most of the work.</p>
             </div>
@@ -237,7 +237,7 @@ export default function TaxPreparationPage() {
                 Why Choose Us
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                The Action Plus Tax <span style={{ color: "#FFF200" }}>Advantage</span>
+                The Action Plus Tax <span style={{ color: "#01567E" }}>Advantage</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
                 Every advantage we offer directly benefits your refund, your peace of mind, and your time.
@@ -274,7 +274,7 @@ export default function TaxPreparationPage() {
                 FAQ
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
-                Common <span style={{ color: "#FFF200" }}>Questions</span>
+                Common <span style={{ color: "#01567E" }}>Questions</span>
               </h2>
             </div>
 
@@ -290,7 +290,7 @@ export default function TaxPreparationPage() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
-                      <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors mb-2">{faq.q}</h3>
+                      <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors mb-2">{faq.q}</h3>
                       <p className="text-sm text-gray-500 leading-relaxed">{faq.a}</p>
                     </div>
                   </div>
@@ -305,7 +305,7 @@ export default function TaxPreparationPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-lg font-bold text-[#0A0A0A]">Related Services</h3>
-              <Link href="/services" className="flex items-center gap-1 text-xs font-bold transition-colors" style={{ color: "#FFF200" }}>
+              <Link href="/services" className="flex items-center gap-1 text-xs font-bold transition-colors" style={{ color: "#01567E" }}>
                 View All <ChevronRight size={13} strokeWidth={2.5} />
               </Link>
             </div>

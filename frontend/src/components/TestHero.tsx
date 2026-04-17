@@ -92,7 +92,7 @@ export default function TestHero() {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-3 pt-1">
-              <Link href="/apply"
+              <Link href="/contact"
                 className="inline-flex items-center justify-center gap-2 font-bold px-7 py-3.5 rounded-xl text-base transition-all"
                 style={{ background: YELLOW, color: "#0A0A0A", boxShadow: "0 4px 24px rgba(255,242,0,0.40)" }}
                 onMouseEnter={(e) => (e.currentTarget.style.background = YELLOW_DARK)}

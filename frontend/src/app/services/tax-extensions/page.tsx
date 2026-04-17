@@ -118,7 +118,7 @@ export default function TaxExtensionsPage() {
                     <div key={h.label} className="rounded-xl p-3 text-center border"
                       style={{ background: PRIMARY_LIGHT, borderColor: "rgba(255,242,0,0.15)" }}
                     >
-                      <div className="text-lg font-bold" style={{ color: "#FFF200" }}>{h.value}</div>
+                      <div className="text-lg font-bold" style={{ color: "#01567E" }}>{h.value}</div>
                       <div className="text-[10px] text-gray-500 mt-0.5 leading-tight">{h.label}</div>
                     </div>
                   ))}
@@ -194,7 +194,7 @@ export default function TaxExtensionsPage() {
                 The Process
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
-                Fast, Simple <span style={{ color: "#FFF200" }}>Extension Filing</span>
+                Fast, Simple <span style={{ color: "#01567E" }}>Extension Filing</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">We file your extension the same day — before the deadline passes.</p>
             </div>
@@ -205,14 +205,14 @@ export default function TaxExtensionsPage() {
               />
               {steps.map((s, i) => (
                 <div key={s.step}
-                  className="relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#FFF200] hover:shadow-xl transition-all duration-300 group"
+                  className="relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#01567E] hover:shadow-xl transition-all duration-300 group"
                 >
                   <div className="w-12 h-12 rounded-full flex items-center justify-center mb-5 text-sm font-bold border-2"
                     style={{ background: i === steps.length - 1 ? PRIMARY : PRIMARY_LIGHT, color: i === steps.length - 1 ? "white" : PRIMARY, borderColor: i === steps.length - 1 ? PRIMARY : "transparent" }}
                   >
                     {s.step}
                   </div>
-                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors mb-2">{s.title}</h3>
+                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors mb-2">{s.title}</h3>
                   <p className="text-xs text-gray-500 leading-relaxed">{s.desc}</p>
                 </div>
               ))}
@@ -274,14 +274,14 @@ export default function TaxExtensionsPage() {
                 FAQ
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
-                Common <span style={{ color: "#FFF200" }}>Questions</span>
+                Common <span style={{ color: "#01567E" }}>Questions</span>
               </h2>
             </div>
 
             <div className="space-y-4">
               {faqs.map((faq, i) => (
                 <div key={faq.q}
-                  className="bg-white border border-gray-100 rounded-2xl p-7 hover:border-[#FFF200] hover:shadow-md transition-all group"
+                  className="bg-white border border-gray-100 rounded-2xl p-7 hover:border-[#01567E] hover:shadow-md transition-all group"
                 >
                   <div className="flex items-start gap-4">
                     <span className="shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold mt-0.5"
@@ -290,7 +290,7 @@ export default function TaxExtensionsPage() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <div>
-                      <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors mb-2">{faq.q}</h3>
+                      <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors mb-2">{faq.q}</h3>
                       <p className="text-sm text-gray-500 leading-relaxed">{faq.a}</p>
                     </div>
                   </div>
@@ -305,17 +305,17 @@ export default function TaxExtensionsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-lg font-bold text-[#0A0A0A]">Related Services</h3>
-              <Link href="/services" className="flex items-center gap-1 text-xs font-bold transition-colors" style={{ color: "#FFF200" }}>
+              <Link href="/services" className="flex items-center gap-1 text-xs font-bold transition-colors" style={{ color: "#01567E" }}>
                 View All <ChevronRight size={13} strokeWidth={2.5} />
               </Link>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {related.map((r) => (
                 <Link key={r.title} href={r.href}
-                  className="group bg-white border border-gray-100 rounded-xl p-5 hover:border-[#FFF200] hover:shadow-lg transition-all flex items-center justify-between"
+                  className="group bg-white border border-gray-100 rounded-xl p-5 hover:border-[#01567E] hover:shadow-lg transition-all flex items-center justify-between"
                 >
                   <div>
-                    <p className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors">{r.title}</p>
+                    <p className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors">{r.title}</p>
                     <p className="text-xs text-gray-400 mt-0.5">{r.sub}</p>
                   </div>
                   <ArrowRight size={14} strokeWidth={2.5} style={{ color: PRIMARY }} className="shrink-0 group-hover:translate-x-0.5 transition-transform" />

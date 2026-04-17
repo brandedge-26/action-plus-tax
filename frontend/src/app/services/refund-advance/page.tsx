@@ -99,7 +99,7 @@ export default function RefundAdvancePage() {
             <div className="text-center mb-14">
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style={{ background: "#FFF200", color: "#041E42" }}>Common Questions</span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
-                Refund Advance <span style={{ color: "#FFF200" }}>FAQs</span>
+                Refund Advance <span style={{ color: "#01567E" }}>FAQs</span>
               </h2>
             </div>
             <div className="space-y-4">

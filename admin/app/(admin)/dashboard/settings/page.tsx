@@ -1,28 +1,57 @@
 "use client";
 
-import { useState } from "react";
-import { Check, Save, Lock, User, Bell, Eye, EyeOff } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Save, Lock, User, Eye, EyeOff } from "lucide-react";
 import { adminFetch } from "../../../lib/adminApi";
 import toast from "react-hot-toast";
 
-type Tab = "profile" | "security" | "notifications";
+type Tab = "profile" | "security";
 
 export default function SettingsPage() {
-  const [tab, setTab]             = useState<Tab>("profile");
+  const [tab, setTab] = useState<Tab>("profile");
+
+  // ── Profile state ──────────────────────────────────────────────────────────
+  const [profile, setProfile] = useState({ name: "", email: "" });
+  const [savingProfile, setSavingProfile] = useState(false);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("apt_admin_user");
+      if (stored) {
+        const u = JSON.parse(stored);
+        setProfile({ name: u.name ?? "", email: u.email ?? "" });
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const handleSaveProfile = async () => {
+    if (!profile.name.trim()) { toast.error("Display name is required."); return; }
+    setSavingProfile(true);
+    try {
+      const data = await adminFetch("/api/auth/update-profile", {
+        method: "PATCH",
+        body: { name: profile.name.trim() },
+      });
+      // update localStorage so header reflects change
+      const stored = localStorage.getItem("apt_admin_user");
+      if (stored) {
+        const u = JSON.parse(stored);
+        localStorage.setItem("apt_admin_user", JSON.stringify({ ...u, name: data.user?.name ?? profile.name }));
+      }
+      toast.success("Profile saved!");
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : "Failed to save profile.");
+    } finally {
+      setSavingProfile(false);
+    }
+  };
+
+  // ── Security state ─────────────────────────────────────────────────────────
   const [showCurrent, setShowCurrent] = useState(false);
   const [showNew,     setShowNew]     = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [pwForm, setPwForm] = useState({ current: "", newPw: "", confirm: "" });
-  const [changingPw, setChangingPw] = useState(false);
-
-  const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
-    { key: "profile",       label: "Profile",       icon: <User size={14} strokeWidth={2} /> },
-    { key: "security",      label: "Security",      icon: <Lock size={14} strokeWidth={2} /> },
-    { key: "notifications", label: "Notifications", icon: <Bell size={14} strokeWidth={2} /> },
-  ];
-
-  const inputClass = "w-full rounded-xl px-4 py-2.5 text-sm outline-none transition-all bg-white";
-  const inputStyle = { border: "1px solid var(--gray-border)", color: "var(--black)" };
+  const [changingPw, setChangingPw]   = useState(false);
 
   const handlePasswordChange = async () => {
     if (!pwForm.current.trim()) { toast.error("Current password is required."); return; }
@@ -43,6 +72,15 @@ export default function SettingsPage() {
       setChangingPw(false);
     }
   };
+
+  // ── Shared ─────────────────────────────────────────────────────────────────
+  const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
+    { key: "profile",  label: "Profile",  icon: <User size={14} strokeWidth={2} /> },
+    { key: "security", label: "Security", icon: <Lock size={14} strokeWidth={2} /> },
+  ];
+
+  const inputClass = "w-full rounded-xl px-4 py-2.5 text-sm outline-none transition-all bg-white";
+  const inputStyle = { border: "1px solid var(--gray-border)", color: "var(--black)" };
 
   return (
     <div className="max-w-2xl mx-auto space-y-5">
@@ -68,7 +106,7 @@ export default function SettingsPage() {
 
       <div className="bg-white rounded-2xl p-6" style={{ border: "1px solid var(--gray-border)" }}>
 
-        {/* Profile */}
+        {/* ── Profile ── */}
         {tab === "profile" && (
           <div className="space-y-5">
             <p className="text-base font-bold" style={{ color: "var(--black)" }}>Admin Profile</p>
@@ -76,11 +114,11 @@ export default function SettingsPage() {
             {/* Avatar */}
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-white text-xl font-bold flex-shrink-0" style={{ background: "var(--primary)" }}>
-                AD
+                {profile.name ? profile.name.charAt(0).toUpperCase() : "A"}
               </div>
               <div>
-                <p className="text-sm font-bold" style={{ color: "var(--black)" }}>Admin</p>
-                <p className="text-xs" style={{ color: "var(--gray-text)" }}>admin@actionplustax.com</p>
+                <p className="text-sm font-bold" style={{ color: "var(--black)" }}>{profile.name || "Admin"}</p>
+                <p className="text-xs" style={{ color: "var(--gray-text)" }}>{profile.email || "admin@actionplustax.com"}</p>
                 <p className="text-[10px] mt-1 px-2 py-0.5 rounded-full inline-block font-bold" style={{ background: "var(--primary-light)", color: "var(--primary)" }}>Administrator</p>
               </div>
             </div>
@@ -90,35 +128,45 @@ export default function SettingsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold mb-1.5" style={{ color: "var(--black)" }}>Display Name</label>
-                  <input type="text" defaultValue="Admin" className={inputClass} style={inputStyle}
+                  <input
+                    type="text"
+                    value={profile.name}
+                    onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
+                    className={inputClass}
+                    style={inputStyle}
                     onFocus={(e) => (e.target.style.borderColor = "var(--primary)")}
                     onBlur={(e) => (e.target.style.borderColor = "var(--gray-border)")}
                   />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold mb-1.5" style={{ color: "var(--black)" }}>Admin Email</label>
-                  <input type="email" defaultValue="admin@actionplustax.com" className={inputClass} style={inputStyle}
-                    onFocus={(e) => (e.target.style.borderColor = "var(--primary)")}
-                    onBlur={(e) => (e.target.style.borderColor = "var(--gray-border)")}
+                  <input
+                    type="email"
+                    value={profile.email}
+                    disabled
+                    className={inputClass}
+                    style={{ ...inputStyle, background: "var(--gray-light)", cursor: "not-allowed", opacity: 0.7 }}
                   />
+                  <p className="text-[10px] mt-1" style={{ color: "var(--gray-text)" }}>Email cannot be changed here.</p>
                 </div>
               </div>
             </div>
 
             <div className="flex justify-end pt-2" style={{ borderTop: "1px solid var(--gray-border)" }}>
               <button
-                onClick={() => toast.success("Profile saved!")}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90"
+                onClick={handleSaveProfile}
+                disabled={savingProfile}
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90 disabled:opacity-50"
                 style={{ background: "var(--primary)" }}
               >
                 <Save size={14} />
-                Save Profile
+                {savingProfile ? "Saving…" : "Save Profile"}
               </button>
             </div>
           </div>
         )}
 
-        {/* Security */}
+        {/* ── Security ── */}
         {tab === "security" && (
           <div className="space-y-5">
             <p className="text-base font-bold" style={{ color: "var(--black)" }}>Change Password</p>
@@ -198,50 +246,6 @@ export default function SettingsPage() {
               >
                 <Lock size={14} />
                 {changingPw ? "Changing…" : "Change Password"}
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Notifications */}
-        {tab === "notifications" && (
-          <div className="space-y-4">
-            <p className="text-base font-bold" style={{ color: "var(--black)" }}>Notification Preferences</p>
-            <p className="text-sm" style={{ color: "var(--gray-text)" }}>Choose which events you want to be alerted about.</p>
-            <div className="space-y-1">
-              {[
-                { label: "New Contact Message",     desc: "Alert when someone submits the contact form",        on: true  },
-                { label: "New Appointment Booked",  desc: "Alert when a client books a consultation",          on: true  },
-                { label: "Appointment Cancelled",   desc: "Alert when a client cancels an appointment",        on: true  },
-                { label: "New Blog Comment",        desc: "Alert when someone comments on a blog post",        on: false },
-                { label: "Daily Summary",           desc: "Daily digest of all admin activity",                on: false },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center justify-between p-3.5 rounded-xl"
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "var(--gray-light)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "")}
-                >
-                  <div>
-                    <p className="text-sm font-semibold" style={{ color: "var(--black)" }}>{item.label}</p>
-                    <p className="text-xs mt-0.5" style={{ color: "var(--gray-text)" }}>{item.desc}</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer flex-shrink-0 ml-4">
-                    <input type="checkbox" defaultChecked={item.on} className="sr-only peer" />
-                    <div className="w-10 h-5 rounded-full transition-all bg-gray-200 peer-checked:bg-[var(--primary)] after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-5" />
-                  </label>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex justify-end pt-2" style={{ borderTop: "1px solid var(--gray-border)" }}>
-              <button
-                onClick={() => toast.success("Notification settings saved!")}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90"
-                style={{ background: "var(--primary)" }}
-              >
-                <Check size={14} />
-                Save Preferences
               </button>
             </div>
           </div>

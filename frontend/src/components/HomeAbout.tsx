@@ -16,10 +16,10 @@ const highlights = [
 ];
 
 const officeInfo = [
-  { icon: MapPin,  label: "Location",       value: "Serving clients locally & nationwide" },
-  { icon: Phone,   label: "Phone",          value: "(555) 123-4567" },
-  { icon: Clock,   label: "Tax Season Hrs", value: "Mon–Sat 9am–8pm · Sun 10am–5pm" },
-  { icon: Building2, label: "Founded",      value: "2012 — Over 12 years in business" },
+  { icon: MapPin,    label: "Location",       value: "212 S 1st Street, Suite 2 · Jesup, GA 31545" },
+  { icon: Phone,     label: "Phone",          value: "912-559-2222" },
+  { icon: Clock,     label: "Office Hours",   value: "Mon–Fri 9AM–7PM · Sat 10AM–6PM" },
+  { icon: Building2, label: "Founded",        value: "2012 — Over 12 years in business" },
 ];
 
 export default function HomeAbout() {

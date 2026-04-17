@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard, FileText, CalendarDays,
-  Users, Settings, Menu, X, Receipt, Bell, ChevronDown,
-  Briefcase, BookOpen, LogOut, Plus, List,
+  Users, Settings, Menu, X, Receipt, ChevronDown,
+  Briefcase, BookOpen, LogOut, Plus, List, Pencil,
 } from "lucide-react";
+import { clearAdminToken, adminFetch } from "../lib/adminApi";
+import toast from "react-hot-toast";
 
 const navItems = [
   { href: "/dashboard",               label: "Overview",        icon: LayoutDashboard, exact: true },
@@ -37,9 +39,66 @@ const pageTitles: Record<string, string> = {
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [adminName, setAdminName] = useState("Admin");
+  const [nameModal, setNameModal] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [savingName, setSavingName] = useState(false);
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("apt_admin_user");
+      if (stored) {
+        const u = JSON.parse(stored);
+        if (u.name) setAdminName(u.name);
+      }
+    } catch { /* ignore */ }
+  }, []);
+
+  const handleChangeName = async () => {
+    if (!newName.trim()) { toast.error("Name cannot be empty."); return; }
+    setSavingName(true);
+    try {
+      const data = await adminFetch("/api/auth/update-profile", {
+        method: "PATCH",
+        body: { name: newName.trim() },
+      });
+      const updated = data.user?.name ?? newName.trim();
+      setAdminName(updated);
+      const stored = localStorage.getItem("apt_admin_user");
+      if (stored) {
+        localStorage.setItem("apt_admin_user", JSON.stringify({ ...JSON.parse(stored), name: updated }));
+      }
+      toast.success("Name updated!");
+      setNameModal(false);
+      setDropdownOpen(false);
+    } catch (e: unknown) {
+      toast.error(e instanceof Error ? e.message : "Failed to update name.");
+    } finally {
+      setSavingName(false);
+    }
+  };
 
   useEffect(() => { setOpen(false); }, [pathname]);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const handleLogout = () => {
+    clearAdminToken();
+    router.push("/login");
+  };
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -169,27 +228,18 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           })}
         </nav>
 
-        {/* Admin user */}
-        <div className="relative z-10 px-4 py-4" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-sm text-white" style={{ background: "var(--primary)" }}>
-              AD
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-white text-sm font-semibold truncate leading-none">Admin</p>
-              <p className="text-xs truncate mt-0.5" style={{ color: "rgba(255,255,255,0.3)" }}>admin@actionplustax.com</p>
-            </div>
-          </div>
-          <Link
-            href="/login"
-            className="flex items-center gap-2 text-xs font-medium py-2 px-3 rounded-xl transition-all w-full"
-            style={{ color: "rgba(255,255,255,0.3)" }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#fff"; (e.currentTarget as HTMLAnchorElement).style.background = "rgba(0,70,190,0.12)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.3)"; (e.currentTarget as HTMLAnchorElement).style.background = ""; }}
+        {/* Sign Out */}
+        <div className="relative z-10 px-3 py-4" style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2.5 text-sm font-semibold py-2.5 px-3 rounded-xl transition-all w-full"
+            style={{ color: "rgba(255,255,255,0.45)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.background = "rgba(239,68,68,0.12)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = "rgba(255,255,255,0.45)"; e.currentTarget.style.background = ""; }}
           >
-            <LogOut size={13} strokeWidth={2} />
+            <LogOut size={15} strokeWidth={2} />
             Sign Out
-          </Link>
+          </button>
         </div>
       </aside>
 
@@ -214,18 +264,53 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Notifications */}
-          <button className="relative w-9 h-9 rounded-xl flex items-center justify-center" style={{ border: "1px solid var(--gray-border)" }}>
-            <Bell size={15} strokeWidth={2} style={{ color: "var(--gray-text)" }} />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full border-2 border-white" style={{ background: "var(--primary)" }} />
-          </button>
-          {/* Admin chip */}
-          <div className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl" style={{ border: "1px solid var(--gray-border)" }}>
-            <div className="w-6 h-6 rounded-lg flex items-center justify-center text-white text-[10px] font-bold" style={{ background: "var(--primary)" }}>
-              AD
-            </div>
-            <span className="hidden sm:block text-sm font-semibold" style={{ color: "var(--black)" }}>Admin</span>
-            <ChevronDown size={13} style={{ color: "var(--gray-text)" }} className="hidden sm:block" />
+          {/* Admin chip with dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setDropdownOpen((v) => !v)}
+              className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl transition-all"
+              style={{ border: "1px solid var(--gray-border)" }}
+            >
+              <div className="w-6 h-6 rounded-lg flex items-center justify-center text-white text-[10px] font-bold" style={{ background: "var(--primary)" }}>
+                {adminName.charAt(0).toUpperCase()}
+              </div>
+              <span className="hidden sm:block text-sm font-semibold max-w-[120px] truncate" style={{ color: "var(--black)" }}>{adminName}</span>
+              <ChevronDown
+                size={13}
+                style={{ color: "var(--gray-text)", transition: "transform 0.2s", transform: dropdownOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                className="hidden sm:block"
+              />
+            </button>
+
+            {/* Dropdown */}
+            {dropdownOpen && (
+              <div
+                className="absolute right-0 mt-2 w-48 rounded-2xl shadow-lg overflow-hidden z-50 bg-white"
+                style={{ border: "1px solid var(--gray-border)", top: "100%" }}
+              >
+                <button
+                  onClick={() => { setNewName(adminName); setNameModal(true); setDropdownOpen(false); }}
+                  className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold transition-all"
+                  style={{ color: "var(--black)" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "var(--gray-light)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
+                >
+                  <Pencil size={14} strokeWidth={2} style={{ color: "var(--gray-text)" }} />
+                  Change Name
+                </button>
+                <div style={{ height: 1, background: "var(--gray-border)", margin: "0 12px" }} />
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2.5 w-full px-4 py-3 text-sm font-semibold transition-all"
+                  style={{ color: "#ef4444" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.background = "#fef2f2"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
+                >
+                  <LogOut size={14} strokeWidth={2} />
+                  Sign Out
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </header>
@@ -234,6 +319,51 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <main className="pt-[60px] min-h-screen md:ml-64">
         <div className="p-4 sm:p-6">{children}</div>
       </main>
+
+      {/* Change Name Modal */}
+      {nameModal && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center px-4"
+          style={{ background: "rgba(0,0,0,0.5)", backdropFilter: "blur(4px)" }}
+          onClick={(e) => { if (e.target === e.currentTarget) setNameModal(false); }}
+        >
+          <div className="bg-white rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+            <h3 className="text-base font-bold mb-1" style={{ color: "var(--black)" }}>Change Display Name</h3>
+            <p className="text-sm mb-4" style={{ color: "var(--gray-text)" }}>This name will show in the header and settings.</p>
+            <input
+              type="text"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") handleChangeName(); if (e.key === "Escape") setNameModal(false); }}
+              placeholder="Enter your name"
+              autoFocus
+              className="w-full rounded-xl px-4 py-2.5 text-sm outline-none mb-4"
+              style={{ border: "1px solid var(--gray-border)", color: "var(--black)" }}
+              onFocus={(e) => (e.target.style.borderColor = "var(--primary)")}
+              onBlur={(e) => (e.target.style.borderColor = "var(--gray-border)")}
+            />
+            <div className="flex gap-2 justify-end">
+              <button
+                onClick={() => setNameModal(false)}
+                className="px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+                style={{ color: "var(--gray-text)", border: "1px solid var(--gray-border)" }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "var(--gray-light)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = ""; }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleChangeName}
+                disabled={savingName}
+                className="px-5 py-2 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90 disabled:opacity-50"
+                style={{ background: "var(--primary)" }}
+              >
+                {savingName ? "Saving…" : "Save"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );

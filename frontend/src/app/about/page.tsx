@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowRight,
   Building2,
@@ -200,71 +201,69 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Right — Info card */}
-              <div className="relative">
-                {/* Glow behind card */}
+              {/* Right — Hero image */}
+              <div className="relative hidden lg:block">
+                {/* Glow behind image */}
                 <div
                   className="absolute -inset-4 rounded-3xl pointer-events-none"
-                  style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%)" }}
+                  style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(255,242,0,0.1) 0%, transparent 70%)" }}
                 />
+
+                {/* Photo card */}
                 <div
-                  className="relative rounded-3xl p-8 border"
-                  style={{ background: "#041E42", borderColor: "rgba(255,255,255,0.07)" }}
+                  className="relative rounded-3xl overflow-hidden"
+                  style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.45)", border: "1px solid rgba(255,255,255,0.1)" }}
                 >
-                  {/* Grid overlay */}
-                  <div
-                    className="absolute inset-0 rounded-3xl pointer-events-none opacity-20"
-                    aria-hidden="true"
-                    style={{
-                      backgroundImage: `linear-gradient(rgba(255,242,0,0.25) 1px, transparent 1px), linear-gradient(90deg, rgba(255,242,0,0.25) 1px, transparent 1px)`,
-                      backgroundSize: "32px 32px",
-                    }}
+                  <Image
+                    src="/images/about-hero.jpg"
+                    alt="Action Plus Tax professional tax advisor"
+                    width={620}
+                    height={460}
+                    className="w-full object-cover"
+                    style={{ height: "440px" }}
+                    priority
                   />
-                  <div className="relative">
-                    {/* Logo */}
-                    <div className="text-2xl font-bold tracking-tighter mb-6">
-                      <span style={{ color: "#FFF200" }}>Action</span>
-                      <span className="text-white">Plus</span>
-                      <span style={{ color: "#FFF200" }}>&nbsp;Tax</span>
-                    </div>
+                  {/* Dark overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(to top, rgba(4,30,66,0.75) 0%, rgba(4,30,66,0.1) 50%, transparent 100%)" }}
+                  />
 
-                    <p
-                      className="text-sm leading-relaxed mb-6 pb-6 border-b"
-                      style={{ color: "rgba(255,255,255,0.55)", borderColor: "rgba(255,255,255,0.07)" }}
-                    >
-                      &ldquo;Get your taxes done right!&rdquo; — Our promise since 2012.
-                      Family-owned, community-driven, and committed to your financial success.
-                    </p>
-
-                    {/* Mini stats */}
-                    <div className="grid grid-cols-2 gap-4">
-                      {[
-                        { v: "2012", l: "Founded" },
-                        { v: "10+", l: "Years" },
-                        { v: "500+", l: "Clients" },
-                        { v: "$6K", l: "Max Advance" },
-                      ].map((s) => (
-                        <div
-                          key={s.l}
-                          className="rounded-xl p-3.5"
-                          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.06)" }}
-                        >
-                          <div className="text-xl font-bold text-white">{s.v}</div>
-                          <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{s.l}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Address */}
+                  {/* Floating info card */}
+                  <div
+                    className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl flex items-center gap-4"
+                    style={{ background: "rgba(255,255,255,0.96)", boxShadow: "0 8px 32px rgba(0,0,0,0.2)", backdropFilter: "blur(12px)" }}
+                  >
                     <div
-                      className="flex items-start gap-3 mt-5 pt-5 border-t"
-                      style={{ borderColor: "rgba(255,255,255,0.07)" }}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: PRIMARY }}
                     >
-                      <MapPin size={14} strokeWidth={2} style={{ color: PRIMARY, marginTop: 2, flexShrink: 0 }} />
-                      <span className="text-xs" style={{ color: "rgba(255,255,255,0.45)" }}>
-                        212 S 1st Street, Suite 2 · Jesup, GA 31545
-                      </span>
+                      <ShieldCheck size={22} strokeWidth={2} style={{ color: "#fff" }} />
                     </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-bold" style={{ color: "#0A0A0A" }}>IRS-Authorized E-File Provider</p>
+                      <p className="text-xs mt-0.5" style={{ color: "#64748B" }}>Family-owned since 2012 · Serving GA & nationwide</p>
+                    </div>
+                    <span
+                      className="text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0"
+                      style={{ background: "#dcfce7", color: "#16a34a" }}
+                    >
+                      ● Verified
+                    </span>
+                  </div>
+                </div>
+
+                {/* Floating rating badge */}
+                <div
+                  className="absolute -top-4 -right-4 px-4 py-3 rounded-2xl flex items-center gap-2.5"
+                  style={{ background: "#041E42", border: "1px solid rgba(255,255,255,0.12)", boxShadow: "0 8px 24px rgba(0,0,0,0.3)" }}
+                >
+                  <div>
+                    <div className="flex gap-0.5 mb-0.5">
+                      {[1,2,3,4,5].map((s) => <Star key={s} size={11} strokeWidth={0} fill="#FFF200" />)}
+                    </div>
+                    <p className="text-[11px] font-bold text-white">4.9 / 5.0</p>
+                    <p className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>500+ reviews</p>
                   </div>
                 </div>
               </div>
@@ -311,7 +310,58 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-              {/* Left */}
+              {/* Left — team image */}
+              <div className="relative">
+                <div
+                  className="absolute -inset-4 rounded-3xl pointer-events-none"
+                  style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(1,86,126,0.07) 0%, transparent 70%)" }}
+                />
+                <div
+                  className="relative rounded-3xl overflow-hidden"
+                  style={{ boxShadow: "0 24px 60px rgba(0,0,0,0.12)", border: "1px solid #E2E8F0" }}
+                >
+                  <Image
+                    src="/images/about-team.jpg"
+                    alt="Action Plus Tax team working with clients"
+                    width={640}
+                    height={460}
+                    className="w-full object-cover"
+                    style={{ height: "420px" }}
+                  />
+                  {/* Gradient overlay */}
+                  <div
+                    className="absolute inset-0"
+                    style={{ background: "linear-gradient(to top, rgba(4,30,66,0.55) 0%, transparent 55%)" }}
+                  />
+                  {/* Bottom label */}
+                  <div
+                    className="absolute bottom-5 left-5 right-5 p-4 rounded-xl flex items-center gap-3"
+                    style={{ background: "rgba(255,255,255,0.95)", boxShadow: "0 4px 20px rgba(0,0,0,0.15)", backdropFilter: "blur(8px)" }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: "#FFF200" }}
+                    >
+                      <Users size={18} strokeWidth={2} style={{ color: "#041E42" }} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold" style={{ color: "#0A0A0A" }}>Our Tax Pros</p>
+                      <p className="text-xs" style={{ color: "#64748B" }}>Trained in-house · One-on-one attention for every client</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating badge */}
+                <div
+                  className="absolute -bottom-5 -right-5 w-24 h-24 rounded-2xl flex flex-col items-center justify-center text-center"
+                  style={{ background: PRIMARY, boxShadow: "0 8px 28px rgba(1,86,126,0.35)" }}
+                >
+                  <span className="text-3xl font-bold text-white leading-none">500+</span>
+                  <span className="text-[10px] font-bold text-white/70 mt-1 leading-tight">Clients<br />Served</span>
+                </div>
+              </div>
+
+              {/* Right — text + highlight blocks */}
               <div>
                 <span
                   className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-5"
@@ -321,40 +371,40 @@ export default function AboutPage() {
                 </span>
                 <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight leading-tight mb-5">
                   Making Tax Season{" "}
-                  <span style={{ color: "#FFF200" }}>Simple & Stress-Free</span>
+                  <span style={{ color: PRIMARY }}>Simple & Stress-Free</span>
                 </h2>
                 <p className="text-gray-500 text-base leading-relaxed mb-5">
                   We believe every person deserves expert tax help — not just those who can afford big firms.
                   That is why we built Action Plus Tax: a place where you get personalized attention,
                   honest pricing, and real results.
                 </p>
-                <p className="text-gray-500 text-base leading-relaxed">
+                <p className="text-gray-500 text-base leading-relaxed mb-8">
                   From your very first filing to complex IRS resolution, our Tax Pros are in your corner
                   every step of the way. We handle the paperwork. You keep the refund.
                 </p>
-              </div>
 
-              {/* Right — 2x2 highlight blocks */}
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { label: "Personalized", text: "One-on-one Tax Pro for every client" },
-                  { label: "Guaranteed", text: "Biggest possible refund, every time" },
-                  { label: "Transparent", text: "Know the price before we begin" },
-                  { label: "Accessible", text: "Open late & weekends, walk-ins welcome" },
-                ].map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-2xl p-5 border border-gray-100 hover:border-[#01567E] hover:shadow-md transition-all group"
-                  >
+                {/* 2x2 highlight blocks */}
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { label: "Personalized", text: "One-on-one Tax Pro for every client" },
+                    { label: "Guaranteed", text: "Biggest possible refund, every time" },
+                    { label: "Transparent", text: "Know the price before we begin" },
+                    { label: "Accessible", text: "Open late & weekends, walk-ins welcome" },
+                  ].map((item) => (
                     <div
-                      className="text-xs font-bold uppercase tracking-widest mb-2"
-                      style={{ color: PRIMARY }}
+                      key={item.label}
+                      className="rounded-2xl p-5 border border-gray-100 hover:border-[#01567E] hover:shadow-md transition-all group"
                     >
-                      {item.label}
+                      <div
+                        className="text-xs font-bold uppercase tracking-widest mb-2"
+                        style={{ color: PRIMARY }}
+                      >
+                        {item.label}
+                      </div>
+                      <p className="text-sm text-gray-600 leading-relaxed">{item.text}</p>
                     </div>
-                    <p className="text-sm text-gray-600 leading-relaxed">{item.text}</p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -373,7 +423,7 @@ export default function AboutPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
                 From Liberty Tax to{" "}
-                <span style={{ color: "#FFF200" }}>Action Plus Tax</span>
+                <span style={{ color: PRIMARY }}>Action Plus Tax</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
                 Over a decade of growth, technology, and community service.
@@ -438,7 +488,7 @@ export default function AboutPage() {
                         >
                           <Icon size={18} strokeWidth={1.8} />
                         </div>
-                        <span className="text-[9px] font-bold" style={{ color: "#FFF200" }}>{item.year}</span>
+                        <span className="text-[9px] font-bold" style={{ color: PRIMARY }}>{item.year}</span>
                       </div>
 
                       {/* Spacer for opposite side on desktop */}
@@ -523,41 +573,77 @@ export default function AboutPage() {
               </span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
                 The Action Plus Tax{" "}
-                <span style={{ color: "#FFF200" }}>Difference</span>
+                <span style={{ color: PRIMARY }}>Difference</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">
                 We are not a tax machine. We are Tax Pros who genuinely care about your outcome.
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {whyUs.map((item, i) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={item.title}
-                    className="group flex gap-5 bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#01567E] hover:shadow-lg transition-all"
-                  >
-                    <div className="shrink-0">
-                      <div
-                        className="w-11 h-11 rounded-xl flex items-center justify-center"
-                        style={{ background: "#FFF200", color: "#041E42" }}
-                      >
-                        <Icon size={20} strokeWidth={1.8} />
+            {/* Cards + image side by side on large screens */}
+            <div className="grid lg:grid-cols-5 gap-6 items-stretch">
+
+              {/* Cards — 3 cols */}
+              <div className="lg:col-span-3 grid sm:grid-cols-2 gap-5">
+                {whyUs.map((item, i) => {
+                  const Icon = item.icon;
+                  return (
+                    <div
+                      key={item.title}
+                      className="group flex gap-5 bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#01567E] hover:shadow-lg transition-all"
+                    >
+                      <div className="shrink-0">
+                        <div
+                          className="w-11 h-11 rounded-xl flex items-center justify-center"
+                          style={{ background: "#FFF200", color: "#041E42" }}
+                        >
+                          <Icon size={20} strokeWidth={1.8} />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="text-[10px] font-bold text-gray-300">0{i + 1}</span>
+                          <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors">
+                            {item.title}
+                          </h3>
+                        </div>
+                        <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
                       </div>
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <span className="text-[10px] font-bold text-gray-300">0{i + 1}</span>
-                        <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors">
-                          {item.title}
-                        </h3>
-                      </div>
-                      <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              {/* Handshake image — 2 cols */}
+              <div
+                className="lg:col-span-2 relative rounded-3xl overflow-hidden min-h-[320px]"
+                style={{ boxShadow: "0 16px 40px rgba(0,0,0,0.1)", border: "1px solid #E2E8F0" }}
+              >
+                <Image
+                  src="/images/about-values.jpg"
+                  alt="Trusted tax partnership — Action Plus Tax"
+                  fill
+                  className="object-cover"
+                />
+                {/* Overlay */}
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(135deg, rgba(1,86,126,0.7) 0%, rgba(4,30,66,0.5) 100%)" }}
+                />
+                {/* Text overlay */}
+                <div className="absolute inset-0 flex flex-col justify-end p-7">
+                  <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: "#FFF200" }}>
+                    Our Promise
+                  </p>
+                  <h3 className="text-xl font-bold text-white leading-snug">
+                    &ldquo;We treat every client like our only client.&rdquo;
+                  </h3>
+                  <p className="text-sm mt-2" style={{ color: "rgba(255,255,255,0.6)" }}>
+                    — Action Plus Tax Team
+                  </p>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
@@ -565,10 +651,20 @@ export default function AboutPage() {
         {/* ── CTA ── */}
         <section className="py-20 lg:py-24" style={{ background: "#F0F8FA" }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div
-              className="relative rounded-3xl overflow-hidden px-8 sm:px-16 py-16 text-center"
-              style={{ background: "#041E42" }}
-            >
+            <div className="relative rounded-3xl overflow-hidden px-8 sm:px-16 py-16 text-center">
+
+              {/* Background office image */}
+              <Image
+                src="/images/about-cta.jpg"
+                alt="Action Plus Tax office"
+                fill
+                className="object-cover"
+              />
+              {/* Dark overlay over the image */}
+              <div
+                className="absolute inset-0"
+                style={{ background: "rgba(4,30,66,0.88)" }}
+              />
               {/* Grid */}
               <div
                 className="absolute inset-0 pointer-events-none opacity-20"
@@ -610,7 +706,7 @@ export default function AboutPage() {
                     <ArrowRight size={17} strokeWidth={2.5} />
                   </Link>
                   <Link
-                    href="/apply"
+                    href="/contact"
                     className="inline-flex items-center justify-center gap-2 border-2 font-bold px-8 py-4 rounded-xl text-base transition-all hover:border-white text-white"
                     style={{ borderColor: "rgba(255,255,255,0.2)" }}
                   >

@@ -112,7 +112,7 @@ export default function HomeHowItWorks() {
         {/* CTA row */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-14">
           <Link
-            href="/apply"
+            href="/contact"
             className="inline-flex items-center gap-2 font-bold px-7 py-3.5 rounded-xl text-sm transition-all"
             style={{ background: PRIMARY, color: "white", boxShadow: "0 4px 20px rgba(1,86,126,0.25)" }}
             onMouseEnter={(e) => (e.currentTarget.style.background = "#014A6A")}

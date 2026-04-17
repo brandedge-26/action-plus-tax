@@ -108,15 +108,15 @@ export default function DropOffPage() {
             <div className="text-center mb-14">
               <span className="inline-flex items-center text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full mb-4" style={{ background: "#FFF200", color: "#041E42" }}>How It Works</span>
               <h2 className="text-3xl sm:text-4xl font-bold text-[#0A0A0A] tracking-tight">
-                Simple as <span style={{ color: "#FFF200" }}>Drop, Wait, Done</span>
+                Simple as <span style={{ color: "#01567E" }}>Drop, Wait, Done</span>
               </h2>
               <p className="mt-4 text-gray-500 text-lg max-w-xl mx-auto">No scheduling, no waiting, no stress. We do the work — you live your life.</p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {steps.map((s) => (
-                <div key={s.step} className="bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#FFF200] hover:shadow-lg transition-all group">
+                <div key={s.step} className="bg-white border border-gray-100 rounded-2xl p-6 hover:border-[#01567E] hover:shadow-lg transition-all group">
                   <div className="text-3xl font-bold mb-4 leading-none" style={{ color: PRIMARY_LIGHT }}>{s.step}</div>
-                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#FFF200] transition-colors mb-2">{s.title}</h3>
+                  <h3 className="text-sm font-bold text-[#0A0A0A] group-hover:text-[#01567E] transition-colors mb-2">{s.title}</h3>
                   <p className="text-xs text-gray-500 leading-relaxed">{s.desc}</p>
                 </div>
               ))}

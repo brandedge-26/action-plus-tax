@@ -59,7 +59,7 @@ export default function HomeCTA() {
                 <ArrowRight size={17} strokeWidth={2.5} />
               </Link>
               <Link
-                href="/apply"
+                href="/contact"
                 className="inline-flex items-center justify-center gap-2 border-2 border-white/40 hover:border-white text-white font-bold px-8 py-4 rounded-xl text-base transition-all"
               >
                 Start Your Application

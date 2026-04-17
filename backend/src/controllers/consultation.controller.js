@@ -1,6 +1,7 @@
 import { Consultation } from "../models/Consultation.js";
 import { User } from "../models/User.js";
 import { z } from "zod";
+import { sendAppointmentStatusEmail } from "../utils/email.js";
 
 
 
@@ -87,6 +88,20 @@ export const updateConsultationStatusController = async (req, res, next) => {
             const err = new Error("Consultation not found.");
             err.statusCode = 404;
             throw err;
+        }
+
+        // Send email notification to client
+        try {
+            await sendAppointmentStatusEmail({
+                to: consultation.email,
+                fullName: consultation.fullName,
+                status,
+                date: consultation.date,
+                time: consultation.time,
+                service: consultation.service,
+            });
+        } catch (emailErr) {
+            console.error("Failed to send appointment status email:", emailErr.message);
         }
 
         return res.status(200).json({ success: true, consultation });

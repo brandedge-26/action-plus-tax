@@ -649,6 +649,57 @@ const getMeController = async (req, res, next) => {
 
 
 
+// CHANGE PASSWORD CONTROLLER
+const changePasswordController = async (req, res, next) => {
+    try {
+        const userId = req.user?.id;
+        if (!userId) {
+            const err = new Error("Unauthorized.");
+            err.statusCode = 401;
+            throw err;
+        }
+
+        const { currentPassword, newPassword } = req.body;
+        if (!currentPassword || !newPassword) {
+            const err = new Error("Current password and new password are required.");
+            err.statusCode = 400;
+            throw err;
+        }
+        if (newPassword.length < 6) {
+            const err = new Error("New password must be at least 6 characters.");
+            err.statusCode = 400;
+            throw err;
+        }
+
+        const user = await User.findById(userId).select("+password");
+        if (!user) {
+            const err = new Error("User not found.");
+            err.statusCode = 404;
+            throw err;
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) {
+            const err = new Error("Current password is incorrect.");
+            err.statusCode = 400;
+            throw err;
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await User.findByIdAndUpdate(userId, { password: hashedPassword });
+
+        return res.status(200).json({
+            success: true,
+            message: "Password changed successfully.",
+        });
+
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+
 export {
     registerController,
     verifyOtpController,
@@ -662,4 +713,5 @@ export {
     forgotPasswordController,
     resetPasswordController,
     getMeController,
+    changePasswordController,
 }
