@@ -281,7 +281,8 @@ export default function HeaderTest() {
                   onMouseEnter={() => setServicesOpen(true)}
                   onMouseLeave={() => setServicesOpen(false)}
                 >
-                  <button
+                  <Link
+                    href={link.href}
                     className="flex items-center gap-1 text-sm font-medium transition-colors cursor-pointer"
                     style={{ color: servicesOpen ? "#FFF200" : "rgba(255,255,255,0.85)" }}
                   >
@@ -292,7 +293,7 @@ export default function HeaderTest() {
                       className={`mt-0.5 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
                       style={{ color: servicesOpen ? "#FFF200" : "rgba(255,255,255,0.85)" }}
                     />
-                  </button>
+                  </Link>
 
                   {/* Invisible bridge */}
                   {servicesOpen && (
