@@ -158,9 +158,9 @@ export default function SelfEmployedPage() {
                       {includes.map((item) => (
                         <li key={item} className="flex items-start gap-3">
                           <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                            style={{ background: "rgba(255,242,0,0.15)" }}
+                            style={{ background: "rgba(255,255,255,0.12)" }}
                           >
-                            <CheckCircle2 size={12} strokeWidth={2.5} style={{ color: PRIMARY }} />
+                            <CheckCircle2 size={12} strokeWidth={2.5} style={{ color: "#fff" }} />
                           </div>
                           <span className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.72)" }}>{item}</span>
                         </li>

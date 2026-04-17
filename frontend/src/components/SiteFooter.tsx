@@ -256,12 +256,7 @@ export default function SiteFooter() {
             >
               Terms of Service
             </Link>
-            <Link
-              href="/sitemap"
-              className="text-gray-600 text-xs hover:text-gray-400 transition-colors"
-            >
-              Sitemap
-            </Link>
+
           </div>
         </div>
       </div>
