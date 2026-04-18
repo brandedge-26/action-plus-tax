@@ -6,11 +6,11 @@ import Underline from "@tiptap/extension-underline";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Bold, Italic, Underline as UnderlineIcon, Strikethrough,
   List, ListOrdered, Quote, Code, Heading1, Heading2, Heading3,
-  Link as LinkIcon, ImageIcon, Undo, Redo, Minus,
+  Link as LinkIcon, ImageIcon, Undo, Redo, Minus, Maximize2, Minimize2,
 } from "lucide-react";
 
 interface TipTapEditorProps {
@@ -21,6 +21,7 @@ interface TipTapEditorProps {
 
 export default function TipTapEditor({ value, onChange, onUploadImage }: TipTapEditorProps) {
   const fileRef = useRef<HTMLInputElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -76,7 +77,10 @@ export default function TipTapEditor({ value, onChange, onUploadImage }: TipTapE
   });
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ border: "1px solid var(--gray-border)" }}>
+    <div
+      className={isFullscreen ? "fixed inset-0 z-50 flex flex-col bg-white" : "rounded-2xl overflow-hidden"}
+      style={isFullscreen ? {} : { border: "1px solid var(--gray-border)" }}
+    >
 
       {/* Heading styles injected inline */}
       <style>{`
@@ -137,10 +141,21 @@ export default function TipTapEditor({ value, onChange, onUploadImage }: TipTapE
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleImageFile} />
           </>
         )}
+
+        <div className="ml-auto">
+          <button
+            type="button"
+            onClick={() => setIsFullscreen((v) => !v)}
+            {...T(false)}
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+          >
+            {isFullscreen ? <Minimize2 size={13} strokeWidth={2} /> : <Maximize2 size={13} strokeWidth={2} />}
+          </button>
+        </div>
       </div>
 
       {/* Editor */}
-      <div className="bg-white">
+      <div className={isFullscreen ? "bg-white flex-1 overflow-y-auto" : "bg-white"}>
         <EditorContent editor={editor} />
       </div>
     </div>

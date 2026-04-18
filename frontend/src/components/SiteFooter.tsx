@@ -243,6 +243,18 @@ export default function SiteFooter() {
           <p className="text-gray-600 text-xs">
             © {new Date().getFullYear()} Action Plus Tax Service. All rights reserved.
           </p>
+          <p className="text-gray-600 text-xs">
+            Developed by{" "}
+            <a
+              href="https://brandedgecreations.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-bold hover:opacity-80 transition-opacity"
+              style={{ color: "#FFF200" }}
+            >
+              BrandEdge Creations
+            </a>
+          </p>
           <div className="flex items-center gap-5">
             <Link
               href="/privacy"
@@ -256,7 +268,6 @@ export default function SiteFooter() {
             >
               Terms of Service
             </Link>
-
           </div>
         </div>
       </div>

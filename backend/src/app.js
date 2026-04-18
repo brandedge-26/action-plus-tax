@@ -1,6 +1,8 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import passport from "passport";
+import "./passport/auth.passport.js";
 import { connectDB } from "./config/db.js";
 import { globalErrorHandler } from "./middlewares/error.middleware.js";
 import { generalLimiter } from "./middlewares/rateLimiter.middleware.js";
@@ -44,6 +46,11 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
+
+
+
+// PASSPORT INITIALIZATION
+app.use(passport.initialize());
 
 
 

@@ -29,7 +29,6 @@ export default function AdminLoginPage() {
       }
 
       setAdminToken(data.accessToken);
-      localStorage.setItem("apt_admin_user", JSON.stringify(data.user));
       toast.success(`Welcome, ${data.user.name}!`);
       window.location.href = "/dashboard";
     } catch (err: unknown) {

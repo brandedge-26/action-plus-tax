@@ -7,7 +7,11 @@ const validateEnv = () => {
     const required = [
         'ACCESS_TOKEN_SECRET',
         'REFRESH_TOKEN_SECRET',
-        'DB_URL'
+        'DB_URL',
+        'GOOGLE_CLIENT_ID',
+        'GOOGLE_CLIENT_SECRET',
+        'GOOGLE_CALLBACK_URL',
+        'CLIENT_URL'
     ];
 
     const missing = required.filter(key => !process.env[key]);

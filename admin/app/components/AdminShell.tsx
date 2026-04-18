@@ -8,7 +8,7 @@ import {
   Users, Settings, Menu, X, Receipt, ChevronDown,
   Briefcase, BookOpen, LogOut, Plus, List, Pencil,
 } from "lucide-react";
-import { clearAdminToken, adminFetch } from "../lib/adminApi";
+import { clearAdminToken, adminFetch, getAdminToken } from "../lib/adminApi";
 import toast from "react-hot-toast";
 
 const navItems = [
@@ -47,16 +47,32 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [nameModal, setNameModal] = useState(false);
   const [newName, setNewName] = useState("");
   const [savingName, setSavingName] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
 
+  // ── Auth Guard — server-side token verification ─────────────────────────────
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem("apt_admin_user");
-      if (stored) {
-        const u = JSON.parse(stored);
-        if (u.name) setAdminName(u.name);
-      }
-    } catch { /* ignore */ }
-  }, []);
+    const token = getAdminToken();
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    // Verify token with server — catches fake, expired, or tampered tokens
+    adminFetch("/api/auth/me")
+      .then((data) => {
+        if (data.user?.role !== "admin") {
+          clearAdminToken();
+          router.replace("/login");
+          return;
+        }
+        if (data.user?.name) setAdminName(data.user.name);
+        setAuthChecked(true);
+      })
+      .catch(() => {
+        clearAdminToken();
+        router.replace("/login");
+      });
+  }, [router]);
 
   const handleChangeName = async () => {
     if (!newName.trim()) { toast.error("Name cannot be empty."); return; }
@@ -68,10 +84,6 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       });
       const updated = data.user?.name ?? newName.trim();
       setAdminName(updated);
-      const stored = localStorage.getItem("apt_admin_user");
-      if (stored) {
-        localStorage.setItem("apt_admin_user", JSON.stringify({ ...JSON.parse(stored), name: updated }));
-      }
       toast.success("Name updated!");
       setNameModal(false);
       setDropdownOpen(false);
@@ -114,6 +126,17 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
     if (pathname.match(/^\/dashboard\/blog\/.+\/edit$/)) return "Edit Blog Post";
     return pageTitles[pathname] || "Admin";
   };
+
+  // Don't render dashboard until auth is confirmed
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--gray-light)" }}>
+        <svg className="animate-spin" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2.5">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+        </svg>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen" style={{ background: "var(--gray-light)" }}>

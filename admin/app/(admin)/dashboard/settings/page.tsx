@@ -48,14 +48,14 @@ export default function SettingsPage() {
 
   // ── Security state ─────────────────────────────────────────────────────────
   const [showCurrent, setShowCurrent] = useState(false);
-  const [showNew,     setShowNew]     = useState(false);
+  const [showNew, setShowNew] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [pwForm, setPwForm] = useState({ current: "", newPw: "", confirm: "" });
-  const [changingPw, setChangingPw]   = useState(false);
+  const [changingPw, setChangingPw] = useState(false);
 
   const handlePasswordChange = async () => {
     if (!pwForm.current.trim()) { toast.error("Current password is required."); return; }
-    if (!pwForm.newPw.trim())   { toast.error("New password is required."); return; }
+    if (!pwForm.newPw.trim()) { toast.error("New password is required."); return; }
     if (pwForm.newPw.length < 6) { toast.error("New password must be at least 6 characters."); return; }
     if (pwForm.newPw !== pwForm.confirm) { toast.error("Passwords do not match."); return; }
     setChangingPw(true);
@@ -75,7 +75,7 @@ export default function SettingsPage() {
 
   // ── Shared ─────────────────────────────────────────────────────────────────
   const tabs: { key: Tab; label: string; icon: React.ReactNode }[] = [
-    { key: "profile",  label: "Profile",  icon: <User size={14} strokeWidth={2} /> },
+    { key: "profile", label: "Profile", icon: <User size={14} strokeWidth={2} /> },
     { key: "security", label: "Security", icon: <Lock size={14} strokeWidth={2} /> },
   ];
 
@@ -123,46 +123,7 @@ export default function SettingsPage() {
               </div>
             </div>
 
-            <div style={{ borderTop: "1px solid var(--gray-border)", paddingTop: "1.25rem" }}>
-              <p className="text-sm font-semibold mb-4" style={{ color: "var(--black)" }}>Account Information</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold mb-1.5" style={{ color: "var(--black)" }}>Display Name</label>
-                  <input
-                    type="text"
-                    value={profile.name}
-                    onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
-                    className={inputClass}
-                    style={inputStyle}
-                    onFocus={(e) => (e.target.style.borderColor = "var(--primary)")}
-                    onBlur={(e) => (e.target.style.borderColor = "var(--gray-border)")}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold mb-1.5" style={{ color: "var(--black)" }}>Admin Email</label>
-                  <input
-                    type="email"
-                    value={profile.email}
-                    disabled
-                    className={inputClass}
-                    style={{ ...inputStyle, background: "var(--gray-light)", cursor: "not-allowed", opacity: 0.7 }}
-                  />
-                  <p className="text-[10px] mt-1" style={{ color: "var(--gray-text)" }}>Email cannot be changed here.</p>
-                </div>
-              </div>
-            </div>
 
-            <div className="flex justify-end pt-2" style={{ borderTop: "1px solid var(--gray-border)" }}>
-              <button
-                onClick={handleSaveProfile}
-                disabled={savingProfile}
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-sm font-bold text-white hover:opacity-90 disabled:opacity-50"
-                style={{ background: "var(--primary)" }}
-              >
-                <Save size={14} />
-                {savingProfile ? "Saving…" : "Save Profile"}
-              </button>
-            </div>
           </div>
         )}
 

@@ -10,7 +10,6 @@ import {
   MessageCircle,
   Clock,
   ArrowRight,
-  Paperclip,
   X,
   CheckCircle2,
   Send,
@@ -76,17 +75,12 @@ export default function ContactPage() {
     subject: "",
     message: "",
   });
-  const [file, setFile] = useState<File | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
-
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.[0]) setFile(e.target.files[0]);
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -229,7 +223,7 @@ export default function ContactPage() {
                         Thank you for reaching out. One of our Tax Pros will respond within 1 business day.
                       </p>
                       <button
-                        onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", subject: "", message: "" }); setFile(null); }}
+                        onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", subject: "", message: "" }); }}
                         className="mt-2 text-sm font-semibold underline underline-offset-4"
                         style={{ color: PRIMARY }}
                       >
@@ -318,53 +312,6 @@ export default function ContactPage() {
                           placeholder="Tell us how we can help you…"
                           className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-[#0A0A0A] placeholder-gray-400 outline-none transition-all focus:border-[#01567E] focus:ring-2 focus:ring-[#01567E]/10 resize-none"
                         />
-                      </div>
-
-                      {/* File attachment */}
-                      <div>
-                        <label className="block text-xs font-semibold text-gray-600 mb-1.5">
-                          Attach a File{" "}
-                          <span className="font-normal text-gray-400">(optional — PDF, JPG, PNG)</span>
-                        </label>
-                        {file ? (
-                          <div
-                            className="flex items-center justify-between gap-3 border border-gray-200 rounded-xl px-4 py-3"
-                            style={{ background: PRIMARY_LIGHT }}
-                          >
-                            <div className="flex items-center gap-2 text-sm font-medium" style={{ color: PRIMARY }}>
-                              <Paperclip size={14} strokeWidth={2} />
-                              <span className="truncate max-w-[200px]">{file.name}</span>
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => setFile(null)}
-                              className="text-gray-400 hover:text-red-500 transition-colors"
-                            >
-                              <X size={15} strokeWidth={2} />
-                            </button>
-                          </div>
-                        ) : (
-                          <label className="flex items-center gap-3 border border-dashed border-gray-200 rounded-xl px-4 py-4 cursor-pointer hover:border-[#01567E] transition-colors group">
-                            <div
-                              className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                              style={{ background: PRIMARY_LIGHT }}
-                            >
-                              <Paperclip size={15} strokeWidth={2} style={{ color: PRIMARY }} />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium text-gray-600 group-hover:text-[#01567E] transition-colors">
-                                Click to attach a file
-                              </p>
-                              <p className="text-xs text-gray-400">Max 10MB · PDF, JPG, PNG</p>
-                            </div>
-                            <input
-                              type="file"
-                              accept=".pdf,.jpg,.jpeg,.png"
-                              onChange={handleFile}
-                              className="hidden"
-                            />
-                          </label>
-                        )}
                       </div>
 
                       {/* Submit */}

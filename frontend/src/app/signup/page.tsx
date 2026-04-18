@@ -260,9 +260,23 @@ export default function SignupPage() {
 
           <div className="flex items-center gap-3 mt-5 mb-4">
             <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-xs text-gray-400">or</span>
+            <span className="text-xs text-gray-400">or sign up with</span>
             <div className="flex-1 h-px bg-gray-200" />
           </div>
+
+          <a
+            href="http://localhost:5510/api/auth/google"
+            className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-semibold hover:bg-gray-50 transition-all mb-5"
+            style={{ color: "#0A0A0A", background: "white" }}
+          >
+            <svg width="18" height="18" viewBox="0 0 48 48" fill="none">
+              <path d="M47.5 24.5c0-1.6-.1-3.2-.4-4.7H24v8.9h13.2c-.6 3-2.4 5.6-5 7.3v6h8c4.7-4.3 7.3-10.7 7.3-17.5z" fill="#4285F4" />
+              <path d="M24 48c6.5 0 11.9-2.1 15.8-5.8l-8-6c-2.1 1.4-4.8 2.2-7.8 2.2-6 0-11.1-4-12.9-9.4H2.8v6.2C6.7 42.8 14.8 48 24 48z" fill="#34A853" />
+              <path d="M11.1 28.9c-.5-1.4-.7-2.8-.7-4.4s.2-3 .7-4.4v-6.2H2.8C1 17.4 0 20.6 0 24s1 6.6 2.8 9.1l8.3-4.2z" fill="#FBBC05" />
+              <path d="M24 9.5c3.4 0 6.4 1.2 8.8 3.4l6.5-6.5C35.9 2.8 30.5.5 24 .5 14.8.5 6.7 5.7 2.8 14.1l8.3 6.2C12.9 13.5 18 9.5 24 9.5z" fill="#EA4335" />
+            </svg>
+            Continue with Google
+          </a>
 
           {/* Trust indicators */}
           <div className="flex items-center justify-center gap-5">

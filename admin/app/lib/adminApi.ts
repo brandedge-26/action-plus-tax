@@ -24,6 +24,13 @@ export async function adminFetch(path: string, options: { method?: string; body?
     body: options.body ? JSON.stringify(options.body) : undefined,
   });
 
+  // Token expired or invalid — force logout
+  if (res.status === 401) {
+    clearAdminToken();
+    window.location.href = "/login";
+    throw new Error("Session expired. Please sign in again.");
+  }
+
   const data = await res.json();
   if (!res.ok) throw new Error(data?.message || "Request failed.");
   return data;
