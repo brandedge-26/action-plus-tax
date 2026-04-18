@@ -16,6 +16,29 @@ export const getPublishedBlogsController = async (req, res, next) => {
 
 
 
+// GET FEATURED BLOGS — PUBLIC
+export const getFeaturedBlogsController = async (req, res, next) => {
+    try {
+        const blogs = await Blog.find({ status: "published", featured: true })
+            .select("-content")
+            .sort({ createdAt: -1 })
+            .limit(6);
+        // fallback: if no featured, return latest 3
+        if (blogs.length === 0) {
+            const latest = await Blog.find({ status: "published" })
+                .select("-content")
+                .sort({ createdAt: -1 })
+                .limit(3);
+            return res.status(200).json({ success: true, blogs: latest, fallback: true });
+        }
+        return res.status(200).json({ success: true, blogs, fallback: false });
+    } catch (err) {
+        next(err);
+    }
+};
+
+
+
 // GET SINGLE BLOG BY SLUG — PUBLIC
 export const getBlogBySlugController = async (req, res, next) => {
     try {

@@ -8,6 +8,7 @@ import HomeTestimonials from "@/components/HomeTestimonials";
 import HomeHowItWorks from "@/components/HomeHowItWorks";
 import HomeCTA from "@/components/HomeCTA";
 import HomeAbout from "@/components/HomeAbout";
+import HomeBlogSection from "@/components/HomeBlogSection";
 import SiteFooter from "@/components/SiteFooter";
 
 export default function HomePage() {
@@ -21,6 +22,7 @@ export default function HomePage() {
         <HomeHowItWorks />
         <HomeGuarantee />
         <HomeTestimonials />
+        <HomeBlogSection />
         <HomeCTA />
       </main>
       <SiteFooter />

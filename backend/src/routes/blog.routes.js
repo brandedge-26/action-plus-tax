@@ -1,6 +1,7 @@
 import express from "express";
 import {
     getPublishedBlogsController,
+    getFeaturedBlogsController,
     getBlogBySlugController,
     getAllBlogsController,
     getBlogByIdController,
@@ -15,7 +16,8 @@ import { adminMiddleware } from "../middlewares/admin.middleware.js";
 export const blogRoutes = express.Router();
 
 // PUBLIC
-blogRoutes.get("/",          getPublishedBlogsController);
+blogRoutes.get("/",           getPublishedBlogsController);
+blogRoutes.get("/featured",   getFeaturedBlogsController);
 blogRoutes.get("/slug/:slug", getBlogBySlugController);
 
 // ADMIN ONLY
